@@ -43,7 +43,7 @@ class SQLogger(retroBot.bot.retroBot):
     def queue_loop(self, interval = 1):
         while True:
             sleep(interval)
-            print(len(self.queue))
+            self.logger.debug(f'Committing {len(self.queue)} entries to database')
             if len(self.queue) > 0:
                 conn = self.get_conn()
                 cur = conn.cursor()
