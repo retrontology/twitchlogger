@@ -29,7 +29,6 @@ class SQLogger(retroBot.bot.retroBot):
         self.queue = []
         self.queue_process = Thread(target=self.queue_loop, args=(1,), daemon=True)
         super(SQLogger, self).__init__(*args, **kwargs)
-        print(len(self.channel_handlers))
         self.queue_process.start()
 
     def on_pubmsg(self, c, e):
