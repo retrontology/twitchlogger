@@ -67,6 +67,7 @@ class SQLoggerHandler(retroBot.channelHandler):
         cur = conn.cursor()
         cmd = (
             'CREATE TABLE IF NOT EXISTS %s ('
+            'channel TEXT NOT NULL, '
             'time TIMESTAMPTZ NOT NULL, '
             'id TEXT NOT NULL, ' 
             'username TEXT NOT NULL, '
@@ -83,7 +84,7 @@ class SQLoggerHandler(retroBot.channelHandler):
             'turbo BOOL NOT NULL, ' 
             'content TEXT NOT NULL' 
             ');'
-        ) % (f'twitchlogger._{self.channel}')
+        ) % (f'twitchlogger.chat')
         cur.execute(cmd, ())
         conn.commit()
         cur.close()
@@ -95,8 +96,8 @@ class SQLoggerHandler(retroBot.channelHandler):
 class SQLmessage(retroBot.message):
 
     def to_db_entry(self, channel):
-        cmd = sql.SQL('INSERT INTO {}.{} (time, id, username, user_id, subscriber, sub_length, prediction, badges, client_nonce, color, emotes, flags, mod, turbo, content) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);').format(psycopg2.sql.Identifier(f'twitchlogger'), psycopg2.sql.Identifier(f'_{channel}'))
-        t = (self.time, self.id, self.username, self.user_id, self.sub, self.sub_length, self.prediction, self.badges, self.client_nonce, self.color, json.dumps(self.emotes), json.dumps(self.flags), self.mod, self.turbo, self.content)
+        cmd = sql.SQL('INSERT INTO {}.{} (time, channel, id, username, user_id, subscriber, sub_length, prediction, badges, client_nonce, color, emotes, flags, mod, turbo, content) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);').format(psycopg2.sql.Identifier(f'twitchlogger'), psycopg2.sql.Identifier(f'chat'))
+        t = (channel, self.time, self.id, self.username, self.user_id, self.sub, self.sub_length, self.prediction, self.badges, self.client_nonce, self.color, json.dumps(self.emotes), json.dumps(self.flags), self.mod, self.turbo, self.content)
         return cmd, t
 
 def setup_logger(logname, logpath=""):
