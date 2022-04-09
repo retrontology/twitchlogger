@@ -54,7 +54,6 @@ class noSQLoggerHandler(retroBot.channelHandler):
     def __init__(self, channel: str, parent: noSQLogger):
         self.channel = channel
         self.parent = parent
-        self.init_db()
         super(noSQLoggerHandler, self).__init__(channel, parent)
 
     def get_collection(self):
