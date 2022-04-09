@@ -1,4 +1,5 @@
-from SQLogger import *
+from noSQLogger import noSQLogger
+import retroBot.config
 import os
 import logging
 
@@ -9,17 +10,18 @@ def main():
     with open(config['twitch']['channel_file'], 'r') as f:
         for i in f.readlines():
             channels.append(i.strip())
-    bot = SQLogger(
-        config['postgres']['dbname'], 
-        config['postgres']['username'], 
-        config['postgres']['password'], 
-        config['postgres']['host'], 
-        config['postgres']['port'], 
-        config['twitch']['username'], 
-        config['twitch']['client_id'], 
-        config['twitch']['client_secret'], 
-        channels
-        )
+    #bot = SQLogger(
+    #    config['postgres']['dbname'], 
+    #    config['postgres']['username'], 
+    #    config['postgres']['password'], 
+    #    config['postgres']['host'], 
+    #    config['postgres']['port'], 
+    #    config['twitch']['username'], 
+    #    config['twitch']['client_id'], 
+    #    config['twitch']['client_secret'], 
+    #    channels
+    #    )
+    bot = noSQLogger('twitch_logger', channels)
     bot.start()
 
 def setup_logger(logname, logpath=""):
