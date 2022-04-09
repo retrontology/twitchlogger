@@ -5,18 +5,6 @@ from psycopg2 import sql
 from time import sleep
 from threading import Thread
 import json
-import os
-import logging
-
-def main():
-    logger = setup_logger('retroBot')
-    config = retroBot.config.config('config.yaml')
-    channels = []
-    with open(config['twitch']['channel_file'], 'r') as f:
-        for i in f.readlines():
-            channels.append(i.strip())
-    bot = SQLogger(config['postgres']['dbname'], config['postgres']['username'], config['postgres']['password'], config['postgres']['host'], config['postgres']['port'], config['twitch']['username'], config['twitch']['client_id'], config['twitch']['client_secret'], channels, handler=SQLoggerHandler)
-    bot.start()
 
 class SQLogger(retroBot.bot.retroBot):
 
@@ -28,6 +16,8 @@ class SQLogger(retroBot.bot.retroBot):
         self.dbport = dbport
         self.queue = []
         self.queue_process = Thread(target=self.queue_loop, args=(1,), daemon=True)
+        if not 'handler' in kwargs:
+            kwargs['handler'] = SQLoggerHandler
         super(SQLogger, self).__init__(*args, **kwargs)
         self.queue_process.start()
 
@@ -99,26 +89,3 @@ class SQLmessage(retroBot.message):
         cmd = sql.SQL('INSERT INTO {}.{} (channel, time, id, username, user_id, subscriber, sub_length, prediction, badges, client_nonce, color, emotes, flags, mod, turbo, content) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);').format(psycopg2.sql.Identifier(f'twitchlogger'), psycopg2.sql.Identifier(f'chat'))
         t = (channel, self.time, self.id, self.username, self.user_id, self.sub, self.sub_length, self.prediction, self.badges, self.client_nonce, self.color, json.dumps(self.emotes), json.dumps(self.flags), self.mod, self.turbo, self.content)
         return cmd, t
-
-def setup_logger(logname, logpath=""):
-    if not logpath or logpath == "":
-        logpath = os.path.join(os.path.dirname(__file__), 'logs')
-    else:
-        logpath = os.path.abspath(logpath)
-    if not os.path.exists(logpath):
-        os.mkdir(logpath)
-    logger = logging.getLogger(logname)
-    logger.setLevel(logging.DEBUG)
-    file_handler = logging.handlers.TimedRotatingFileHandler(os.path.join(logpath, logname), when='midnight')
-    stream_handler = logging.StreamHandler()
-    form = logging.Formatter('%(asctime)s [%(levelname)s] %(name)s: %(message)s')
-    file_handler.setFormatter(form)
-    stream_handler.setFormatter(form)
-    file_handler.setLevel(logging.INFO)
-    stream_handler.setLevel(logging.DEBUG)
-    logger.addHandler(file_handler)
-    logger.addHandler(stream_handler)
-    return logger
-
-if __name__ == "__main__":
-    main()
