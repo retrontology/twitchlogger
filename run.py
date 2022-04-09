@@ -21,7 +21,12 @@ def main():
     #    config['twitch']['client_secret'], 
     #    channels
     #    )
-    bot = noSQLogger('twitch_logger', channels)
+    bot = noSQLogger('twitch_logger',
+        config['twitch']['username'], 
+        config['twitch']['client_id'], 
+        config['twitch']['client_secret'],
+        channels
+        )
     bot.start()
 
 def setup_logger(logname, logpath=""):
