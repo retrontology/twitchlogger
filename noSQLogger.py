@@ -17,6 +17,9 @@ class noSQLogger(retroBot.bot.retroBot):
         if not 'handler' in kwargs:
             kwargs['handler'] = noSQLoggerHandler
         super(noSQLogger, self).__init__(*args, **kwargs)
+    
+    def get_db(self):
+        return self.dbclient[self.dbname]
 
     def get_connection_string(self):
         out_string = "mongodb://"
@@ -48,22 +51,35 @@ class noSQLogger(retroBot.bot.retroBot):
 
 class noSQLoggerHandler(retroBot.channelHandler):
     
-    def __init__(self, channel, parent):
+    def __init__(self, channel: str, parent: noSQLogger):
         self.channel = channel
         self.parent = parent
         self.init_db()
         super(noSQLoggerHandler, self).__init__(channel, parent)
 
-    def init_db(self):
-        #TODO
-        pass
+    def get_collection(self):
+        return self.parent.get_db()[self.channel]
 
     def on_pubmsg(self, c, e):
-        #TODO
-        pass
+        self.get_collection().insert_one(noSQLmessage(e).to_db_entry())
         
-class SQLmessage(retroBot.message):
+class noSQLmessage(retroBot.message):
 
-    def to_db_entry(self, channel):
-        #TODO
-        pass
+    def to_db_entry(self):
+        return {
+            'timestamp': self.time,
+            'twitch_id': self.id,
+            'username': self.username,
+            'user_id': self.user_id,
+            'subscription': self.sub,
+            'sub_length': self.sub_length,
+            'prediction': self.prediction,
+            'badges': self.badges,
+            'client_nonce': self.client_nonce,
+            'color': self.color,
+            'emotes': self.emotes,
+            'flags': self.flags,
+            'mod': self.mod,
+            'turbo': self.turbo,
+            'content': self.content
+        }
