@@ -1,0 +1,14 @@
+<table>
+    <tr>
+        <th>Date</th>
+        <th>User</th>
+        <th>Message</th>
+    </tr>
+    {% for message in messages %}
+    <tr>
+        <th>{{ message.timestamp }}</th>
+        <th>{{ message.username }}</th>
+        <th>{{ message.content }}</th>
+    </tr>
+    {% endfor %}
+</table>

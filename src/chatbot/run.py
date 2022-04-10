@@ -1,4 +1,4 @@
-from chatbot.noSQLogger import noSQLogger
+from noSQLogger import noSQLogger
 import retroBot.config
 import os
 import logging
