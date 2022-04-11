@@ -36,6 +36,8 @@ def get_project(fields):
     project['_id'] = 0
     for field in fields:
         project[field] = 1
+    if 'username' in fields:
+        project['color'] = 1
     return project
 
 def get_db():
