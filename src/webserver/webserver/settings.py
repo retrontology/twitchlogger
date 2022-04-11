@@ -122,3 +122,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# MongoDB Settings
+# List of (Host, Port) tuples
+MONGO_HOSTS = [('192.168.1.32', '27017')]
+MONGO_USER = ''
+MONGO_PASS = ''
+MONGO_AUTHDB = ''
+# Dictionary of options
+MONGO_OPTIONS = {}
+# Name of Mongo DB for twitchlogger
+MONGO_DBNAME = 'twitch_logger'
