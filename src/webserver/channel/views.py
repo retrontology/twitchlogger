@@ -11,8 +11,13 @@ def channel(request, channel):
     template = loader.get_template('channel/index.html')
     dbs = get_db().list_collection_names()
     if channel.lower() in dbs:
+        username = request.GET.get('username', None)
+        filter = {}
+        if username:
+            filter['username'] = username
         messages = get_channel_messages(
             channel=channel,
+            filter=filter,
             limit=int(request.GET.get('limit', DEFAULT_LIMIT)),
             page=int(request.GET.get('page', 0))
         )

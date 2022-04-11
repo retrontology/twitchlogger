@@ -7,7 +7,9 @@
     {% for message in messages %}
     <tr>
         <th>{{ message.timestamp }}</th>
-        <th style="color:{{ message.color }};">{{ message.username }}</th>
+        <th>
+            <a style="color:{{ message.color }}; text-decoration: none;" href="{{ channel }}?username={{ message.username }}">{{ message.username }}</a>
+        </th>
         <th>{{ message.content }}</th>
     </tr>
     {% endfor %}
