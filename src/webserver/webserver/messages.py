@@ -6,7 +6,8 @@ DEFAULT_LIMIT = 50
 DEFAULT_FIELDS = [
     'username',
     'timestamp',
-    'content'
+    'content',
+    'color'
 ]
 DEFAULT_SORT = list({'timestamp': -1}.items())
     
