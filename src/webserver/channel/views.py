@@ -8,7 +8,6 @@ def index(request):
     raise Http404("Incorrect usage") 
 
 def channel(request, channel):
-    print()
     template = loader.get_template('channel/index.html')
     dbs = get_db().list_collection_names()
     if channel.lower() in dbs:
