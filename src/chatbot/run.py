@@ -29,7 +29,7 @@ def main():
         )
     bot.start()
 
-def setup_logger(logname, logpath=""):
+def setup_logger(logprefix, logname=None, logpath=""):
     if not logpath or logpath == "":
         logpath = os.path.join(os.path.dirname(__file__), 'logs')
     else:
@@ -38,7 +38,7 @@ def setup_logger(logname, logpath=""):
         os.mkdir(logpath)
     logger = logging.getLogger(logname)
     logger.setLevel(logging.DEBUG)
-    file_handler = logging.handlers.TimedRotatingFileHandler(os.path.join(logpath, logname), when='midnight')
+    file_handler = logging.handlers.TimedRotatingFileHandler(os.path.join(logpath, logprefix), when='midnight')
     stream_handler = logging.StreamHandler()
     form = logging.Formatter('%(asctime)s [%(levelname)s] %(name)s: %(message)s')
     file_handler.setFormatter(form)
