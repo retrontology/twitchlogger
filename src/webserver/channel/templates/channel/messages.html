@@ -6,11 +6,11 @@
     </tr>
     {% for message in messages %}
     <tr>
-        <th>{{ message.timestamp }}</th>
-        <th>
+        <td>{{ message.timestamp }}</td>
+        <td>
             <a style="color:{{ message.color }}; text-decoration: none;" href="{{ channel }}?username={{ message.username }}">{{ message.username }}</a>
-        </th>
-        <th>{{ message.content }}</th>
+        </td>
+        <td>{{ message.content }}</td>
     </tr>
     {% endfor %}
 </table>
