@@ -10,7 +10,7 @@ def index(request):
 
 def channel(request, channel):
     template = loader.get_template('channel/index.html')
-    dbs = get_db().list_collection_names()
+    dbs = get_channels()
     if channel.lower() in dbs:
         username = request.GET.get('username', None)
         filter = {}
