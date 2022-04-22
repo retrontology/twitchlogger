@@ -2,7 +2,9 @@
     <h1>Channels</h1>
     <table>
         {% for channel in channels %}
-        <tr>{{ channel }}</tr>
+        <tr>
+            <a href="{{ channel }}">{{ channel }}</a>
+        </tr>
         {% endfor %}
     </table>
 </html>
