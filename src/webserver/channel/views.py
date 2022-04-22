@@ -5,7 +5,7 @@ from datetime import datetime
 from webserver.messages import get_channel_messages, get_db, get_channels, DEFAULT_LIMIT
 
 def index(request):
-    template = loader.get_template('channel/index.html')
+    template = loader.get_template('channel/channel.html')
     return HttpResponse(template.render({'channels': get_channels()}, request))
 
 def channel(request, channel):
