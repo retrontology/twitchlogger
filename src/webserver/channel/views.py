@@ -6,7 +6,7 @@ from webserver.messages import get_channel_messages, get_db, get_channels, DEFAU
 
 def index(request):
     template = loader.get_template('channel/channel.html')
-    return HttpResponse(template.render({'channels': get_channels()}, request))
+    return HttpResponse(template.render({'channels': get_channels().sort()}, request))
 
 def channel(request, channel):
     template = loader.get_template('channel/index.html')
