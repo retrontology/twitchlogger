@@ -2,10 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.template import loader
 from datetime import datetime
-from webserver.messages import get_channel_messages, get_db, DEFAULT_LIMIT
+from webserver.messages import get_channel_messages, get_db, get_channels, DEFAULT_LIMIT
 
 def index(request):
-    raise Http404("Incorrect usage") 
+    template = loader.get_template('channel/index.html')
+    return HttpResponse(template.render({'channels': get_channels()}, request))
 
 def channel(request, channel):
     template = loader.get_template('channel/index.html')

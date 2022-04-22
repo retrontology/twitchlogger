@@ -22,6 +22,9 @@ def get_channel_messages(channel:str, filter={}, sort=DEFAULT_SORT, fields=DEFAU
         limit=limit
     )
 
+def get_channels():
+    return get_db().list_collection_names()
+
 def get_channels_messages():
     pass
 
