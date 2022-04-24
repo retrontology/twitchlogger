@@ -22,7 +22,8 @@ def channel(request, channel):
             limit=int(request.GET.get('limit', DEFAULT_LIMIT)),
             page=int(request.GET.get('page', 0))
         )
-        messages = parse_usernames(messages, channel)
+        for message in messages:
+            message.content = parse_usernames(message, channel)
         return HttpResponse(template.render({'messages': messages, 'channel': channel}, request))
     else:
         raise Http404("Channel not found in database") 
