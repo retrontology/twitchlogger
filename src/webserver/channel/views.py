@@ -25,6 +25,7 @@ def channel(request, channel):
         messages = []
         for message in cursor:
             message['content'] = parse_usernames(message['content'], channel)
+            messages.append(message)
         return HttpResponse(template.render({'messages': messages, 'channel': channel}, request))
     else:
         raise Http404("Channel not found in database") 
