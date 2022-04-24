@@ -16,13 +16,14 @@ def channel(request, channel):
         filter = {}
         if username:
             filter['username'] = username
-        messages = get_channel_messages(
+        cursor = get_channel_messages(
             channel=channel,
             filter=filter,
             limit=int(request.GET.get('limit', DEFAULT_LIMIT)),
             page=int(request.GET.get('page', 0))
         )
-        for message in messages:
+        messages = []
+        for message in cursor:
             message['content'] = parse_usernames(message['content'], channel)
         return HttpResponse(template.render({'messages': messages, 'channel': channel}, request))
     else:
