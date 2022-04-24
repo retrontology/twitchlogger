@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.template import loader
 from datetime import datetime
-from webserver.messages import get_channel_messages, get_db, get_channels, DEFAULT_LIMIT
+from webserver.messages import get_channel_messages, get_channels, parse_usernames, DEFAULT_LIMIT
 
 def index(request):
     template = loader.get_template('channel/channel.html')
@@ -22,6 +22,7 @@ def channel(request, channel):
             limit=int(request.GET.get('limit', DEFAULT_LIMIT)),
             page=int(request.GET.get('page', 0))
         )
+        messages = parse_usernames(messages)
         return HttpResponse(template.render({'messages': messages, 'channel': channel}, request))
     else:
         raise Http404("Channel not found in database") 

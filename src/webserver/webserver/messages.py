@@ -77,3 +77,10 @@ def get_connection_string(dbhosts, dbusername, dbpassword, defaultauthdb, dbopti
                 out_string += f'{option}={dboptions[option]}'
                 option_count+=1
         return out_string
+
+def parse_usernames(message: str, channel):
+    words = message.split()
+    for word in words:
+        if word[0] == '@' and len(word) > 1:
+            replacement = f'<a style="text-decoration: none;" href="{channel}?username={word[1:]}">{word}</a'
+            message = message.replace(word, replacement, 1)
