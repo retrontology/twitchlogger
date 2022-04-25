@@ -18,7 +18,10 @@ def channel(request, channel):
         filter = {}
         if username:
             filter['username'] = username
-        page_count = get_page_count(filter=filter)
+        page_count = get_page_count(
+            channel=channel,
+            filter=filter
+        )
         cursor = get_channel_messages(
             channel=channel,
             filter=filter,
