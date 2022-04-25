@@ -1,6 +1,7 @@
 from django.conf import settings
 from pymongo import MongoClient
 from urllib.parse import quote_plus
+from math import floor
 
 DEFAULT_LIMIT = 50
 DEFAULT_FIELDS = [
@@ -21,6 +22,11 @@ def get_channel_messages(channel:str, filter={}, sort=DEFAULT_SORT, fields=DEFAU
         skip=page*limit,
         limit=limit
     )
+
+def get_page_count(channel:str, filter={}, limit=DEFAULT_LIMIT):
+    container = get_db()[channel.lower()]
+    total = container.count_documents(filter=filter)
+    return floor(total / limit)
 
 def get_channels():
     return get_db().list_collection_names()

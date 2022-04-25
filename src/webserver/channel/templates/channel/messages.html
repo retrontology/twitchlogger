@@ -17,7 +17,7 @@
         {% if page != 0 %}
             <a id="previous-page" href="{{ channel }}?page={{ page | add:"-1" }}&limit={{ limit }}">Prev</a>
         {% endif %}
-        {% if page < page_total %}
+        {% if page < page_count %}
             <a id="next-page" href="{{ channel }}?page={{ page | add:"1" }}&limit={{ limit }}">Next</a>
         {% endif %}
     </div>

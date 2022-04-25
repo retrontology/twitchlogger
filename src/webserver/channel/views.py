@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.template import loader
 from datetime import datetime
-from webserver.messages import get_channel_messages, get_channels, parse_usernames, DEFAULT_LIMIT
+from webserver.messages import *
 
 def index(request):
     template = loader.get_template('channel/channel.html')
@@ -18,6 +18,7 @@ def channel(request, channel):
         filter = {}
         if username:
             filter['username'] = username
+        page_count = get_page_count(filter=filter)
         cursor = get_channel_messages(
             channel=channel,
             filter=filter,
@@ -32,7 +33,8 @@ def channel(request, channel):
             'messages': messages,
             'channel': channel,
             'page': page,
-            'limit': limit
+            'limit': limit,
+            'page_count': page_count
         }
         return HttpResponse(template.render(context, request))
     else:
