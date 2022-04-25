@@ -1,4 +1,4 @@
-<table>
+<table id="messages">
     <tr>
         <th>Date</th>
         <th>User</th>
@@ -13,12 +13,12 @@
         <td>{{ message.content | safe }}</td>
     </tr>
     {% endfor %}
-    <div id="messages-navigation">
-        {% if page != 0 %}
-            <a id="previous-page" href="{{ channel }}?page={{ page | add:"-1" }}&limit={{ limit }}">Prev</a>
-        {% endif %}
-        {% if page < page_count %}
-            <a id="next-page" href="{{ channel }}?page={{ page | add:"1" }}&limit={{ limit }}">Next</a>
-        {% endif %}
-    </div>
 </table>
+<div id="messages-navigation">
+    {% if page != 0 %}
+        <a id="previous-page" href="{{ channel }}?page={{ page | add:"-1" }}&limit={{ limit }}">Prev</a>
+    {% endif %}
+    {% if page < page_count %}
+        <a id="next-page" href="{{ channel }}?page={{ page | add:"1" }}&limit={{ limit }}">Next</a>
+    {% endif %}
+</div>
