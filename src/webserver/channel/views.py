@@ -16,7 +16,7 @@ def channel(request, channel):
         filter = {}
         if username:
             filter['username'] = username
-        messages = get_channel_messages(
+        cursor = get_channel_messages(
             channel=channel,
             filter=filter,
             limit=int(request.GET.get('limit', DEFAULT_LIMIT)),
