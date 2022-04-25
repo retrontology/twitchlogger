@@ -1,4 +1,4 @@
-<table>
+<table id="messages">
     <tr>
         <th>Date</th>
         <th>User</th>
@@ -14,3 +14,11 @@
     </tr>
     {% endfor %}
 </table>
+<div id="messages-navigation">
+    {% if page != 0 %}
+        <a id="previous-page" href="{{ previous_page }}">Prev</a>
+    {% endif %}
+    {% if page < page_count %}
+        <a id="next-page" href="{{ next_page }}">Next</a>
+    {% endif %}
+</div>
