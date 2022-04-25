@@ -10,7 +10,7 @@
         <td>
             <a style="color:{{ message.color }}; text-decoration: none;" href="{{ channel }}?username={{ message.username }}">{{ message.username }}</a>
         </td>
-        <td>{{ message.content }}</td>
+        <td>{{ message.content | safe }}</td>
     </tr>
     {% endfor %}
 </table>

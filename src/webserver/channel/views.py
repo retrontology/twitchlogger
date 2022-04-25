@@ -22,10 +22,10 @@ def channel(request, channel):
             limit=int(request.GET.get('limit', DEFAULT_LIMIT)),
             page=int(request.GET.get('page', 0))
         )
-        #messages = []
-        #for message in cursor:
-        #    message['content'] = parse_usernames(message['content'], channel)
-        #    messages.append(message)
+        messages = []
+        for message in cursor:
+            message['content'] = parse_usernames(message['content'], channel)
+            messages.append(message)
         return HttpResponse(template.render({'messages': messages, 'channel': channel}, request))
     else:
         raise Http404("Channel not found in database") 
