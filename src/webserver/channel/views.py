@@ -13,19 +13,27 @@ def channel(request, channel):
     dbs = get_channels()
     if channel.lower() in dbs:
         username = request.GET.get('username', None)
+        limit = int(request.GET.get('limit', DEFAULT_LIMIT))
+        page = int(request.GET.get('page', 0))
         filter = {}
         if username:
             filter['username'] = username
         cursor = get_channel_messages(
             channel=channel,
             filter=filter,
-            limit=int(request.GET.get('limit', DEFAULT_LIMIT)),
-            page=int(request.GET.get('page', 0))
+            limit=limit,
+            page=page
         )
         messages = []
         for message in cursor:
             message['content'] = parse_usernames(message['content'], channel)
             messages.append(message)
-        return HttpResponse(template.render({'messages': messages, 'channel': channel}, request))
+        context = {
+            'messages': messages,
+            'channel': channel,
+            'page': page,
+            'limit': limit
+        }
+        return HttpResponse(template.render(context, request))
     else:
         raise Http404("Channel not found in database") 
