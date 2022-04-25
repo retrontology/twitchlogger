@@ -28,7 +28,7 @@ def channel(request, channel):
             page=page
         )
         previous_page = f'?page={page-1}&limit={limit}'
-        next_page = f'?page={page-1}&limit={limit}'
+        next_page = f'?page={page+1}&limit={limit}'
         if username:
             previous_page += f'&username={username}'
             next_page += f'&username={username}'
