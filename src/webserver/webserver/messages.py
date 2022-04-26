@@ -33,14 +33,8 @@ def get_page_count(channel:str, filter={}, limit=DEFAULT_LIMIT):
 def get_channels():
     return get_db()[COLLECTION_NAME].distinct('channel')
 
-def get_channels_messages():
+def get_user_messages(username, channels=None, ):
     pass
-
-def get_user_messages(username, channel='', filter={}, fields=DEFAULT_FIELDS, limit=DEFAULT_LIMIT, page=0):
-    if channel:
-        pass
-    else:
-        pass
 
 def get_project(fields):
     project = {}

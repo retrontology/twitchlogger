@@ -19,7 +19,8 @@ def channel(request, channel):
             filter['username'] = username
         page_count = get_page_count(
             channel=channel,
-            filter=filter
+            filter=filter,
+            limit=limit
         )
         cursor = get_channel_messages(
             channel=channel,
