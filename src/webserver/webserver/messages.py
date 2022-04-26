@@ -1,7 +1,7 @@
 from django.conf import settings
 from pymongo import MongoClient
 from urllib.parse import quote_plus
-from math import floor
+from math import ceil
 
 DEFAULT_LIMIT = 50
 DEFAULT_FIELDS = [
@@ -30,7 +30,7 @@ def get_page_count(channel=None, username=None, filter={}, limit=DEFAULT_LIMIT):
     if channel: filter['channel'] = channel
     if username: filter['username'] = channel
     total = container.count_documents(filter=filter)
-    return floor(total / limit)
+    return ceil(total / limit)
 
 def get_channels():
     return get_db()[COLLECTION_NAME].distinct('channel')
