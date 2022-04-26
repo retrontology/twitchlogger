@@ -33,6 +33,7 @@ def channel(request, channel):
             message['content'] = parse_usernames(message['content'], channel)
             messages.append(message)
         context = {
+            'username': username,
             'messages': messages,
             'channel': channel,
             'second_previous_page': page -2,
