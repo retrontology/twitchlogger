@@ -42,7 +42,7 @@ def channel(request, channel):
             'next_page': page + 1,
             'second_next_page': page + 2,
             'limit': limit,
-            'page_count': page_count,
+            'max_pages': page_count-1,
         }
         return HttpResponse(template.render(context, request))
     else:

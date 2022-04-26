@@ -27,21 +27,21 @@
         <a id="previous-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ previous_page }}&limit={{ limit }}">{{ previous_page }}</a>
         {% endif %}
         {{ page }}
-        {% if next_page <= page_count %}
+        {% if next_page <= max_pages %}
         <a id="next-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ next_page }}&limit={{ limit }}">{{ next_page }}</a>
         {% endif %}
-        {% if second_next_page <= page_count %}
+        {% if second_next_page <= max_pages %}
         <a id="second-next-page-number" href="{% url 'channel' channel  %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ second_next_page }}&limit={{ limit }}">{{ second_next_page }}</a>
         {% endif %}
-        {% if second_next_page < page_count %}
+        {% if second_next_page < max_pages %}
         ...
-        <a id="last-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ page_count }}&limit={{ limit }}">{{ page_count|add:"-1" }}</a>
+        <a id="last-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ max_pages|add:'-1' }}&limit={{ limit }}">{{ max_pages|add:"-1" }}</a>
         {% endif %}
     </div>
     {% if page != 0 %}
     <a id="previous-page" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ previous_page }}&limit={{ limit }}">Prev</a>
     {% endif %}
-    {% if page < page_count %}
+    {% if page < max_pages %}
     <a id="next-page" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ next_page }}&limit={{ limit }}">Next</a>
     {% endif %}
 </div>
