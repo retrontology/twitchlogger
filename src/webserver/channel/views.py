@@ -28,11 +28,6 @@ def channel(request, channel):
             limit=limit,
             page=page
         )
-        previous_page = f'?page={page-1}&limit={limit}'
-        next_page = f'?page={page+1}&limit={limit}'
-        if username:
-            previous_page += f'&username={username}'
-            next_page += f'&username={username}'
         messages = []
         for message in cursor:
             message['content'] = parse_usernames(message['content'], channel)
@@ -40,11 +35,13 @@ def channel(request, channel):
         context = {
             'messages': messages,
             'channel': channel,
+            'second_previous_page': page -2,
+            'previous_page': page - 1,
             'page': page,
+            'next_page': page + 1,
+            'second_next_page': page + 2,
             'limit': limit,
             'page_count': page_count,
-            'previous_page': previous_page,
-            'next_page': next_page,
         }
         return HttpResponse(template.render(context, request))
     else:
