@@ -25,8 +25,10 @@ def get_channel_messages(channel:str, filter={}, sort=DEFAULT_SORT, fields=DEFAU
         limit=limit
     )
 
-def get_page_count(channel:str, filter={}, limit=DEFAULT_LIMIT):
+def get_page_count(channel=None, username=None, filter={}, limit=DEFAULT_LIMIT):
     container = get_db()[COLLECTION_NAME]
+    if channel: filter['channel'] = channel
+    if username: filter['username'] = channel
     total = container.count_documents(filter=filter)
     return floor(total / limit)
 
