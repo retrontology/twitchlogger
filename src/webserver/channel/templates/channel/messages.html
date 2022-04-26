@@ -19,10 +19,10 @@
     <a id="previous-page" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ previous_page }}&limit={{ limit }}">Prev</a>
     {% endif %}
     <div id="page-number-navigation">
-        {% if page > 0 %}
+        {% if second_previous_page >= 0 %}
         <a id="second-previous-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ second_previous_page }}&limit={{ limit }}">{{ second_previous_page }}</a>
         {% endif %}
-        {% if page > 1 %}
+        {% if previous_page >= 0 %}
         <a id="previous-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ previous_page }}&limit={{ limit }}">{{ previous_page }}</a>
         {% endif %}
         <a id="current-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ page }}&limit={{ limit }}">{{ page }}</a>
