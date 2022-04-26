@@ -2,6 +2,7 @@ from noSQLogger import noSQLogger
 import retroBot.config
 import os
 import logging
+import logging.handlers
 
 def main():
     logger = setup_logger('retroBot')
@@ -43,8 +44,8 @@ def setup_logger(logprefix, logname=None, logpath=""):
     form = logging.Formatter('%(asctime)s [%(levelname)s] %(name)s: %(message)s')
     file_handler.setFormatter(form)
     stream_handler.setFormatter(form)
-    file_handler.setLevel(logging.INFO)
-    stream_handler.setLevel(logging.DEBUG)
+    file_handler.setLevel(logging.DEBUG)
+    stream_handler.setLevel(logging.INFO)
     logger.addHandler(file_handler)
     logger.addHandler(stream_handler)
     return logger
