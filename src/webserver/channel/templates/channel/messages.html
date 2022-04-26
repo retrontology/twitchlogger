@@ -22,7 +22,7 @@
     {% endif %}
     <div id="page-number-navigation">
         {% if page > 1 %}
-        <a id="first-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page=0&limit={{ limit }}">{{ second_previous_page }}</a>
+        <a id="first-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page=0&limit={{ limit }}">0</a>
         ...
         {% endif %}
         {% if second_previous_page >= 0 %}
@@ -40,7 +40,7 @@
         {% endif %}
         {% if second_next_page < page_count %}
         ...
-        <a id="last-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ page_count }}&limit={{ limit }}">{{ page_count }}</a>
+        <a id="last-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ page_count }}&limit={{ limit }}">{{ page_count|add"-1" }}</a>
         {% endif %}
     </div>
     {% if page < page_count %}
