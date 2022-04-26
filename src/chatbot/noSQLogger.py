@@ -3,6 +3,8 @@ from pymongo import MongoClient
 from threading import Thread
 from urllib.parse import quote_plus
 
+COLLECTION_NAME = 'messages'
+
 class noSQLogger(retroBot.bot.retroBot):
 
     # dbhosts expected to be array filled with tuples of (IP, port). IP must be filled but port can be None
@@ -20,6 +22,9 @@ class noSQLogger(retroBot.bot.retroBot):
     
     def get_db(self):
         return self.dbclient[self.dbname]
+    
+    def get_collection(self):
+        return self.parent.get_db()[COLLECTION_NAME]
 
     def get_connection_string(self):
         out_string = "mongodb://"
@@ -56,16 +61,14 @@ class noSQLoggerHandler(retroBot.channelHandler):
         self.parent = parent
         super(noSQLoggerHandler, self).__init__(channel, parent)
 
-    def get_collection(self):
-        return self.parent.get_db()[self.channel]
-
     def on_pubmsg(self, c, e):
-        self.get_collection().insert_one(noSQLmessage(e).to_db_entry())
+        self.parent.get_collection().insert_one(noSQLmessage(e).to_db_entry(self.channel))
         
 class noSQLmessage(retroBot.message):
 
-    def to_db_entry(self):
+    def to_db_entry(self, channel):
         return {
+            'channel': channel,
             'timestamp': self.time,
             'twitch_id': self.id,
             'username': self.username,
