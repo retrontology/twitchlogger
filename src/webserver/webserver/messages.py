@@ -1,7 +1,7 @@
 from django.conf import settings
 from pymongo import MongoClient
 from urllib.parse import quote_plus
-from math import floor
+from math import ceil
 
 DEFAULT_LIMIT = 50
 DEFAULT_FIELDS = [
@@ -11,10 +11,12 @@ DEFAULT_FIELDS = [
     'color'
 ]
 DEFAULT_SORT = list({'timestamp': -1}.items())
+COLLECTION_NAME = 'messages'
     
 def get_channel_messages(channel:str, filter={}, sort=DEFAULT_SORT, fields=DEFAULT_FIELDS, limit=DEFAULT_LIMIT, page=0):
-    container = get_db()[channel.lower()]
+    container = get_db()[COLLECTION_NAME]
     project=get_project(fields)
+    filter['channel'] = channel.lower()
     return container.find(
         filter=filter,
         projection=project,
@@ -23,22 +25,18 @@ def get_channel_messages(channel:str, filter={}, sort=DEFAULT_SORT, fields=DEFAU
         limit=limit
     )
 
-def get_page_count(channel:str, filter={}, limit=DEFAULT_LIMIT):
-    container = get_db()[channel.lower()]
+def get_page_count(channel=None, username=None, filter={}, limit=DEFAULT_LIMIT):
+    container = get_db()[COLLECTION_NAME]
+    if channel: filter['channel'] = channel
+    if username: filter['username'] = channel
     total = container.count_documents(filter=filter)
-    return floor(total / limit)
+    return ceil(total / limit)
 
 def get_channels():
-    return get_db().list_collection_names()
+    return get_db()[COLLECTION_NAME].distinct('channel')
 
-def get_channels_messages():
+def get_user_messages(username, channels=None, ):
     pass
-
-def get_user_messages(username, channel='', filter={}, fields=DEFAULT_FIELDS, limit=DEFAULT_LIMIT, page=0):
-    if channel:
-        pass
-    else:
-        pass
 
 def get_project(fields):
     project = {}
