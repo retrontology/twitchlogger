@@ -24,7 +24,7 @@ class noSQLogger(retroBot.bot.retroBot):
         return self.dbclient[self.dbname]
     
     def get_collection(self):
-        return self.parent.get_db()[COLLECTION_NAME]
+        return self.get_db()[COLLECTION_NAME]
 
     def get_connection_string(self):
         out_string = "mongodb://"
