@@ -11,10 +11,12 @@ DEFAULT_FIELDS = [
     'color'
 ]
 DEFAULT_SORT = list({'timestamp': -1}.items())
+COLLECTION_NAME = 'messages'
     
 def get_channel_messages(channel:str, filter={}, sort=DEFAULT_SORT, fields=DEFAULT_FIELDS, limit=DEFAULT_LIMIT, page=0):
-    container = get_db()[channel.lower()]
+    container = get_db()[COLLECTION_NAME]
     project=get_project(fields)
+    filter['channel'] = channel.lower()
     return container.find(
         filter=filter,
         projection=project,
@@ -24,12 +26,12 @@ def get_channel_messages(channel:str, filter={}, sort=DEFAULT_SORT, fields=DEFAU
     )
 
 def get_page_count(channel:str, filter={}, limit=DEFAULT_LIMIT):
-    container = get_db()[channel.lower()]
+    container = get_db()[COLLECTION_NAME]
     total = container.count_documents(filter=filter)
     return floor(total / limit)
 
 def get_channels():
-    return get_db().list_collection_names()
+    return get_db()[COLLECTION_NAME].distinct('channel')
 
 def get_channels_messages():
     pass
