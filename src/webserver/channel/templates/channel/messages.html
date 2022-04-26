@@ -1,3 +1,11 @@
+<div id="top-incremental-navigation">
+    {% if page != 0 %}
+    <a id="previous-page" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ previous_page }}&limit={{ limit }}">Prev</a>
+    {% endif %}
+    {% if page < max_pages %}
+    <a id="next-page" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ next_page }}&limit={{ limit }}">Next</a>
+    {% endif %}
+</div>
 <table id="messages">
     <tr>
         <th>Date</th>
@@ -14,7 +22,7 @@
     </tr>
     {% endfor %}
 </table>
-<div id="messages-navigation">
+<div id="bottom-messages-navigation">
     <div id="page-number-navigation">
         {% if page > 2 %}
         <a id="first-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page=0&limit={{ limit }}">0</a>
@@ -38,10 +46,12 @@
         <a id="last-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ max_pages|add:'-1' }}&limit={{ limit }}">{{ max_pages|add:"-1" }}</a>
         {% endif %}
     </div>
-    {% if page != 0 %}
-    <a id="previous-page" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ previous_page }}&limit={{ limit }}">Prev</a>
-    {% endif %}
-    {% if page < max_pages %}
-    <a id="next-page" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ next_page }}&limit={{ limit }}">Next</a>
-    {% endif %}
+    <div id="bottom-incremental-navigation">
+        {% if page != 0 %}
+        <a id="previous-page" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ previous_page }}&limit={{ limit }}">Prev</a>
+        {% endif %}
+        {% if page < max_pages %}
+        <a id="next-page" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ next_page }}&limit={{ limit }}">Next</a>
+        {% endif %}
+    </div>
 </div>
