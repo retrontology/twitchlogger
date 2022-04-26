@@ -21,7 +21,7 @@
     <div id="page-number-navigation">
         {% if page > 1 %}
         <a id="first-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page=0&limit={{ limit }}">{{ second_previous_page }}</a>
-        <p>...</p>
+        ...
         {% endif %}
         {% if second_previous_page >= 0 %}
         <a id="second-previous-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ second_previous_page }}&limit={{ limit }}">{{ second_previous_page }}</a>
@@ -29,7 +29,7 @@
         {% if previous_page >= 0 %}
         <a id="previous-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ previous_page }}&limit={{ limit }}">{{ previous_page }}</a>
         {% endif %}
-        <p id="current-page-number">{{ page }}</p>
+        {{ page }}
         {% if next_page <= page_count %}
         <a id="next-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ next_page }}&limit={{ limit }}">{{ next_page }}</a>
         {% endif %}
@@ -37,7 +37,7 @@
         <a id="second-next-page-number" href="{% url 'channel' channel  %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ second_next_page }}&limit={{ limit }}">{{ second_next_page }}</a>
         {% endif %}
         {% if second_next_page < page_count %}
-        <p>...</p>
+        ...
         <a id="last-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page=page_count&limit={{ limit }}">{{ second_previous_page }}</a>
         {% endif %}
     </div>
