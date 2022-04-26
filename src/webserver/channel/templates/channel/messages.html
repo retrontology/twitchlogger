@@ -16,25 +16,25 @@
 </table>
 <div id="messages-navigation">
     {% if page != 0 %}
-    <a id="previous-page" href="{% url 'channel' channel page=previous_page limit=limit username=username %}">Prev</a>
+    <a id="previous-page" href="{% url 'channel/<str:channel>' page=previous_page limit=limit username=username %}">Prev</a>
     {% endif %}
     <div id="page-number-navigation">
         {% if page > 1 %}
-        <a id="second-previous-page-number" href="{% url 'channel' channel page=second_previous_page limit=limit username=username %}"></a>
+        <a id="second-previous-page-number" href="{% url 'channel/<str:channel>' channel page=second_previous_page limit=limit username=username %}"></a>
         {% endif %}
         {% if page > 2 %}
-        <a id="previous-page-number" href="{% url 'channel' channel page=previous_page limit=limit username=username %}"></a>
+        <a id="previous-page-number" href="{% url 'channel/<str:channel>' channel page=previous_page limit=limit username=username %}"></a>
         {% endif %}
-        <a id="current-page-number" href="{% url 'channel' channel page=previous_page limit=limit username=username %}"></a>
+        <a id="current-page-number" href="{% url 'channel/<str:channel>' channel page=previous_page limit=limit username=username %}"></a>
         {% if page < page_count %}
-        <a id="next-page-number" href="{% url 'channel' channel page=next_page limit=limit username=username %}"></a>
+        <a id="next-page-number" href="{% url 'channel/<str:channel>' channel page=next_page limit=limit username=username %}"></a>
         {% endif %}
         {% if page < page_count %}
-        <a id="second-next-page-number" href="{% url 'channel' channel page=second_next_page limit=limit username=username %}"></a>
+        <a id="second-next-page-number" href="{% url 'channel/<str:channel>' channel page=second_next_page limit=limit username=username %}"></a>
         {% endif %}
     </div>
     {% if page < page_count %}
-        <a id="next-page" href="{% url 'channel' channel page=next_page limit=limit username=username %}">Next</a>
+        <a id="next-page" href="{% url 'channel/<str:channel>' channel page=next_page limit=limit username=username %}">Next</a>
     {% endif %}
     <h2>{{ page_count }}</h2>
 </div>
