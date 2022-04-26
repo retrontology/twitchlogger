@@ -16,7 +16,9 @@
 </table>
 <div id="messages-navigation">
     {% if page != 0 %}
-    <a id="previous-page" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ previous_page }}&limit={{ limit }}">Prev</a>
+    <div>
+        <a id="previous-page" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ previous_page }}&limit={{ limit }}">Prev</a>
+    </div>
     {% endif %}
     <div id="page-number-navigation">
         {% if page > 1 %}
@@ -38,11 +40,13 @@
         {% endif %}
         {% if second_next_page < page_count %}
         ...
-        <a id="last-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page=page_count&limit={{ limit }}">{{ second_previous_page }}</a>
+        <a id="last-page-number" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ page_count }}&limit={{ limit }}">{{ page_count }}</a>
         {% endif %}
     </div>
     {% if page < page_count %}
+    <div>
         <a id="next-page" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ next_page }}&limit={{ limit }}">Next</a>
+    </div>
     {% endif %}
     <h2>{{ page_count }}</h2>
 </div>
