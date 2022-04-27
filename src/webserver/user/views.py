@@ -13,7 +13,7 @@ def user(request, username):
     limit = int(request.GET.get('limit', DEFAULT_LIMIT))
     page = int(request.GET.get('page', 0))
     page_count = get_page_count(
-        username=username
+        username=username,
         limit=limit
     )
     cursor = get_user_messages(
