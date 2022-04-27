@@ -20,7 +20,7 @@
             <a style="text-decoration: none;" href="{% url 'channel' message.channel %}?username={{ username }}">{{ message.channel }}</a>
         </td>
         <td>
-            <a style="color:{{ message.color }}; text-decoration: none;" href="{{ channel }}?username={{ message.username }}">{{ message.username }}</a>
+            <a style="color:{{ message.color }}; text-decoration: none;" href="{{ message.channel }}?username={{ message.username }}">{{ message.username }}</a>
         </td>
         <td>{{ message.content | safe }}</td>
     </tr>
