@@ -18,13 +18,14 @@ def get_channel_messages(channel:str, filter={}, sort=DEFAULT_SORT, fields=DEFAU
     container = get_db()[COLLECTION_NAME]
     project=get_project(fields)
     filter['channel'] = channel.lower()
-    return container.find(
+    cursor = container.find(
         filter=filter,
         projection=project,
         sort=sort,
         skip=page*limit,
         limit=limit
     )
+    return parse_messages(cursor)
 
 def get_page_count(channel=None, username=None, filter={}, limit=DEFAULT_LIMIT):
     container = get_db()[COLLECTION_NAME]
@@ -40,13 +41,14 @@ def get_user_messages(username, channels=None, filter={}, sort=DEFAULT_SORT, fie
     container = get_db()[COLLECTION_NAME]
     project=get_project(fields)
     filter['username'] = username
-    return container.find(
+    cursor = container.find(
         filter=filter,
         projection=project,
         sort=sort,
         skip=page*limit,
         limit=limit
     )
+    return parse_messages(cursor)
 
 def get_project(fields):
     project = {}

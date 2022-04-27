@@ -16,12 +16,11 @@ def user(request, username):
         username=username,
         limit=limit
     )
-    cursor = get_user_messages(
+    messages = get_user_messages(
         username=username,
         limit=limit,
         page=page
     )
-    messages = parse_messages(cursor)
     context = {
         'username': username,
         'messages': messages,

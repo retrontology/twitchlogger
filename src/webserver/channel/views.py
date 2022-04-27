@@ -22,13 +22,12 @@ def channel(request, channel):
             filter=filter,
             limit=limit
         )
-        cursor = get_channel_messages(
+        messages = get_channel_messages(
             channel=channel,
             filter=filter,
             limit=limit,
             page=page
         )
-        messages = parse_messages(cursor)
         context = {
             'username': username,
             'messages': messages,
