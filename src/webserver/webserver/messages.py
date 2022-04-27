@@ -36,7 +36,16 @@ def get_channels():
     return get_db()[COLLECTION_NAME].distinct('channel')
 
 def get_user_messages(username, channels=None, filter={}, sort=DEFAULT_SORT, fields=DEFAULT_FIELDS, limit=DEFAULT_LIMIT, page=0):
-    pass
+    container = get_db()[COLLECTION_NAME]
+    project=get_project(fields)
+    filter['username'] = username
+    return container.find(
+        filter=filter,
+        projection=project,
+        sort=sort,
+        skip=page*limit,
+        limit=limit
+    )
 
 def get_project(fields):
     project = {}
