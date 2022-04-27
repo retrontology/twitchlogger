@@ -22,16 +22,12 @@ def channel(request, channel):
             filter=filter,
             limit=limit
         )
-        cursor = get_channel_messages(
+        messages = get_channel_messages(
             channel=channel,
             filter=filter,
             limit=limit,
             page=page
         )
-        messages = []
-        for message in cursor:
-            message['content'] = parse_usernames(message['content'], channel)
-            messages.append(message)
         context = {
             'username': username,
             'messages': messages,

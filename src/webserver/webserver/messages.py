@@ -5,6 +5,7 @@ from math import ceil
 
 DEFAULT_LIMIT = 50
 DEFAULT_FIELDS = [
+    'channel',
     'username',
     'timestamp',
     'content',
@@ -17,26 +18,37 @@ def get_channel_messages(channel:str, filter={}, sort=DEFAULT_SORT, fields=DEFAU
     container = get_db()[COLLECTION_NAME]
     project=get_project(fields)
     filter['channel'] = channel.lower()
-    return container.find(
+    cursor = container.find(
         filter=filter,
         projection=project,
         sort=sort,
         skip=page*limit,
         limit=limit
     )
+    return parse_messages(cursor)
 
 def get_page_count(channel=None, username=None, filter={}, limit=DEFAULT_LIMIT):
     container = get_db()[COLLECTION_NAME]
     if channel: filter['channel'] = channel
-    if username: filter['username'] = channel
+    if username: filter['username'] = username
     total = container.count_documents(filter=filter)
     return ceil(total / limit)
 
 def get_channels():
     return get_db()[COLLECTION_NAME].distinct('channel')
 
-def get_user_messages(username, channels=None, ):
-    pass
+def get_user_messages(username, channels=None, filter={}, sort=DEFAULT_SORT, fields=DEFAULT_FIELDS, limit=DEFAULT_LIMIT, page=0):
+    container = get_db()[COLLECTION_NAME]
+    project=get_project(fields)
+    filter['username'] = username
+    cursor = container.find(
+        filter=filter,
+        projection=project,
+        sort=sort,
+        skip=page*limit,
+        limit=limit
+    )
+    return parse_messages(cursor)
 
 def get_project(fields):
     project = {}
@@ -82,10 +94,17 @@ def get_connection_string(dbhosts, dbusername, dbpassword, defaultauthdb, dbopti
                 option_count+=1
         return out_string
 
+def parse_messages(cursor):
+    messages = []
+    for message in cursor:
+        message['content'] = parse_usernames(message['content'], message['channel'])
+        messages.append(message)
+    return messages
+
 def parse_usernames(message: str, channel):
     words = message.split()
     for word in words:
         if word[0] == '@' and len(word) > 1:
-            replacement = f'<a style="text-decoration: none;" href="{channel}?username={word[1:]}">{word}</a>'
+            replacement = f'<a style="text-decoration: none;" href="/channel/{channel}?username={word[1:]}">{word}</a>'
             message = message.replace(word, replacement, 1)
     return message
