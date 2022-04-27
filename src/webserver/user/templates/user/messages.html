@@ -18,6 +18,7 @@
         <td>{{ message.timestamp }}</td>
         <td>
             <a style="text-decoration: none;" href="{% url 'channel' message.channel %}?username={{ username }}">{{ message.channel }}</a>
+            [<a style="text-decoration: none;" href="{% url 'user' message.username %}">U</a>]
         </td>
         <td>
             <a style="color:{{ message.color }}; text-decoration: none;" href="{% url 'channel' message.channel %}?username={{ username }}">{{ message.username }}</a>
