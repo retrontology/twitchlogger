@@ -111,6 +111,7 @@ def parse_usernames(message):
     words = message['content'].split()
     for word in words:
         if word[0] == '@' and len(word) > 1:
-            replacement = f'<a style="text-decoration: none;" href="/channel/{message.channel}?username={word[1:]}">{word}</a>'
+            channel = message['channel']
+            replacement = f'<a style="text-decoration: none;" href="/channel/{channel}?username={word[1:]}">{word}</a>'
             message['content'] = message['content'].replace(word, replacement, 1)
     return message
