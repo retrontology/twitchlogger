@@ -13,6 +13,7 @@ DEFAULT_FIELDS = [
 ]
 DEFAULT_SORT = list({'timestamp': -1}.items())
 COLLECTION_NAME = 'messages'
+TIMESTAMP_FORMAT = '%H:%M:%S %m/%d/%y'
     
 def get_channel_messages(channel:str, filter={}, sort=DEFAULT_SORT, fields=DEFAULT_FIELDS, limit=DEFAULT_LIMIT, page=0):
     container = get_db()[COLLECTION_NAME]
@@ -97,14 +98,19 @@ def get_connection_string(dbhosts, dbusername, dbpassword, defaultauthdb, dbopti
 def parse_messages(cursor):
     messages = []
     for message in cursor:
-        message['content'] = parse_usernames(message['content'], message['channel'])
+        message = parse_usernames(message)
+        message = parse_timestamp(message)
         messages.append(message)
     return messages
 
-def parse_usernames(message: str, channel):
-    words = message.split()
+def parse_timestamp(message):
+    message['timestamp'] = message['timestamp'].strftime(TIMESTAMP_FORMAT)
+    return message
+
+def parse_usernames(message):
+    words = message['content'].split()
     for word in words:
         if word[0] == '@' and len(word) > 1:
-            replacement = f'<a style="text-decoration: none;" href="/channel/{channel}?username={word[1:]}">{word}</a>'
-            message = message.replace(word, replacement, 1)
+            replacement = f'<a style="text-decoration: none;" href="/channel/{message.channel}?username={word[1:]}">{word}</a>'
+            message['content'] = message['content'].replace(word, replacement, 1)
     return message
