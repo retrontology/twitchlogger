@@ -5,6 +5,7 @@ from math import ceil
 
 DEFAULT_LIMIT = 50
 DEFAULT_FIELDS = [
+    'channel',
     'username',
     'timestamp',
     'content',
