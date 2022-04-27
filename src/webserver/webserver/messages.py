@@ -35,7 +35,7 @@ def get_page_count(channel=None, username=None, filter={}, limit=DEFAULT_LIMIT):
 def get_channels():
     return get_db()[COLLECTION_NAME].distinct('channel')
 
-def get_user_messages(username, channels=None, ):
+def get_user_messages(username, channels=None, filter={}, sort=DEFAULT_SORT, fields=DEFAULT_FIELDS, limit=DEFAULT_LIMIT, page=0):
     pass
 
 def get_project(fields):
@@ -81,6 +81,13 @@ def get_connection_string(dbhosts, dbusername, dbpassword, defaultauthdb, dbopti
                 out_string += f'{option}={dboptions[option]}'
                 option_count+=1
         return out_string
+
+def parse_messages(cursor):
+    messages = []
+    for message in cursor:
+        message['content'] = parse_usernames(message['content'], message['channel'])
+        messages.append(message)
+    return messages
 
 def parse_usernames(message: str, channel):
     words = message.split()

@@ -28,10 +28,7 @@ def channel(request, channel):
             limit=limit,
             page=page
         )
-        messages = []
-        for message in cursor:
-            message['content'] = parse_usernames(message['content'], channel)
-            messages.append(message)
+        messages = parse_messages(cursor)
         context = {
             'username': username,
             'messages': messages,
