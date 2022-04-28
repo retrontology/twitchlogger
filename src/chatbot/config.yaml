@@ -10,4 +10,4 @@ mongo:
   password: null
   options: {}
   authdb: null
-  dbname: 'twitchlogger'
+  dbname: 'twitch_logger'
