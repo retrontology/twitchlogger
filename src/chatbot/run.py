@@ -11,23 +11,17 @@ def main():
     with open(config['twitch']['channel_file'], 'r') as f:
         for i in f.readlines():
             channels.append(i.strip())
-    #bot = SQLogger(
-    #    config['postgres']['dbname'], 
-    #    config['postgres']['username'], 
-    #    config['postgres']['password'], 
-    #    config['postgres']['host'], 
-    #    config['postgres']['port'], 
-    #    config['twitch']['username'], 
-    #    config['twitch']['client_id'], 
-    #    config['twitch']['client_secret'], 
-    #    channels
-    #    )
-    bot = noSQLogger('twitch_logger',
+    bot = noSQLogger(
         config['twitch']['username'], 
         config['twitch']['client_id'], 
         config['twitch']['client_secret'],
-        channels
-        )
+        dbhosts=config['mongo']['hosts'],
+        dbusername=config['mongo']['username'],
+        dbpassword=config['mongo']['password'],
+        dboptions=config['mongo']['options'],
+        defaultauthdb=config['mongo']['authdb'],
+        dbname=config['mongo']['dbname']
+    )
     bot.start()
 
 def setup_logger(logprefix, logname=None, logpath=""):
