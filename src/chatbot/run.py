@@ -1,16 +1,26 @@
 from noSQLogger import noSQLogger
+from functools import partial
+from api import TwitchLoggerAPI
 import retroBot.config
 import os
 import logging
 import logging.handlers
+from http.server import ThreadingHTTPServer
+from threading import Thread
 
 def main():
     logger = setup_logger('retroBot')
     config = retroBot.config.config('config.yaml')
-    channels = []
-    with open(config['twitch']['channel_file'], 'r') as f:
-        for i in f.readlines():
-            channels.append(i.strip())
+    #bot, bot_thread = setup_bot(config)
+    bot = None
+    setup_api(bot, config['api'])
+
+def setup_api(bot, config):
+    api_handler = partial(TwitchLoggerAPI, bot)
+    api_server = ThreadingHTTPServer((config['host'], config['port']), api_handler)
+    api_server.serve_forever()
+
+def setup_bot(config):
     bot = noSQLogger(
         config['twitch']['username'], 
         config['twitch']['client_id'], 
@@ -22,7 +32,8 @@ def main():
         defaultauthdb=config['mongo']['authdb'],
         dbname=config['mongo']['dbname']
     )
-    bot.start()
+    bot_thread = Thread(target=bot.start, daemon=True).start()
+    return bot, bot_thread
 
 def setup_logger(logprefix, logname=None, logpath=""):
     if not logpath or logpath == "":

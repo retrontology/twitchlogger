@@ -53,9 +53,9 @@ class noSQLogger(retroBot.bot.retroBot):
         for i in range(len(self.dbhosts)):
             if i > 0:
                 out_string += ','
-            out_string += f'{self.dbhosts[i][0]}'
-            if self.dbhosts[i][1]:
-                out_string += f':{self.dbhosts[i][1]}'
+            out_string += f'{self.dbhosts[i]["host"]}'
+            if 'port' in self.dbhosts[i]:
+                out_string += f':{self.dbhosts[i]["port"]}'
         out_string += '/'
         if self.defaultauthdb:
             out_string += self.defaultauthdb
