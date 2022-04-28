@@ -3,7 +3,7 @@ from pymongo import MongoClient
 from threading import Thread
 from urllib.parse import quote_plus
 
-DEFAULT_DB = 'twitchlogger'
+DEFAULT_DB = 'twitch_logger'
 MESSAGE_COLLECTION = 'messages'
 CHANNEL_COLLECTION = 'channels'
 
