@@ -21,7 +21,7 @@ class noSQLogger(retroBot.bot.retroBot):
         self.dbclient = MongoClient(self.get_connection_string())
         if not 'handler' in kwargs:
             kwargs['handler'] = noSQLoggerHandler
-        super(noSQLogger, self).__init__(self.get_channels(), *args, **kwargs)
+        super(noSQLogger, self).__init__(*args, self.get_channels(), **kwargs)
     
     def add_channel(self, channel):
         if channel in self.get_channels():
