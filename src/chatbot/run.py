@@ -11,7 +11,7 @@ from threading import Thread
 def main():
     logger = setup_logger('retroBot')
     config = retroBot.config.config('config.yaml')
-    #bot, bot_thread = setup_bot(config)
+    bot, bot_thread = setup_bot(config)
     bot = None
     setup_api(bot, config['api'])
 

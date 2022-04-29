@@ -2,6 +2,7 @@ import retroBot
 from pymongo import MongoClient
 from threading import Thread
 from urllib.parse import quote_plus
+import datetime
 
 DEFAULT_DB = 'twitch_logger'
 MESSAGE_COLLECTION = 'messages'
@@ -23,15 +24,35 @@ class noSQLogger(retroBot.bot.retroBot):
         super(noSQLogger, self).__init__(self.get_channels(), *args, **kwargs)
     
     def add_channel(self, channel):
-        self.channels()
+        if channel in self.get_channels():
+            self.logger.error(f'{channel} already exists in database!')
+            return False
         if self.handler:
             try:
                 self.channel_handlers[channel.lower()] = self.handler(channel.lower(), self)
+                self.get_channel_collection().insert_one({'channel': channel.lower(), 'added': datetime.datetime.now()})
+                self.connection.join('#' + channel.lower())
+                return True
             except Exception as e:
                 self.logger.error(e)
+                return False
+            
 
     def remove_channel(self, channel):
-        pass
+        if channel not in self.get_channels():
+            self.logger.error(f'{channel} does not exist in database!')
+            return False
+        if self.handler:
+            try:
+                test = {}
+                self.channel_handlers.pop(channel.lower())
+                self.get_channel_collection().delete_one(filter={'channel': channel.lower(),})
+                self.connection.part('#' + channel.lower())
+                return True
+            except Exception as e:
+                self.logger.error(e)
+                return False
+            
     
     def get_db(self):
         return self.dbclient[self.dbname]
@@ -45,6 +66,7 @@ class noSQLogger(retroBot.bot.retroBot):
     def get_channels(self):
         collection = self.get_channel_collection()
         channels = [entry['channel'] for entry in collection.find()]
+        return channels
 
     def get_connection_string(self):
         out_string = "mongodb://"

@@ -1,4 +1,5 @@
 from http.server import BaseHTTPRequestHandler
+from noSQLogger import noSQLogger
 from logging import getLogger
 from urllib.parse import unquote
 import json
@@ -7,7 +8,7 @@ class TwitchLoggerAPI(BaseHTTPRequestHandler):
 
     logger = getLogger(__name__)
 
-    def __init__(self, bot, *args, **kwargs):
+    def __init__(self, bot: noSQLogger, *args, **kwargs):
         self.bot = bot
         super().__init__(*args, **kwargs)
 
@@ -16,21 +17,36 @@ class TwitchLoggerAPI(BaseHTTPRequestHandler):
         if path != '/channel':
             self.not_found()
         else:
-            pass
+            if not 'channel' in args:
+                self.malformed()
+            else:
+                if self.bot.remove_channel(args['channel']):
+                    self.send_response(200)
+                else:
+                    self.send_response(500)
+            
 
     def do_GET(self):
         path, args = self.parse_path()
         if path != '/channel':
             self.not_found()
         else:
-            pass
+            channels = json.dumps({'channels': self.bot.get_channels()})
+            self.send_response(200)
+            self.wfile.write(channels)
 
     def do_PUT(self):
         path, args = self.parse_path()
         if path != '/channel':
             self.not_found()
         else:
-            pass
+            if not 'channel' in args:
+                self.malformed()
+            else:
+                if self.bot.add_channel(args['channel']):
+                    self.send_response(200)
+                else:
+                    self.send_response(500)
 
     def parse_path(self):
         path = unquote(self.path)
@@ -47,6 +63,10 @@ class TwitchLoggerAPI(BaseHTTPRequestHandler):
     def not_found(self):
         self.send_response(404)
         self.wfile.write('Not found')
+    
+    def malformed(self):
+        self.send_response(400)
+        self.wfile.write('Bad request')
 
     def respond(self, code, data):
         self.send_response(code)
