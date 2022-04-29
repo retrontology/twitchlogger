@@ -2,13 +2,16 @@ import retroBot
 from pymongo import MongoClient
 from threading import Thread
 from urllib.parse import quote_plus
+import datetime
 
-COLLECTION_NAME = 'messages'
+DEFAULT_DB = 'twitch_logger'
+MESSAGE_COLLECTION = 'messages'
+CHANNEL_COLLECTION = 'channels'
 
 class noSQLogger(retroBot.bot.retroBot):
 
     # dbhosts expected to be array filled with tuples of (IP, port). IP must be filled but port can be None
-    def __init__(self, dbname, *args, dbhosts=[('127.0.0.1', None)], dbusername=None, dbpassword=None, dboptions={}, defaultauthdb=None, **kwargs):
+    def __init__(self, *args, dbhosts=[('127.0.0.1', None)], dbusername=None, dbpassword=None, dboptions={}, defaultauthdb=None, dbname=DEFAULT_DB, **kwargs):
         self.dbname = dbname
         self.defaultauthdb = defaultauthdb
         self.dbusername = dbusername
@@ -18,13 +21,53 @@ class noSQLogger(retroBot.bot.retroBot):
         self.dbclient = MongoClient(self.get_connection_string())
         if not 'handler' in kwargs:
             kwargs['handler'] = noSQLoggerHandler
-        super(noSQLogger, self).__init__(*args, **kwargs)
+            self.handler = kwargs['handler']
+        super(noSQLogger, self).__init__(*args, self.get_channels(), **kwargs)
+    
+    def add_channel(self, channel):
+        if channel in self.get_channels():
+            self.logger.error(f'{channel} already exists in database!')
+            return False
+        if self.handler:
+            try:
+                self.channel_handlers[channel.lower()] = self.handler(channel.lower(), self)
+                self.get_channel_collection().insert_one({'channel': channel.lower(), 'added': datetime.datetime.now()})
+                self.connection.join('#' + channel.lower())
+                return True
+            except Exception as e:
+                self.logger.error(e)
+                return False
+            
+
+    def remove_channel(self, channel):
+        if channel not in self.get_channels():
+            self.logger.error(f'{channel} does not exist in database!')
+            return False
+        if self.handler:
+            try:
+                test = {}
+                self.channel_handlers.pop(channel.lower())
+                self.get_channel_collection().delete_one(filter={'channel': channel.lower(),})
+                self.connection.part('#' + channel.lower())
+                return True
+            except Exception as e:
+                self.logger.error(e)
+                return False
+            
     
     def get_db(self):
         return self.dbclient[self.dbname]
     
-    def get_collection(self):
-        return self.get_db()[COLLECTION_NAME]
+    def get_messages_collection(self):
+        return self.get_db()[MESSAGE_COLLECTION]
+    
+    def get_channel_collection(self):
+        return self.get_db()[CHANNEL_COLLECTION]
+    
+    def get_channels(self):
+        collection = self.get_channel_collection()
+        channels = [entry['channel'] for entry in collection.find()]
+        return channels
 
     def get_connection_string(self):
         out_string = "mongodb://"
@@ -33,9 +76,9 @@ class noSQLogger(retroBot.bot.retroBot):
         for i in range(len(self.dbhosts)):
             if i > 0:
                 out_string += ','
-            out_string += f'{self.dbhosts[i][0]}'
-            if self.dbhosts[i][1]:
-                out_string += f':{self.dbhosts[i][1]}'
+            out_string += f'{self.dbhosts[i]["host"]}'
+            if 'port' in self.dbhosts[i]:
+                out_string += f':{self.dbhosts[i]["port"]}'
         out_string += '/'
         if self.defaultauthdb:
             out_string += self.defaultauthdb
@@ -62,7 +105,7 @@ class noSQLoggerHandler(retroBot.channelHandler):
         super(noSQLoggerHandler, self).__init__(channel, parent)
 
     def on_pubmsg(self, c, e):
-        self.parent.get_collection().insert_one(noSQLmessage(e).to_db_entry(self.channel))
+        self.parent.get_messages_collection().insert_one(noSQLmessage(e).to_db_entry(self.channel))
         
 class noSQLmessage(retroBot.message):
 

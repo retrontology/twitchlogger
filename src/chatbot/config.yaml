@@ -2,12 +2,15 @@ twitch:
   client_id: ':)'
   client_secret: ':)'
   username: ':)'
-  channel_file: 'streamers.txt'
 mongo:
-  host: 'localhost'
-postgres:
-  dbname: 'mydb'
-  username: 'username'
-  password: 'password'
-  host: 'localhost'
-  port: '5432'
+  hosts:
+  - host: '192.168.1.32'
+    port: 27017
+  username: null
+  password: null
+  options: {}
+  authdb: null
+  dbname: 'twitch_logger'
+api:
+  host: '127.0.0.1'
+  port: 8365
