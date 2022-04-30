@@ -53,6 +53,9 @@ class noSQLogger(retroBot.bot.retroBot):
         if channel in self.get_channels():
             self.logger.error(f'{channel} already exists in database!')
             return False
+        if len(self.twitch.get_users(logins=[channel])['data']) == 0:
+            self.logger.error(f'{channel} does not exist on twitch!')
+            return False
         if self.handler:
             try:
                 self.channel_handlers[channel.lower()] = self.handler(channel.lower(), self)
@@ -65,7 +68,7 @@ class noSQLogger(retroBot.bot.retroBot):
             
 
     def remove_channel(self, channel):
-        if channel not in self.get_channels():
+        if channel.lower() not in self.get_channels():
             self.logger.error(f'{channel} does not exist in database!')
             return False
         if self.handler:

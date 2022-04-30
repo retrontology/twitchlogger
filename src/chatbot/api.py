@@ -73,11 +73,10 @@ class TwitchLoggerAPI(BaseHTTPRequestHandler):
         return path, out_args
 
     def respond(self, code, message=None):
-        self.send_response(200)
+        self.send_response(code)
         self.send_header('Content-Length', len(message))
         self.end_headers()
         self.wfile.write(message.encode())
-        self.wfile.close()
 
     def not_found(self):
         self.respond(404, 'Not found')
