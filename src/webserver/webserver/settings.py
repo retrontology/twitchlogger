@@ -70,6 +70,12 @@ TEMPLATES = [
     },
 ]
 
+OPTIONS={
+    'libraries': {
+        'page_filter': 'webserver.templatetags.page_filter'
+    }
+}
+
 WSGI_APPLICATION = 'webserver.wsgi.application'
 
 
