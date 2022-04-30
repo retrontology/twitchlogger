@@ -1,3 +1,3 @@
 function change_page() {
-    alert(this);
+    alert(this.dataurl + this.value);
 }
