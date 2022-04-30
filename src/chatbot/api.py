@@ -32,9 +32,11 @@ class TwitchLoggerAPI(BaseHTTPRequestHandler):
             self.not_found()
         else:
             channels = json.dumps({'channels': self.bot.get_channels()})
+            self.send_response(200)
             self.send_header('Content-Length', len(channels))
             self.end_headers()
-            self.send_response(200, channels)
+            self.wfile.write(channels.encode())
+            self.wfile.close()
 
     def do_PUT(self):
         path, args = self.parse_path()
@@ -68,9 +70,3 @@ class TwitchLoggerAPI(BaseHTTPRequestHandler):
     def malformed(self):
         self.send_response(400)
         self.wfile.write('Bad request'.encode(encoding='utf_8'))
-
-    def respond(self, code, data):
-        self.send_response(code)
-        self.send_header('Content-Type', 'application/json')
-        self.end_headers()
-        self.wfile.write(json.dumps(data).encode(encoding='utf_8'))
