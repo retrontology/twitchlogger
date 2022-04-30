@@ -34,6 +34,6 @@ tr:nth-child(even) {background-color: #1f1925;}
 .message-date, .message-user, .message-channel {
     width: 1em;
     white-space:nowrap;
-    text-decoration: none !important;
-    color: var(--text-color) !important;
+    text-decoration: none;
+    color: var(--text-color);
 }
