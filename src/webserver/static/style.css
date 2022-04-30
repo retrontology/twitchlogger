@@ -27,7 +27,7 @@ td {
 tr:nth-child(odd) {background-color: #0f0c12;}
 tr:nth-child(even) {background-color: #1f1925;}
 
-.message-date {
+.message-date, .message-user {
     width: 1em;
     white-space:nowrap;
 }
