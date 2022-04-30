@@ -21,9 +21,15 @@ class TwitchLoggerAPI(BaseHTTPRequestHandler):
                 self.malformed()
             else:
                 if self.bot.remove_channel(args['channel']):
-                    self.send_response(200)
+                    result = {
+                        'result': True
+                    }
+                    self.respond(200, json.dumps(result))
                 else:
-                    self.send_response(500)
+                    result = {
+                        'result': False
+                    }
+                    self.respond(500, json.dumps(result))
             
 
     def do_GET(self):
@@ -32,8 +38,8 @@ class TwitchLoggerAPI(BaseHTTPRequestHandler):
             self.not_found()
         else:
             channels = json.dumps({'channels': self.bot.get_channels()})
-            self.send_response(200)
-            self.wfile.write(channels.encode(encoding='utf_8'))
+            self.respond(200, channels)
+            
 
     def do_PUT(self):
         path, args = self.parse_path()
@@ -44,9 +50,15 @@ class TwitchLoggerAPI(BaseHTTPRequestHandler):
                 self.malformed()
             else:
                 if self.bot.add_channel(args['channel']):
-                    self.send_response(200)
+                    result = {
+                        'result': True
+                    }
+                    self.respond(200, json.dumps(result))
                 else:
-                    self.send_response(500)
+                    result = {
+                        'result': False
+                    }
+                    self.respond(500, json.dumps(result))
 
     def parse_path(self):
         path = unquote(self.path)
@@ -60,16 +72,15 @@ class TwitchLoggerAPI(BaseHTTPRequestHandler):
                 out_args[key] = value
         return path, out_args
 
+    def respond(self, code, message=None):
+        self.send_response(200)
+        self.send_header('Content-Length', len(message))
+        self.end_headers()
+        self.wfile.write(message.encode())
+        self.wfile.close()
+
     def not_found(self):
-        self.send_response(404)
-        self.wfile.write('Not found'.encode(encoding='utf_8'))
+        self.respond(404, 'Not found')
     
     def malformed(self):
-        self.send_response(400)
-        self.wfile.write('Bad request'.encode(encoding='utf_8'))
-
-    def respond(self, code, data):
-        self.send_response(code)
-        self.send_header('Content-Type', 'application/json')
-        self.end_headers()
-        self.wfile.write(json.dumps(data).encode(encoding='utf_8'))
+        self.respond(400, 'Bad request')
