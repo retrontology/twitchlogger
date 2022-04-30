@@ -1,5 +1,5 @@
 import retroBot
-from pymongo import MongoClient
+from pymongo import MongoClient, ASCENDING, DESCENDING
 from threading import Thread
 from urllib.parse import quote_plus
 import datetime
@@ -7,6 +7,23 @@ import datetime
 DEFAULT_DB = 'twitch_logger'
 MESSAGE_COLLECTION = 'messages'
 CHANNEL_COLLECTION = 'channels'
+MESSAGE_INDEXES = [
+  {
+    'keys': [('channel', ASCENDING), ('timestamp', DESCENDING)],
+    'name': 'Channel Time Desc',
+    'background': False
+  },
+  {
+    'keys': [('username', ASCENDING), ('timestamp', DESCENDING)],
+    'name': 'User Time Desc',
+    'background': False
+  },
+  {
+    'keys': [('channel', ASCENDING), ('username', ASCENDING), ('timestamp', DESCENDING)],
+    'name': 'Channel User Time Desc',
+    'background': False
+  }
+]
 
 class noSQLogger(retroBot.bot.retroBot):
 
@@ -19,11 +36,19 @@ class noSQLogger(retroBot.bot.retroBot):
         self.dbhosts = dbhosts
         self.dboptions = dboptions
         self.dbclient = MongoClient(self.get_connection_string())
+        self.init_indexes()
         if not 'handler' in kwargs:
             kwargs['handler'] = noSQLoggerHandler
             self.handler = kwargs['handler']
         super(noSQLogger, self).__init__(*args, self.get_channels(), **kwargs)
     
+    def init_indexes(self):
+        current_indexes = self.get_messages_collection().list_indexes()
+        current_indexes = [index['name'] for index in current_indexes]
+        for index in MESSAGE_INDEXES:
+            if index['name'] not in current_indexes:
+                self.get_messages_collection().create_index(**index)
+
     def add_channel(self, channel):
         if channel in self.get_channels():
             self.logger.error(f'{channel} already exists in database!')
@@ -54,7 +79,6 @@ class noSQLogger(retroBot.bot.retroBot):
                 self.logger.error(e)
                 return False
             
-    
     def get_db(self):
         return self.dbclient[self.dbname]
     
@@ -114,7 +138,7 @@ class noSQLmessage(retroBot.message):
             'channel': channel,
             'timestamp': self.time,
             'twitch_id': self.id,
-            'username': self.username,
+            'username': self.username.lower(),
             'user_id': self.user_id,
             'subscription': self.sub,
             'sub_length': self.sub_length,
