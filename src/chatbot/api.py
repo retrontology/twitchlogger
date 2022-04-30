@@ -77,7 +77,6 @@ class TwitchLoggerAPI(BaseHTTPRequestHandler):
         self.send_header('Content-Length', len(message))
         self.end_headers()
         self.wfile.write(message.encode())
-        self.wfile.close()
 
     def not_found(self):
         self.respond(404, 'Not found')
