@@ -1,8 +1,6 @@
 <div class="page-navigation">
-    {% if page > 0 %}
-    <a id="first-page" href="{% url 'channel' channel %}{% if username is not None %}?username={{ username }}{% endif %}"><<</a>
-    <a id="previous-page" href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ page|add:'-1' }}&limit={{ limit }}"><</a>
-    {% endif %}
+    <a id="first-page"{% if page > 0 %} href="{% url 'channel' channel %}{% if username is not None %}?username={{ username }}{% endif %}"{% endif %}><<</a>
+    <a id="previous-page"{% if page > 0 %} href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ page|add:'-1' }}&limit={{ limit }}"{% endif %}><</a>
     <select data-url="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}limit={{ limit }}">
         {% load page_filter %}
         {% for i in last_page|pages %}
