@@ -53,6 +53,14 @@ a {
 
 div.page-navigation {
     font-size: 18px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+}
+
+select.page-selection {
+    font-size: inherit;
+    color: --text-color;
+    background-color: #2f2736;
 }
 
 a.first-page, a.previous-page, a.next-page, a.last-page {
