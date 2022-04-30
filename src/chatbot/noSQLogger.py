@@ -1,5 +1,5 @@
 import retroBot
-from pymongo import MongoClient
+from pymongo import MongoClient, ASCENDING, DESCENDING
 from threading import Thread
 from urllib.parse import quote_plus
 import datetime
@@ -9,17 +9,17 @@ MESSAGE_COLLECTION = 'messages'
 CHANNEL_COLLECTION = 'channels'
 MESSAGE_INDEXES = [
   {
-    'keys': { 'channel': 1, 'timestamp': -1 },
+    'keys': { 'channel': ASCENDING, 'timestamp': DESCENDING },
     'name': 'Channel Time Desc',
     'background': False
   },
   {
-    'keys': { 'username': 1, 'timestamp': -1 },
+    'keys': { 'username': ASCENDING, 'timestamp': DESCENDING },
     'name': 'User Time Desc',
     'background': False
   },
   {
-    'keys': { 'channel': 1, 'username': 1, 'timestamp': -1 },
+    'keys': { 'channel': ASCENDING, 'username': ASCENDING, 'timestamp': DESCENDING },
     'name': 'Channel User Time Desc',
     'background': False
   }
