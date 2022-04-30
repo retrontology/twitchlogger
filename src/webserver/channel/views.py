@@ -32,13 +32,9 @@ def channel(request, channel):
             'username': username,
             'messages': messages,
             'channel': channel,
-            'second_previous_page': page -2,
-            'previous_page': page - 1,
             'page': page,
-            'next_page': page + 1,
-            'second_next_page': page + 2,
             'limit': limit,
-            'max_pages': page_count-1,
+            'last_page': page_count-1,
         }
         return HttpResponse(template.render(context, request))
     else:
