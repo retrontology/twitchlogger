@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('channel/', include('channel.urls')),
     path('user/', include('user.urls')),
-    path('', include(views.index))
+    path('/', include(views.index))
 ]
