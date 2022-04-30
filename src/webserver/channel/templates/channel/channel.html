@@ -1,16 +1,10 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 <html>
-    <h1>Channels</h1>
+    <a href="{{ channel }}">
+        <h1>{{ channel }}</h1>
+    </a>
     <body>
-        <table>
-            {% for channel in channels %}
-            <tr>
-                <td>
-                    <a href="{{ channel }}">{{ channel }}</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
+        {% include "messages.html" %}
     </body>
 </html>
