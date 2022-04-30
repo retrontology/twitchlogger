@@ -33,6 +33,7 @@ class TwitchLoggerAPI(BaseHTTPRequestHandler):
         else:
             channels = json.dumps({'channels': self.bot.get_channels()})
             self.send_header('Content-Length', len(channels))
+            self.end_headers()
             self.send_response(200, channels)
 
     def do_PUT(self):
