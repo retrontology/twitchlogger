@@ -13,10 +13,10 @@ table {
 
 th {
     text-align: center;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: bold;
     padding: 8px;
-    
+    background-color: #342641;
 }
 
 td {
