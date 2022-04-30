@@ -68,7 +68,7 @@ class noSQLogger(retroBot.bot.retroBot):
             
 
     def remove_channel(self, channel):
-        if channel not in self.get_channels():
+        if channel.lower() not in self.get_channels():
             self.logger.error(f'{channel} does not exist in database!')
             return False
         if self.handler:
