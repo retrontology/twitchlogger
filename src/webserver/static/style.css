@@ -51,8 +51,12 @@ a {
     color: var(--text-color);
 }
 
-a.first-page, a.previous-page, a.next-page, a.last-page {
+div.page-navigation {
     font-size: 18px;
+}
+
+a.first-page, a.previous-page, a.next-page, a.last-page {
+    
     border: 1px #0b0a0d;
     background-color: #2f2736;
     border-collapse: collapse;
