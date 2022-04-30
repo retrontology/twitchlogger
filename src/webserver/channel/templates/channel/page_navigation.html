@@ -10,5 +10,5 @@
         {% endfor %}
     </select>
     <a id="next-page"{% if page < last_page %} href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ page|add:'1' }}&limit={{ limit }}" title='Next Page'{% endif %}>></a>
-    <a id="last-page"{% if page < last_page %} href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ last_page }}&limit={{ limit }} title='Last Page'"{% endif %}>{{ last_page}} >></a>
+    <a id="last-page"{% if page < last_page %} href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ last_page }}&limit={{ limit }}" title='Last Page'{% endif %}>{{ last_page}} >></a>
 </div>
