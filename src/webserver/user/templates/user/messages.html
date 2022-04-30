@@ -31,24 +31,24 @@
         {% endif %}
     </div>
 </div>
-<table id="messages">
-    <tr>
-        <th id="message-date">Date</th>
-        <th id="message-channel">Channel</th>
-        <th id="message-user">User</th>
-        <th id="message-content">Message</th>
+<table class="messages">
+    <tr class="messages-header">
+        <th class="message-date">Date</th>
+        <th class="message-channel">Channel</th>
+        <th class="message-user">User</th>
+        <th class="message-content">Message</th>
     </tr>
     {% for message in messages %}
     <tr>
-        <td id="message-date">{{ message.timestamp }}</td>
-        <td id="message-channel>
+        <td class="message-date">{{ message.timestamp }}</td>
+        <td class="message-channel>
             <a style="text-decoration: none;" href="{% url 'channel' message.channel %}?username={{ username }}">{{ message.channel }}</a>
         </td>
-        <td id="message-user">
+        <td class="message-user">
             <a style="color:{{ message.color }}; text-decoration: none;" href="{% url 'channel' message.channel %}?username={{ username }}">{{ message.username }}</a>
             [<a style="text-decoration: none;" href="{% url 'user' message.username %}">U</a>]
         </td>
-        <td id="message-content">{{ message.content | safe }}</td>
+        <td class="message-content">{{ message.content | safe }}</td>
     </tr>
     {% endfor %}
 </table>

@@ -18,3 +18,5 @@ th, td {
 
 tr:nth-child(odd) {background-color: #0f0c12;}
 tr:nth-child(even) {background-color: #1f1925;}
+
+tr.messages-header {text-align: center;}
