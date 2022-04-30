@@ -12,8 +12,7 @@ body {
 table {
     width: 100%;
     table-layout: auto;
-    border-collapse: collapse;
-    border-style: solid;
+    
 }
 
 th {
@@ -23,12 +22,16 @@ th {
     padding: 8px;
     background-color: #342641;
     border: 3px #0b0a0d;
+    border-collapse: collapse;
+    border-style: solid;
 }
 
 td {
     text-align: left;
     padding: 8px;
     border: 1px #0b0a0d;
+    border-collapse: collapse;
+    border-style: solid;
 }
 
 tr:nth-child(odd) {background-color: #0f0c12;}
