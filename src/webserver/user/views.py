@@ -9,7 +9,7 @@ def index(request):
     raise Http404("Incorrect usage") 
 
 def user(request, username):
-    template = loader.get_template('user/index.html')
+    template = loader.get_template('user/user.html')
     limit = int(request.GET.get('limit', DEFAULT_LIMIT))
     page = int(request.GET.get('page', 0))
     page_count = get_page_count(
