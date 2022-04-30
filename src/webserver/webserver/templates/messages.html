@@ -1,0 +1,39 @@
+<div id="top-messages-navigation">
+    {% if channel %}
+    {% include "channel/page_navigation.html" %}
+    {% else %}
+    {% include "user/page_navigation.html" %}
+    {% endif %}
+</div>
+<table class="messages">
+    <tr class="messages-header">
+        <th class="message-date">Date</th>
+        {% if channel %}
+        <th class="message-channel">Channel</th>
+        {% endif %}
+        <th class="message-user">User</th>
+        <th class="message-content">Message</th>
+    </tr>
+    {% for message in messages %}
+    <tr>
+        <td class="message-date">{{ message.timestamp }}</td>
+        {% if channel %}
+        <td class="message-channel">
+            <a href="{% url 'channel' message.channel %}?username={{ username }}">{{ message.channel }}</a>
+        </td>
+        {% endif %}
+        <td class="message-user">
+            <a style="color:{{ message.color }};" href="{{ message.channel }}?username={{ message.username }}">{{ message.username }}</a>
+            <a href="{% url 'user' message.username %}">[U]</a>
+        </td>
+        <td class="message-content">{{ message.content | safe }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<div id="bottom-messages-navigation">
+    {% if channel %}
+    {% include "channel/page_navigation.html" %}
+    {% else %}
+    {% include "user/page_navigation.html" %}
+    {% endif %}
+</div>

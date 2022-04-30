@@ -10,5 +10,4 @@
     
     <a id="next-page"{% if page < last_page %} href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ page|add:'1' }}&limit={{ limit }}"{% endif %}>></a>
     <a id="last-page"{% if page < last_page %} href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ last_page }}&limit={{ limit }}"{% endif %}>{{ last_page}} >></a>
-    
 </div>

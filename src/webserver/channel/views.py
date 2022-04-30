@@ -4,11 +4,11 @@ from datetime import datetime
 from webserver.messages import *
 
 def index(request):
-    template = loader.get_template('channel/channel.html')
+    template = loader.get_template('channel/index.html')
     return HttpResponse(template.render({'channels': sorted(get_channels())}, request))
 
 def channel(request, channel):
-    template = loader.get_template('channel/index.html')
+    template = loader.get_template('channel/channel.html')
     dbs = get_channels()
     if channel.lower() in dbs:
         username = request.GET.get('username', None)
@@ -34,7 +34,7 @@ def channel(request, channel):
             'channel': channel,
             'page': page,
             'limit': limit,
-            'last_page': page_count-1,
+            'last_page': page_count-1
         }
         return HttpResponse(template.render(context, request))
     else:
