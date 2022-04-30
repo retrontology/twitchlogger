@@ -1,10 +1,35 @@
-<div id="top-incremental-navigation">
-    {% if page != 0 %}
-    <a id="previous-page" href="{% url 'user' username %}?page={{ previous_page }}&limit={{ limit }}">Prev</a>
-    {% endif %}
-    {% if page < max_pages %}
-    <a id="next-page" href="{% url 'user' username %}?page={{ next_page }}&limit={{ limit }}">Next</a>
-    {% endif %}
+<div id="top-messages-navigation">
+    <div id="top-incremental-navigation">
+        {% if page != 0 %}
+        <a id="previous-page" href="{% url 'user' username %}?page={{ previous_page }}&limit={{ limit }}">Prev</a>
+        {% endif %}
+        {% if page < max_pages %}
+        <a id="next-page" href="{% url 'user' username %}?page={{ next_page }}&limit={{ limit }}">Next</a>
+        {% endif %}
+    </div>
+    <div id="top-page-navigation">
+        {% if page > 2 %}
+        <a id="first-page-number" href="{% url 'user' username %}?page=0&limit={{ limit }}">0</a>
+        ...
+        {% endif %}
+        {% if second_previous_page >= 0 %}
+        <a id="second-previous-page-number" href="{% url 'user' username %}?page={{ second_previous_page }}&limit={{ limit }}">{{ second_previous_page }}</a>
+        {% endif %}
+        {% if previous_page >= 0 %}
+        <a id="previous-page-number" href="{% url 'user' username %}?page={{ previous_page }}&limit={{ limit }}">{{ previous_page }}</a>
+        {% endif %}
+        {{ page }}
+        {% if next_page <= max_pages %}
+        <a id="next-page-number" href="{% url 'user' username %}?page={{ next_page }}&limit={{ limit }}">{{ next_page }}</a>
+        {% endif %}
+        {% if second_next_page <= max_pages %}
+        <a id="second-next-page-number" href="{% url 'user' username %}?page={{ second_next_page }}&limit={{ limit }}">{{ second_next_page }}</a>
+        {% endif %}
+        {% if second_next_page < max_pages %}
+        ...
+        <a id="last-page-number" href="{% url 'user' username %}?page={{ max_pages|add:'-1' }}&limit={{ limit }}">{{ max_pages|add:"-1" }}</a>
+        {% endif %}
+    </div>
 </div>
 <table id="messages">
     <tr>
@@ -28,7 +53,7 @@
     {% endfor %}
 </table>
 <div id="bottom-messages-navigation">
-    <div id="page-number-navigation">
+    <div id="bottom-page-navigation">
         {% if page > 2 %}
         <a id="first-page-number" href="{% url 'user' username %}?page=0&limit={{ limit }}">0</a>
         ...
