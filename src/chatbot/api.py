@@ -32,8 +32,7 @@ class TwitchLoggerAPI(BaseHTTPRequestHandler):
             self.not_found()
         else:
             channels = json.dumps({'channels': self.bot.get_channels()})
-            self.send_response(200)
-            self.wfile.write(channels.encode(encoding='utf_8'))
+            self.send_response(200, channels)
 
     def do_PUT(self):
         path, args = self.parse_path()
