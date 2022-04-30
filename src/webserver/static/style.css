@@ -11,12 +11,15 @@ table {
     table-layout: auto;
 }
 
-th, td {
+th {
+    text-align: center;
+    padding: 8px;
+}
+
+td {
     text-align: left;
     padding: 8px;
 }
 
 tr:nth-child(odd) {background-color: #0f0c12;}
 tr:nth-child(even) {background-color: #1f1925;}
-
-tr.messages-header {text-align: center;}
