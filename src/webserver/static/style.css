@@ -1,6 +1,10 @@
+element {
+    --text-color: #rgb(239, 239, 241);
+}
+
 body {
     background-color:rgb(14, 14, 16);
-    color: rgb(239, 239, 241);
+    color: var(--text-color);
     width: 85%;
     margin-left: auto;
     margin-right: auto;
@@ -30,6 +34,6 @@ tr:nth-child(even) {background-color: #1f1925;}
 .message-date, .message-user, .message-channel {
     width: 1em;
     white-space:nowrap;
-    text-decoration: none;
-    color: inherit;
+    text-decoration: none !important;
+    color: var(--text-color) !important;
 }
