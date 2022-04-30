@@ -52,9 +52,11 @@ a {
 }
 
 a.first-page, a.previous-page, a.next-page, a.last-page {
+    font-size: 18px;
     border: 1px #0b0a0d;
     background-color: #2f2736;
     border-collapse: collapse;
     border-style: solid;
     background-clip: border-box;
+    padding: 8px;
 }
