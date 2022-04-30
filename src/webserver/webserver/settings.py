@@ -66,15 +66,12 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'page_filter': 'webserver.templatetags.page_filter'
+            }
         },
     },
 ]
-
-OPTIONS={
-    'libraries': {
-        'page_filter': 'webserver.templatetags.page_filter'
-    }
-}
 
 WSGI_APPLICATION = 'webserver.wsgi.application'
 
