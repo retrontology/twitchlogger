@@ -44,7 +44,7 @@ class noSQLogger(retroBot.bot.retroBot):
     
     def init_indexes(self):
         current_indexes = self.get_messages_collection().list_indexes()
-        current_indexes = [index.name for index in current_indexes]
+        current_indexes = [index['name'] for index in current_indexes]
         for index in MESSAGE_INDEXES:
             if index['name'] not in current_indexes:
                 self.get_messages_collection().create_index(**index)
