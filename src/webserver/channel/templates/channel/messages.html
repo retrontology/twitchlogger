@@ -34,13 +34,13 @@
 <table class="messages">
     <tr class="messages-header">
         <th class="message-date">Date</th>
-        <th class="message-channel">User</th>
+        <th class="message-user">User</th>
         <th class="message-content">Message</th>
     </tr>
     {% for message in messages %}
     <tr>
         <td class="message-date">{{ message.timestamp }}</td>
-        <td class="message-channel">
+        <td class="message-user">
             <a style="color:{{ message.color }}; text-decoration: none;" href="{{ channel }}?username={{ message.username }}">{{ message.username }}</a>
             [<a style="text-decoration: none;" href="{% url 'user' message.username %}">U</a>]
         </td>
