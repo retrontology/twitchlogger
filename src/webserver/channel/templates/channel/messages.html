@@ -42,7 +42,7 @@
         <td class="message-date">{{ message.timestamp }}</td>
         <td class="message-user">
             <a style="color:{{ message.color }}; text-decoration: none;" href="{{ channel }}?username={{ message.username }}">{{ message.username }}</a>
-            [<a style="text-decoration: none;" href="{% url 'user' message.username %}">U</a>]
+            <a style="text-decoration: none;" href="{% url 'user' message.username %}">[U]</a>
         </td>
         <td class="message-content">{{ message.content | safe }}</td>
     </tr>
