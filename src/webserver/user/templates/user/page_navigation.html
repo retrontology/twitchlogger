@@ -8,6 +8,6 @@
         {% endfor %}
     </select>
     
-    <a id="next-page"{% if page < last_page %} href="{% url 'user' username %}?page={{ page|add:'1' }}&limit={{ limit }}">></a>
+    <a id="next-page"{% if page < last_page %} href="{% url 'user' username %}?page={{ page|add:'1' }}&limit={{ limit }}"{% endif %}>></a>
     <a id="last-page"{% if page < last_page %} href="{% url 'user' username %}?page={{ last_page }}&limit={{ limit }}"{% endif %}>{{ last_page}} >></a>
 </div>
