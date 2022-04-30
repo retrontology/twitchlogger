@@ -53,22 +53,28 @@ a {
 
 div.page-navigation {
     font-size: 18px;
-    padding-bottom: 8px;
-    padding-top: 8px;
+    margin: auto;
 }
 
 select.page-selection {
     font-size: inherit;
-    color: --text-color;
+    color: var(--text-color);
     background-color: #2f2736;
+    padding: 8px;
+    padding-top: 6px;
+    border-style: solid;
+    background-clip: border-box;
+    border: 1px #0b0a0d;
+    margin: 2px;
 }
 
 a.first-page, a.previous-page, a.next-page, a.last-page {
-    
     border: 1px #0b0a0d;
     background-color: #2f2736;
     border-collapse: collapse;
     border-style: solid;
     background-clip: border-box;
     padding: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
 }
