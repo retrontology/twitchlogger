@@ -9,17 +9,17 @@ MESSAGE_COLLECTION = 'messages'
 CHANNEL_COLLECTION = 'channels'
 MESSAGE_INDEXES = [
   {
-    'keys': { 'channel': ASCENDING, 'timestamp': DESCENDING },
+    'keys': [('channel', ASCENDING), ('timestamp', DESCENDING)],
     'name': 'Channel Time Desc',
     'background': False
   },
   {
-    'keys': { 'username': ASCENDING, 'timestamp': DESCENDING },
+    'keys': [('username', ASCENDING), ('timestamp', DESCENDING)],
     'name': 'User Time Desc',
     'background': False
   },
   {
-    'keys': { 'channel': ASCENDING, 'username': ASCENDING, 'timestamp': DESCENDING },
+    'keys': [('channel', ASCENDING), ('username', ASCENDING), ('timestamp', DESCENDING)],
     'name': 'Channel User Time Desc',
     'background': False
   }
