@@ -1,3 +1,3 @@
 function change_page() {
-    alert(this.getAttribute('data-url') + this.value);
+    window.location.href = this.getAttribute('data-url') + '&page=' + this.value;
 }
