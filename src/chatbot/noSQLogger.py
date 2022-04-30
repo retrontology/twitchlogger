@@ -7,6 +7,23 @@ import datetime
 DEFAULT_DB = 'twitch_logger'
 MESSAGE_COLLECTION = 'messages'
 CHANNEL_COLLECTION = 'channels'
+MESSAGE_INDEXES = [
+  {
+    'keys': { 'channel': 1, 'timestamp': -1 },
+    'name': 'Channel Time Desc',
+    'background': False
+  },
+  {
+    'keys': { 'username': 1, 'timestamp': -1 },
+    'name': 'User Time Desc',
+    'background': False
+  },
+  {
+    'keys': { 'channel': 1, 'username': 1, 'timestamp': -1 },
+    'name': 'Channel User Time Desc',
+    'background': False
+  }
+]
 
 class noSQLogger(retroBot.bot.retroBot):
 
@@ -19,11 +36,20 @@ class noSQLogger(retroBot.bot.retroBot):
         self.dbhosts = dbhosts
         self.dboptions = dboptions
         self.dbclient = MongoClient(self.get_connection_string())
+        self.init_indexes()
         if not 'handler' in kwargs:
             kwargs['handler'] = noSQLoggerHandler
             self.handler = kwargs['handler']
         super(noSQLogger, self).__init__(*args, self.get_channels(), **kwargs)
     
+    def init_indexes(self):
+        current_indexes = self.get_messages_collection().list_indexes()
+        current_indexes = [index.name for index in current_indexes]
+        for index in MESSAGE_INDEXES:
+            if index['name'] not in current_indexes:
+                self.get_messages_collection().create_index(**index)
+        
+
     def add_channel(self, channel):
         if channel in self.get_channels():
             self.logger.error(f'{channel} already exists in database!')
