@@ -54,7 +54,6 @@ class noSQLogger(retroBot.bot.retroBot):
                 self.logger.error(e)
                 return False
             
-    
     def get_db(self):
         return self.dbclient[self.dbname]
     
@@ -114,7 +113,7 @@ class noSQLmessage(retroBot.message):
             'channel': channel,
             'timestamp': self.time,
             'twitch_id': self.id,
-            'username': self.username,
+            'username': self.username.lower(),
             'user_id': self.user_id,
             'subscription': self.sub,
             'sub_length': self.sub_length,
