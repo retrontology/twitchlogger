@@ -5,7 +5,7 @@
     {% endif %}
     <select data-url="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}limit={{ limit }}">
         {% load page_filter %}
-        {% for i in pages|times %}
+        {% for i in last_page|times %}
         <option value="{{ i }}"{% if i == page %} selected="selected"{% endif %}>{{ i }}</option>
         {% endfor %}
     </select>
