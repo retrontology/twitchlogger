@@ -8,7 +8,7 @@
 <table class="messages">
     <tr class="messages-header">
         <th class="message-date">Date</th>
-        {% if channel %}
+        {% if not channel %}
         <th class="message-channel">Channel</th>
         {% endif %}
         <th class="message-user">User</th>
@@ -17,7 +17,7 @@
     {% for message in messages %}
     <tr>
         <td class="message-date">{{ message.timestamp }}</td>
-        {% if channel %}
+        {% if not channel %}
         <td class="message-channel">
             <a href="{% url 'channel' message.channel %}?username={{ username }}">{{ message.channel }}</a>
         </td>
