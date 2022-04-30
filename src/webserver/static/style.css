@@ -33,7 +33,10 @@ tr:nth-child(even) {background-color: #1f1925;}
 
 .message-date, .message-user, .message-channel {
     width: 1em;
-    white-space:nowrap;
+    white-space: nowrap;
+}
+
+a {
     text-decoration: none;
     color: var(--text-color);
 }
