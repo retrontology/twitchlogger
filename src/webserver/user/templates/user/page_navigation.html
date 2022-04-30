@@ -1,14 +1,14 @@
 {% load static %}
 <script src="{% static 'page_navigation.js' %}"></script> 
 <div class="page-navigation">
-    <a id="first-page"{% if page > 0 %} href="{% url 'user' username %}?page=0&limit={{ limit }}" title='First Page'{% endif %}><<</a>
-    <a id="previous-page"{% if page > 0 %} href="{% url 'user' username %}?page={{ page|add:'-1' }}&limit={{ limit }}" title='Prev Page'{% endif %}><</a>
+    <a class="first-page"{% if page > 0 %} href="{% url 'user' username %}?page=0&limit={{ limit }}" title='First Page'{% endif %}><<</a>
+    <a class="previous-page"{% if page > 0 %} href="{% url 'user' username %}?page={{ page|add:'-1' }}&limit={{ limit }}" title='Prev Page'{% endif %}><</a>
     <select onchange="change_page.call(this);" data-url="{% url 'user' username %}?limit={{ limit }}">
         {% load page_filter %}
         {% for i in last_page|pages %}
         <option value="{{ i }}"{% if i == page %} selected="selected"{% endif %}>{{ i }}</option>
         {% endfor %}
     </select>
-    <a id="next-page"{% if page < last_page %} href="{% url 'user' username %}?page={{ page|add:'1' }}&limit={{ limit }}" title='Next Page'{% endif %}>></a>
-    <a id="last-page"{% if page < last_page %} href="{% url 'user' username %}?page={{ last_page }}&limit={{ limit }}" title='Last Page'{% endif %}>{{ last_page}} >></a>
+    <a class="next-page"{% if page < last_page %} href="{% url 'user' username %}?page={{ page|add:'1' }}&limit={{ limit }}" title='Next Page'{% endif %}>></a>
+    <a class="last-page"{% if page < last_page %} href="{% url 'user' username %}?page={{ last_page }}&limit={{ limit }}" title='Last Page'{% endif %}>{{ last_page}} >></a>
 </div>
