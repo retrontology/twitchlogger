@@ -1,12 +1,16 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'webserver/style.css' %}">
 <html>
     <h1>Channels</h1>
-    <table>
-        {% for channel in channels %}
-        <tr>
-            <td>
-                <a href="{{ channel }}">{{ channel }}</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <body>
+        <table>
+            {% for channel in channels %}
+            <tr>
+                <td>
+                    <a href="{{ channel }}">{{ channel }}</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
 </html>

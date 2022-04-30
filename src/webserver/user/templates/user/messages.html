@@ -8,22 +8,22 @@
 </div>
 <table id="messages">
     <tr>
-        <th>Date</th>
-        <th>Channel</th>
-        <th>User</th>
-        <th>Message</th>
+        <th id="message-date">Date</th>
+        <th id="message-channel">Channel</th>
+        <th id="message-user">User</th>
+        <th id="message-content">Message</th>
     </tr>
     {% for message in messages %}
     <tr>
-        <td>{{ message.timestamp }}</td>
-        <td>
+        <td id="message-date">{{ message.timestamp }}</td>
+        <td id="message-channel>
             <a style="text-decoration: none;" href="{% url 'channel' message.channel %}?username={{ username }}">{{ message.channel }}</a>
         </td>
-        <td>
+        <td id="message-user">
             <a style="color:{{ message.color }}; text-decoration: none;" href="{% url 'channel' message.channel %}?username={{ username }}">{{ message.username }}</a>
             [<a style="text-decoration: none;" href="{% url 'user' message.username %}">U</a>]
         </td>
-        <td>{{ message.content | safe }}</td>
+        <td id="message-content">{{ message.content | safe }}</td>
     </tr>
     {% endfor %}
 </table>
