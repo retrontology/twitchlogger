@@ -10,9 +10,10 @@ body {
     margin-right: auto;
 }
 table {
-    border-collapse: collapse;
     width: 100%;
     table-layout: auto;
+    border-collapse: collapse;
+    border-style: solid;
 }
 
 th {
@@ -21,11 +22,13 @@ th {
     font-weight: bold;
     padding: 8px;
     background-color: #342641;
+    border: 3px #0b0a0d;
 }
 
 td {
     text-align: left;
     padding: 8px;
+    border: 1px #0b0a0d;
 }
 
 tr:nth-child(odd) {background-color: #0f0c12;}
@@ -34,6 +37,10 @@ tr:nth-child(even) {background-color: #1f1925;}
 .message-date, .message-user, .message-channel {
     width: 1em;
     white-space: nowrap;
+}
+
+.message-date {
+    color: #A1A1A1
 }
 
 a {
