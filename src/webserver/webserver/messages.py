@@ -127,7 +127,6 @@ def parse_messages(cursor):
         if message['channel'] not in channels:
             channels[message['channel']] = get_channel_id(message['channel'])
         message['channel_id'] = channels[message['channel']]
-        message = parse_usernames(message)
         message = parse_timestamp(message)
         messages.append(message)
     return messages
