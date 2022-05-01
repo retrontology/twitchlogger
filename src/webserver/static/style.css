@@ -55,6 +55,7 @@ a {
 a.channel-title, a.user-title {
     font-family: "Roobert", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 32px;
+    margin: 4px;
 }
 
 div.page-navigation {
@@ -83,4 +84,9 @@ a.first-page, a.previous-page, a.next-page, a.last-page {
     padding: 8px;
     padding-left: 16px;
     padding-right: 16px;
+}
+
+span.page-navigation {
+    float: right;
+    margin: 4px;
 }
