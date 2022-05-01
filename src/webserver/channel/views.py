@@ -8,9 +8,10 @@ def index(request):
     return HttpResponse(template.render({'channels': sorted(get_channels())}, request))
 
 def channel(request, channel):
+    channel = channel.lower()
     template = loader.get_template('channel/channel.html')
     dbs = get_channels()
-    if channel.lower() in dbs:
+    if channel in dbs:
         username = request.GET.get('username', None)
         limit = int(request.GET.get('limit', DEFAULT_LIMIT))
         page = int(request.GET.get('page', 0))

@@ -1,10 +1,3 @@
-<div id="top-messages-navigation">
-    {% if channel %}
-    {% include "channel/page_navigation.html" %}
-    {% else %}
-    {% include "user/page_navigation.html" %}
-    {% endif %}
-</div>
 <table class="messages">
     <tr class="messages-header">
         <th class="message-date">Date</th>
@@ -15,7 +8,7 @@
         <th class="message-content">Message</th>
     </tr>
     {% for message in messages %}
-    <tr>
+    <tr class="messages-row">
         <td class="message-date">{{ message.timestamp }}</td>
         {% if not channel %}
         <td class="message-channel">
@@ -30,10 +23,3 @@
     </tr>
     {% endfor %}
 </table>
-<div id="bottom-messages-navigation">
-    {% if channel %}
-    {% include "channel/page_navigation.html" %}
-    {% else %}
-    {% include "user/page_navigation.html" %}
-    {% endif %}
-</div>
