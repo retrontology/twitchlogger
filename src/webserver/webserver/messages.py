@@ -42,7 +42,7 @@ def get_user_color(username):
     username = username.lower()
     collection = get_db()[MESSAGE_COLLECTION]
     filter={
-        'username': 'retrontology'
+        'username': username
     }
     project={
         '_id': 0, 
