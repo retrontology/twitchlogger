@@ -12,11 +12,11 @@ DEFAULT_FIELDS = [
     'color'
 ]
 DEFAULT_SORT = list({'timestamp': -1}.items())
-COLLECTION_NAME = 'messages'
+MESSAGE_COLLECTION = 'messages'
 TIMESTAMP_FORMAT = '%H:%M:%S %m/%d/%y'
     
 def get_channel_messages(channel:str, filter={}, sort=DEFAULT_SORT, fields=DEFAULT_FIELDS, limit=DEFAULT_LIMIT, page=0):
-    container = get_db()[COLLECTION_NAME]
+    container = get_db()[MESSAGE_COLLECTION]
     project=get_project(fields)
     filter['channel'] = channel.lower()
     cursor = container.find(
@@ -29,17 +29,42 @@ def get_channel_messages(channel:str, filter={}, sort=DEFAULT_SORT, fields=DEFAU
     return parse_messages(cursor)
 
 def get_page_count(channel=None, username=None, filter={}, limit=DEFAULT_LIMIT):
-    container = get_db()[COLLECTION_NAME]
+    container = get_db()[MESSAGE_COLLECTION]
     if channel: filter['channel'] = channel
     if username: filter['username'] = username
     total = container.count_documents(filter=filter)
     return ceil(total / limit)
 
 def get_channels():
-    return get_db()[COLLECTION_NAME].distinct('channel')
+    return get_db()[MESSAGE_COLLECTION].distinct('channel')
+
+def get_user_color(username):
+    username = username.lower()
+    collection = get_db()[MESSAGE_COLLECTION]
+    filter={
+        'username': 'retrontology'
+    }
+    project={
+        '_id': 0, 
+        'color': 1
+    }
+    limit=1
+    count = collection.count_documents(
+        filter=filter,
+        projection=project,
+        limit=limit
+    )
+    if count != 1:
+        return None
+    color = next(collection.find(
+        filter=filter,
+        projection=project,
+        limit=limit
+    ))['color']
+    return color
 
 def get_user_messages(username, channels=None, filter={}, sort=DEFAULT_SORT, fields=DEFAULT_FIELDS, limit=DEFAULT_LIMIT, page=0):
-    container = get_db()[COLLECTION_NAME]
+    container = get_db()[MESSAGE_COLLECTION]
     project=get_project(fields)
     filter['username'] = username
     cursor = container.find(
@@ -111,7 +136,13 @@ def parse_usernames(message):
     words = message['content'].split()
     for word in words:
         if word[0] == '@' and len(word) > 1:
+            target_user = word[1:]
             channel = message['channel']
-            replacement = f'<a style="text-decoration: none;" href="/channel/{channel}?username={word[1:]}">{word}</a>'
+            color = get_user_color(target_user)
+            if color:
+                color = f' color: {color};'
+            else:
+                color = ''
+            replacement = f'<a style="text-decoration: none;{color}" href="/channel/{channel}?username={target_user}">{word}</a>'
             message['content'] = message['content'].replace(word, replacement, 1)
     return message
