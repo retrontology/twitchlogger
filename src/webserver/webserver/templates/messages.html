@@ -12,7 +12,7 @@
         <td class="message-date">{{ message.timestamp }}</td>
         {% if not channel %}
         <td class="message-channel">
-            <a href="{% url 'channel' message.channel %}?username={{ username }}">{{ message.channel }}</a>
+            <a data-id="{% message.channel-id %}" href="{% url 'channel' message.channel %}?username={{ username }}">{{ message.channel }}</a>
         </td>
         {% endif %}
         <td class="message-user">
