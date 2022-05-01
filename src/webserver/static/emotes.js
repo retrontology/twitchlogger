@@ -25,6 +25,10 @@ async function fetch_ffz_global_emotes() {
     return emotes;
 }
 
+function parse_ffz_emotes(message, emotes) {
+
+}
+
 async function fetch_bttv_channel_emotes(channel_id) {
     let url = 'https://api.betterttv.net/3/cached/users/twitch/' + channel_id;
     if (response.status === 200) {
@@ -83,6 +87,24 @@ async function parse_emotes() {
     for (let i in this.rows) {
         let row = table.rows[i];
         let channel_id = row.getAttribute('data-channel-id');
-        
+        let channel = row.getAttribute('data-channel');
+        if (!(channel in ffz_channels)) {
+            ffz_channels[channel] = fetch_ffz_channel_emotes(channel_id);
+        }
+        if (!(channel in bttv_channels)) {
+            ffz_channels[channel] = fetch_bttv_channel_emotes(channel_id);
+        }
+        if (!(channel in seventv_channels)) {
+            seventv_channels[channel] = fetch_ffz_channel_emotes(channel_id);
+        }
+        let message = ''
+        for (let j in row.cells) {
+            let cell = row.cells[j]
+            if (cell.classList.contains("message-content")) {
+                let message = cell.innerText
+                
+                break;
+            }
+        }
     }
 }
