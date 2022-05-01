@@ -27,7 +27,7 @@ th {
     border-style: solid;
 }
 
-td {
+td.message-date, td.message-user, td.message-channel, td.message-content {
     text-align: left;
     padding: 8px;
     border: 1px #0b0a0d;
@@ -35,8 +35,8 @@ td {
     border-style: solid;
 }
 
-tr.messages-message:nth-child(odd) {background-color: #0f0c12;}
-tr.messages-message:nth-child(even) {background-color: #1f1925;}
+tr.messages-row:nth-child(odd) {background-color: #0f0c12;}
+tr.messages-row:nth-child(even) {background-color: #1f1925;}
 
 .message-date, .message-user, .message-channel {
     width: 1em;
