@@ -1,9 +1,7 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 <html>
-    <a href="{{ username }}">
-        <h1>{{ username }}</h1>
-    </a>
+    <a class="user-title" href="{{ username }}">{{ username }}</a>
     <body>
         {% include "messages.html" %}
     </body>

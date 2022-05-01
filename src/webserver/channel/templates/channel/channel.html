@@ -1,9 +1,7 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 <html>
-    <a href="{{ channel }}">
-        <h1>{{ channel }}</h1>
-    </a>
+    <a class="channel-title" href="{{ channel }}">{{ channel }}</a>
     <body>
         {% include "messages.html" %}
     </body>

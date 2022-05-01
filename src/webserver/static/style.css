@@ -52,6 +52,11 @@ a {
     color: var(--text-color);
 }
 
+a.channel-title, a.user-title {
+    font-family: "Roobert", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 24px;
+}
+
 div.page-navigation {
     font-size: 18px;
     margin: auto;
