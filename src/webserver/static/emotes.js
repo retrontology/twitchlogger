@@ -83,6 +83,6 @@ async function parse_emotes() {
     for (let i in this.rows) {
         let row = table.rows[i];
         let channel_id = row.getAttribute('data-channel-id');
-        let channel = 
+        
     }
 }
