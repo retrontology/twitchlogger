@@ -8,11 +8,11 @@
         <th class="message-content">Message</th>
     </tr>
     {% for message in messages %}
-    <tr class="messages-row">
+    <tr class="messages-row" data-channel-id="{{ message.channel_id }}" >
         <td class="message-date">{{ message.timestamp }}</td>
         {% if not channel %}
         <td class="message-channel">
-            <a data-id="{{ message.channel_id }}" href="{% url 'channel' message.channel %}?username={{ username }}">{{ message.channel }}</a>
+            <a href="{% url 'channel' message.channel %}?username={{ username }}">{{ message.channel }}</a>
         </td>
         {% endif %}
         <td class="message-user">
