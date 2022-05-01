@@ -51,7 +51,6 @@ def get_user_color(username):
     limit=1
     count = collection.count_documents(
         filter=filter,
-        projection=project,
         limit=limit
     )
     if count != 1:
