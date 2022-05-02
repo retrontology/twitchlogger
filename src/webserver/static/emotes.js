@@ -143,6 +143,7 @@ function parse_twitch_emotes(message, emote_string, dark_mode = true) {
 }
 
 function parse_table() {
+    console.log(this)
     for (let i in this.rows) {
         let row = this.rows[i];
         for (let j in row.cells) {
