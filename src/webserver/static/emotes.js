@@ -143,9 +143,9 @@ function parse_twitch_emotes(message, emote_string, dark_mode = true) {
 }
 
 function parse_table() {
-    console.log(this)
-    for (let i in this.rows) {
-        let row = this.rows[i];
+    let table = document.getElementById('messages')
+    for (let i in table.rows) {
+        let row = table.rows[i];
         for (let j in row.cells) {
             let cell = row.cells[j]
             if (cell.classList != undefined && cell.classList.contains("message-content")) {
@@ -156,9 +156,7 @@ function parse_table() {
     }
 }
 
-async function parse_emotes() {
-
-    let table = document.getElementById('messages')
+async function parse_emotes(table) {
 
     ffz_global = await fetch_ffz_global_emotes();
     bttv_global = await fetch_bttv_global_emotes();
