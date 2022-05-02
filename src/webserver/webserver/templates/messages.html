@@ -1,4 +1,6 @@
-<table id="messages">
+{% load static %}
+<script src="{% static 'emotes.js' %}"></script> 
+<table id="messages" onload="parse_table.call(this);">
     <tr class="messages-header">
         <th class="message-date">Date</th>
         {% if not channel %}
