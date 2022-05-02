@@ -158,6 +158,8 @@ function parse_table() {
 
 async function parse_emotes() {
 
+    let table = document.getElementById('messages')
+
     ffz_global = await fetch_ffz_global_emotes();
     bttv_global = await fetch_bttv_global_emotes();
     seventv_global = await fetch_7tv_global_emotes();
@@ -166,8 +168,8 @@ async function parse_emotes() {
     bttv_channels = {};
     seventv_channels = {};
 
-    for (let i in this.rows) {
-        let row = this.rows[i];
+    for (let i in table.rows) {
+        let row = table.rows[i];
         let channel_id = row.getAttribute('data-channel-id');
         let channel = row.getAttribute('data-channel');
         if (!(channel in ffz_channels)) {
@@ -190,5 +192,3 @@ async function parse_emotes() {
         }
     }
 }
-
-parse_table(document.getElementById('messages'));

@@ -1,7 +1,8 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+<script src="{% static 'emotes.js' %}"></script> 
 <html>
-    <body>
+    <body onload="parse_table()">
         <div class="top-messages-navigation"></div>
             <span class="channel-title">
                 <a class="channel-title" href="{{ channel }}">{{ channel }}</a>
