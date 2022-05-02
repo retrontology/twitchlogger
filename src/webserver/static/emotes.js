@@ -74,6 +74,36 @@ async function fetch_7tv_channel_emotes(channel) {
     }
 }
 
+function compare_indexes(a, b) {
+    return a[1][0]-b[1][0];
+}
+
+async function parse_twitch_emotes(message, emote_string) {
+    const emotes = emote_string.split('/');
+    var emote_indexes = [];
+    for (var emote in emotes) {
+        var [emote_id, occurances] = emote.split(':');
+        var url = 'https://static-cdn.jtvnw.net/emoticons/v2/' + emote_id + '/static/dark/3.0';
+        var occurances = occurances.split(',');
+        for (var occurance in occurances) {
+            var [start, end] = occurance.split('-');
+            var start = parseInt(start, 10);
+            var end = parseInt(end, 10);
+            emote_indexes.push([url, [start, end]])
+        }
+    }
+    if (emote_indexes.length > 0) {
+        emote_indexes.sort(compare_indexes);
+        for (var emote_index in emote_indexes) {
+            let url = emote_index[0];
+            let start = emote_index[1][0];
+            let end = emote_index[1][0];
+            let length = end - start;
+            
+        }
+    }
+}
+
 async function parse_emotes() {
 
     ffz_global = await fetch_ffz_global_emotes();
