@@ -9,7 +9,8 @@ DEFAULT_FIELDS = [
     'username',
     'timestamp',
     'content',
-    'color'
+    'color',
+    'emotes'
 ]
 DEFAULT_SORT = list({'timestamp': -1}.items())
 MESSAGE_COLLECTION = 'messages'

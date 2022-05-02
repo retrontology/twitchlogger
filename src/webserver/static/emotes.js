@@ -78,12 +78,23 @@ function compare_indexes(a, b) {
     return a[1][0]-b[1][0];
 }
 
-async function parse_twitch_emotes(message, emote_string) {
+async function parse_twitch_emotes(message, emote_string, dark_mode=true) {
+
+    if (emote_string == "") {
+        return message;
+    }
+
+    if (dark_mode) {
+        const mode = "dark";
+    } else {
+        const mode = "light";
+    }
+
     const emotes = emote_string.split('/');
     var emote_indexes = [];
     for (var emote in emotes) {
         var [emote_id, occurances] = emote.split(':');
-        var url = 'https://static-cdn.jtvnw.net/emoticons/v2/' + emote_id + '/static/dark/3.0';
+        var url = 'https://static-cdn.jtvnw.net/emoticons/v2/' + emote_id + '/static/' + mode + '/';
         var occurances = occurances.split(',');
         for (var occurance in occurances) {
             var [start, end] = occurance.split('-');
@@ -92,15 +103,31 @@ async function parse_twitch_emotes(message, emote_string) {
             emote_indexes.push([url, [start, end]])
         }
     }
-    if (emote_indexes.length > 0) {
-        emote_indexes.sort(compare_indexes);
-        for (var emote_index in emote_indexes) {
-            let url = emote_index[0];
-            let start = emote_index[1][0];
-            let end = emote_index[1][0];
-            let length = end - start;
-            
-        }
+    emote_indexes.sort(compare_indexes);
+    var snippets = [];
+    var last_end = 0;
+    for (var emote_index in emote_indexes) {
+        let url = emote_index[0];
+        let start = emote_index[1][0];
+        let end = emote_index[1][0];
+        let length = end - start;
+        snippets.push(message.splice(last_end, start));
+        let emote_text = message.splice(start, end);
+
+        let snippet = '<img alt="';
+        snippet += emote_text;
+        snippet += '" src="';
+        snippet += url;
+        snippet += '1.0" srcset="';
+        snippet += url; 
+        snippet += '1.0 1x,';
+        snippet += url;
+        snippet += '2.0 2x,';
+        snippet += url;
+        snippet += '3.0 4x"></img>';
+        snippets.push(snippet);
+
+        last_end = end;
     }
 }
 
