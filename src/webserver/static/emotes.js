@@ -98,7 +98,7 @@ function parse_twitch_emotes(message, emote_string, dark_mode = true) {
             console.log(emote);
             var [emote_id, occurances] = emote.split(':');
             console.log(occurances);
-            var url = 'https://static-cdn.jtvnw.net/emoticons/v2/' + emote_id + '/static/' + color_mode + '/';
+            var url = 'https://static-cdn.jtvnw.net/emoticons/v2/' + emote_id + '/default/' + color_mode + '/';
             var occurances = occurances.split(',');
             console.log(occurances)
             for (var occurance in occurances) {
