@@ -9,10 +9,12 @@ DEFAULT_FIELDS = [
     'username',
     'timestamp',
     'content',
-    'color'
+    'color',
+    'emotes'
 ]
 DEFAULT_SORT = list({'timestamp': -1}.items())
 MESSAGE_COLLECTION = 'messages'
+CHANNEL_COLLECTION = 'channels'
 TIMESTAMP_FORMAT = '%H:%M:%S %m/%d/%y'
     
 def get_channel_messages(channel:str, filter={}, sort=DEFAULT_SORT, fields=DEFAULT_FIELDS, limit=DEFAULT_LIMIT, page=0):
@@ -121,11 +123,19 @@ def get_connection_string(dbhosts, dbusername, dbpassword, defaultauthdb, dbopti
 
 def parse_messages(cursor):
     messages = []
+    channels = {}
     for message in cursor:
-        message = parse_usernames(message)
+        if message['channel'] not in channels:
+            channels[message['channel']] = get_channel_id(message['channel'])
+        message['channel_id'] = channels[message['channel']]
         message = parse_timestamp(message)
         messages.append(message)
     return messages
+
+def get_channel_id(channel):
+    channel = channel.lower()
+    filter = {'channel': channel}
+    return get_db()[CHANNEL_COLLECTION].find_one()['twitch_id']
 
 def parse_timestamp(message):
     message['timestamp'] = message['timestamp'].strftime(TIMESTAMP_FORMAT)

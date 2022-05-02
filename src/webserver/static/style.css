@@ -10,7 +10,7 @@ body {
     margin-right: auto;
 }
 
-table.messages {
+#messages {
     width: 100%;
     table-layout: auto;
     border-collapse: collapse;
