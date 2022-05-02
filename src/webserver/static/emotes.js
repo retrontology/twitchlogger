@@ -75,59 +75,83 @@ async function fetch_7tv_channel_emotes(channel) {
 }
 
 function compare_indexes(a, b) {
-    return a[1][0]-b[1][0];
+    return a[1][0] - b[1][0];
 }
 
-async function parse_twitch_emotes(message, emote_string, dark_mode=true) {
+function parse_twitch_emotes(message, emote_string, dark_mode = true) {
 
-    if (emote_string == "") {
+    if (emote_string == null || emote_string == 'None') {
         return message;
-    }
-
-    if (dark_mode) {
-        const mode = "dark";
     } else {
-        const mode = "light";
-    }
 
-    const emotes = emote_string.split('/');
-    var emote_indexes = [];
-    for (var emote in emotes) {
-        var [emote_id, occurances] = emote.split(':');
-        var url = 'https://static-cdn.jtvnw.net/emoticons/v2/' + emote_id + '/static/' + mode + '/';
-        var occurances = occurances.split(',');
-        for (var occurance in occurances) {
-            var [start, end] = occurance.split('-');
-            var start = parseInt(start, 10);
-            var end = parseInt(end, 10);
-            emote_indexes.push([url, [start, end]])
+        let color_mode = '';
+        if (dark_mode) {
+            color_mode = "dark";
+        } else {
+            color_mode = "light";
         }
+
+        var emotes = emote_string.split('/');
+        var emote_indexes = [];
+        for (var emote in emotes) {
+            emote = emotes[emote];
+            console.log(emote);
+            var [emote_id, occurances] = emote.split(':');
+            console.log(occurances);
+            var url = 'https://static-cdn.jtvnw.net/emoticons/v2/' + emote_id + '/static/' + color_mode + '/';
+            var occurances = occurances.split(',');
+            console.log(occurances)
+            for (var occurance in occurances) {
+                occurance = occurances[occurance];
+                var [start, end] = occurance.split('-');
+                var start = parseInt(start, 10);
+                var end = parseInt(end, 10);
+                emote_indexes.push([url, [start, end]])
+            }
+        }
+        console.log(emote_indexes)
+        emote_indexes.sort(compare_indexes);
+        var snippets = [];
+        var last_end = 0;
+        for (var emote_index in emote_indexes) {
+
+            emote_index = emote_indexes[emote_index];
+            console.log(emote_index)
+            let url = emote_index[0];
+            let start = emote_index[1][0];
+            let end = emote_index[1][1]+1;
+
+            let content_fragment = `<span class='content-fragment'>${message.slice(last_end, start)}</span>`
+            snippets.push(content_fragment);
+
+            let emote_text = message.slice(start, end);
+            let snippet = `<img alt="${emote_text}" src="${url}1.0" srcset="${url}1.0 1x,${url}2.0 2x,${url}3.0 4x"></img>`;
+            console.log('Snippet: ' + snippet);
+            snippets.push(snippet);
+            last_end = end;
+        }
+        if (last_end < message.length) {
+            let content_fragment = `<span class='content-fragment'>${message.slice(last_end)}</span>`;
+            snippets.push(content_fragment);
+        }
+        var output = '';
+        for (var snippet in snippets) {
+            output += snippets[snippet];
+        }
+        return output;
     }
-    emote_indexes.sort(compare_indexes);
-    var snippets = [];
-    var last_end = 0;
-    for (var emote_index in emote_indexes) {
-        let url = emote_index[0];
-        let start = emote_index[1][0];
-        let end = emote_index[1][0];
-        let length = end - start;
-        snippets.push(message.splice(last_end, start));
-        let emote_text = message.splice(start, end);
+}
 
-        let snippet = '<img alt="';
-        snippet += emote_text;
-        snippet += '" src="';
-        snippet += url;
-        snippet += '1.0" srcset="';
-        snippet += url; 
-        snippet += '1.0 1x,';
-        snippet += url;
-        snippet += '2.0 2x,';
-        snippet += url;
-        snippet += '3.0 4x"></img>';
-        snippets.push(snippet);
-
-        last_end = end;
+function parse_table() {
+    for (let i in this.rows) {
+        let row = this.rows[i];
+        for (let j in row.cells) {
+            let cell = row.cells[j]
+            if (cell.classList != undefined && cell.classList.contains("message-content")) {
+                let emotes = cell.getAttribute('data-emotes');
+                cell.innerHTML = parse_twitch_emotes(cell.innerHTML, emotes);
+            }
+        }
     }
 }
 
@@ -142,7 +166,7 @@ async function parse_emotes() {
     seventv_channels = {};
 
     for (let i in this.rows) {
-        let row = table.rows[i];
+        let row = this.rows[i];
         let channel_id = row.getAttribute('data-channel-id');
         let channel = row.getAttribute('data-channel');
         if (!(channel in ffz_channels)) {
@@ -159,9 +183,11 @@ async function parse_emotes() {
             let cell = row.cells[j]
             if (cell.classList.contains("message-content")) {
                 let message = cell.innerText
-                
+
                 break;
             }
         }
     }
 }
+
+parse_table(document.getElementById('messages'));
