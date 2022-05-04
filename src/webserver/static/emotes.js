@@ -78,10 +78,10 @@ function compare_indexes(a, b) {
     return a[1][0] - b[1][0];
 }
 
-function parse_twitch_emotes(message, emote_string, dark_mode = true) {
+function parse_twitch_emotes(emote_string, dark_mode = true) {
 
     if (emote_string == null || emote_string == 'None') {
-        return message;
+        return [];
     } else {
 
         let color_mode = '';
@@ -109,48 +109,58 @@ function parse_twitch_emotes(message, emote_string, dark_mode = true) {
                 emote_indexes.push([url, [start, end]])
             }
         }
-        console.log(emote_indexes)
-        emote_indexes.sort(compare_indexes);
-        var snippets = [];
-        var last_end = 0;
-        for (var emote_index in emote_indexes) {
-
-            emote_index = emote_indexes[emote_index];
-            console.log(emote_index)
-            let url = emote_index[0];
-            let start = emote_index[1][0];
-            let end = emote_index[1][1]+1;
-
-            let content_fragment = `<span class='content-fragment'>${message.slice(last_end, start)}</span>`
-            snippets.push(content_fragment);
-
-            let emote_text = message.slice(start, end);
-            let snippet = `<img alt="${emote_text}" src="${url}1.0" srcset="${url}1.0 1x,${url}2.0 2x,${url}3.0 4x"></img>`;
-            console.log('Snippet: ' + snippet);
-            snippets.push(snippet);
-            last_end = end;
-        }
-        if (last_end < message.length) {
-            let content_fragment = `<span class='content-fragment'>${message.slice(last_end)}</span>`;
-            snippets.push(content_fragment);
-        }
-        var output = '';
-        for (var snippet in snippets) {
-            output += snippets[snippet];
-        }
-        return output;
+        return emote_indexes;
     }
 }
 
-function parse_table() {
-    let table = document.getElementById('messages')
+function replace_emotes(message, emote_indexes) {
+    emote_indexes.sort(compare_indexes);
+    var snippets = [];
+    var last_end = 0;
+    for (var emote_index in emote_indexes) {
+
+        emote_index = emote_indexes[emote_index];
+        console.log(emote_index)
+        let url = emote_index[0];
+        let start = emote_index[1][0];
+        let end = emote_index[1][1]+1;
+
+        let content_fragment = `<span class='content-fragment'>${message.slice(last_end, start)}</span>`
+        snippets.push(content_fragment);
+
+        let emote_text = message.slice(start, end);
+        let snippet = `<img alt="${emote_text}" src="${url}1.0" srcset="${url}1.0 1x,${url}2.0 2x,${url}3.0 4x"></img>`;
+        console.log('Snippet: ' + snippet);
+        snippets.push(snippet);
+        last_end = end;
+    }
+    if (last_end < message.length) {
+        let content_fragment = `<span class='content-fragment'>${message.slice(last_end)}</span>`;
+        snippets.push(content_fragment);
+    }
+    var output = '';
+    for (var snippet in snippets) {
+        output += snippets[snippet];
+    }
+    return output;
+}
+
+async function parse_table() {
+    let table = document.getElementById('messages');
+
+    ffz_global = await fetch_ffz_global_emotes();
+    bttv_global = await fetch_bttv_global_emotes();
+    seventv_global = await fetch_7tv_global_emotes();
+
     for (let i in table.rows) {
         let row = table.rows[i];
         for (let j in row.cells) {
             let cell = row.cells[j]
             if (cell.classList != undefined && cell.classList.contains("message-content")) {
-                let emotes = cell.getAttribute('data-emotes');
-                cell.innerHTML = parse_twitch_emotes(cell.innerHTML, emotes);
+                let twitch_emotes = cell.getAttribute('data-emotes');
+                twitch_emotes =  parse_twitch_emotes(twitch_emotes)
+
+                cell.innerHTML = replace_emotes(cell.innerHTML, twitch_emotes);
             }
         }
     }
@@ -158,9 +168,7 @@ function parse_table() {
 
 async function parse_emotes(table) {
 
-    ffz_global = await fetch_ffz_global_emotes();
-    bttv_global = await fetch_bttv_global_emotes();
-    seventv_global = await fetch_7tv_global_emotes();
+    
 
     ffz_channels = {};
     bttv_channels = {};
