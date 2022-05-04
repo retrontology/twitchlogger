@@ -166,6 +166,16 @@ async function parse_table() {
         let channel = row.getAttribute("data-channel");
         let channel_id = row.getAttribute("data-channel-id");
 
+        if (!(channel in ffz_channels)) {
+            ffz_channels[channel] = fetch_ffz_channel_emotes(channel_id);
+        }
+        if (!(channel in bttv_global)) {
+            bttv_global[channel] = fetch_bttv_channel_emotes(channel_id);
+        }
+        if (!(channel in seventv_channels)) {
+            seventv_channels[channel] = fetch_7tv_channel_emotes(channel);
+        }
+
         for (let j in row.cells) {
             let cell = row.cells[j]
             if (cell.classList != undefined && cell.classList.contains("message-content")) {
