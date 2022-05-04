@@ -161,6 +161,9 @@ async function parse_table() {
     seventv_channels = {};
 
     for (let i in table.rows) {
+        if (i == 0) {
+            continue;
+        }
         let row = table.rows[i];
 
         let channel = row.getAttribute("data-channel");
