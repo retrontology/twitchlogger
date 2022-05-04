@@ -26,7 +26,7 @@ async function fetch_ffz_global_emotes() {
 }
 
 function parse_ffz_emotes(message, emotes) {
-    
+    return [];
 }
 
 async function fetch_bttv_channel_emotes(channel_id) {
@@ -54,6 +54,10 @@ async function fetch_bttv_global_emotes() {
     }
 }
 
+function parse_bttv_emotes(message, emotes) {
+    return [];
+}
+
 async function fetch_7tv_global_emotes() {
     let url = 'https://api.7tv.app/v2/emotes/global'
     let response = await fetch(url);
@@ -78,6 +82,10 @@ async function fetch_7tv_channel_emotes(channel) {
     }
 }
 
+function parse_7tv_emotes(message, emotes) {
+    return [];
+}
+
 function compare_indexes(a, b) {
     return a[1][0] - b[1][0];
 }
@@ -99,12 +107,9 @@ function parse_twitch_emotes(emote_string, dark_mode = true) {
         var emote_indexes = [];
         for (var emote in emotes) {
             emote = emotes[emote];
-            console.log(emote);
             var [emote_id, occurances] = emote.split(':');
-            console.log(occurances);
             var url = 'https://static-cdn.jtvnw.net/emoticons/v2/' + emote_id + '/default/' + color_mode + '/';
             var occurances = occurances.split(',');
-            console.log(occurances)
             for (var occurance in occurances) {
                 occurance = occurances[occurance];
                 var [start, end] = occurance.split('-');
@@ -127,7 +132,7 @@ function replace_emotes(message, emote_indexes) {
         console.log(emote_index)
         let url = emote_index[0];
         let start = emote_index[1][0];
-        let end = emote_index[1][1]+1;
+        let end = emote_index[1][1] + 1;
 
         let content_fragment = `<span class='content-fragment'>${message.slice(last_end, start)}</span>`
         snippets.push(content_fragment);
@@ -182,11 +187,17 @@ async function parse_table() {
         for (let j in row.cells) {
             let cell = row.cells[j]
             if (cell.classList != undefined && cell.classList.contains("message-content")) {
-                let twitch_emotes = cell.getAttribute('data-emotes');
-                twitch_emotes =  parse_twitch_emotes(twitch_emotes);
-                console.log(twitch_emotes);
+                let message = cell.innerHTML;
 
-                cell.innerHTML = replace_emotes(cell.innerHTML, twitch_emotes);
+                let twitch_emotes = cell.getAttribute('data-emotes');
+                twitch_emotes = parse_twitch_emotes(twitch_emotes);
+                let ffz_emotes = parse_ffz_emotes(message, ffz_global, ffz_channels[channel]);
+                let bttv_emotes = parse_bttv_emotes(message, bttv_global, bttv_channels[channel]);
+                let seventv_emotes = parse_7tv_emotes(message, seventv_global, seventv_channels[channel]);
+
+                let message_emotes = twitch_emotes.concat(ffz_emotes, bttv_emotes, seventv_emotes);
+
+                cell.innerHTML = replace_emotes(cell.innerHTML, message_emotes);
             }
         }
     }
