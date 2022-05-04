@@ -26,11 +26,12 @@ async function fetch_ffz_global_emotes() {
 }
 
 function parse_ffz_emotes(message, emotes) {
-
+    
 }
 
 async function fetch_bttv_channel_emotes(channel_id) {
     let url = 'https://api.betterttv.net/3/cached/users/twitch/' + channel_id;
+    let response = await fetch(url);
     if (response.status === 200) {
         const data = await response.json();
         const emotes = data.channelEmotes.concat(data.sharedEmotes);
@@ -43,6 +44,7 @@ async function fetch_bttv_channel_emotes(channel_id) {
 
 async function fetch_bttv_global_emotes() {
     let url = 'https://api.betterttv.net/3/cached/emotes/global';
+    let response = await fetch(url);
     if (response.status === 200) {
         const emotes = await response.json();
         return emotes;
@@ -54,6 +56,7 @@ async function fetch_bttv_global_emotes() {
 
 async function fetch_7tv_global_emotes() {
     let url = 'https://api.7tv.app/v2/emotes/global'
+    let response = await fetch(url);
     if (response.status === 200) {
         const emotes = await response.json();
         return emotes;
@@ -65,6 +68,7 @@ async function fetch_7tv_global_emotes() {
 
 async function fetch_7tv_channel_emotes(channel) {
     let url = 'https://api.7tv.app/v2/users/' + channel + '/emotes'
+    let response = await fetch(url);
     if (response.status === 200) {
         const emotes = await response.json();
         return emotes;
