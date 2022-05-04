@@ -158,7 +158,8 @@ async function parse_table() {
             let cell = row.cells[j]
             if (cell.classList != undefined && cell.classList.contains("message-content")) {
                 let twitch_emotes = cell.getAttribute('data-emotes');
-                twitch_emotes =  parse_twitch_emotes(twitch_emotes)
+                twitch_emotes =  parse_twitch_emotes(twitch_emotes);
+                console.log(twitch_emotes);
 
                 cell.innerHTML = replace_emotes(cell.innerHTML, twitch_emotes);
             }
