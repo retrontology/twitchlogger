@@ -156,8 +156,16 @@ async function parse_table() {
     bttv_global = await fetch_bttv_global_emotes();
     seventv_global = await fetch_7tv_global_emotes();
 
+    ffz_channels = {};
+    bttv_channels = {};
+    seventv_channels = {};
+
     for (let i in table.rows) {
         let row = table.rows[i];
+
+        let channel = row.getAttribute("data-channel");
+        let channel_id = row.getAttribute("data-channel-id");
+
         for (let j in row.cells) {
             let cell = row.cells[j]
             if (cell.classList != undefined && cell.classList.contains("message-content")) {
@@ -166,39 +174,6 @@ async function parse_table() {
                 console.log(twitch_emotes);
 
                 cell.innerHTML = replace_emotes(cell.innerHTML, twitch_emotes);
-            }
-        }
-    }
-}
-
-async function parse_emotes(table) {
-
-    
-
-    ffz_channels = {};
-    bttv_channels = {};
-    seventv_channels = {};
-
-    for (let i in table.rows) {
-        let row = table.rows[i];
-        let channel_id = row.getAttribute('data-channel-id');
-        let channel = row.getAttribute('data-channel');
-        if (!(channel in ffz_channels)) {
-            ffz_channels[channel] = fetch_ffz_channel_emotes(channel_id);
-        }
-        if (!(channel in bttv_channels)) {
-            ffz_channels[channel] = fetch_bttv_channel_emotes(channel_id);
-        }
-        if (!(channel in seventv_channels)) {
-            seventv_channels[channel] = fetch_ffz_channel_emotes(channel_id);
-        }
-        let message = ''
-        for (let j in row.cells) {
-            let cell = row.cells[j]
-            if (cell.classList.contains("message-content")) {
-                let message = cell.innerText
-
-                break;
             }
         }
     }
