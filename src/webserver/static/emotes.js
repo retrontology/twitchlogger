@@ -98,10 +98,7 @@ async function fetch_bttv_global_emotes() {
 }
 
 function parse_bttv_emotes(cell, global_emotes, channel_emotes) {
-    let emotes = [...global_emotes];
-    console.log(channel_emotes)
-    emotes = emotes.concat(channel_emotes['channelEmotes']);
-    emotes = emotes.concat(channel_emotes['sharedEmotes']);
+    let emotes = global_emotes.concat(channel_emotes);
     for (var emote in emotes) {
         emote = emotes[emote];
         if (emote == undefined) {
