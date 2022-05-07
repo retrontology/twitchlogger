@@ -232,11 +232,7 @@ function replace_twitch_emotes(cell, emote_indexes) {
         let content_fragment = `<span class='content-fragment'>${message.slice(last_end)}</span>`;
         snippets.push(content_fragment);
     }
-    var output = '';
-    for (var snippet in snippets) {
-        output += snippets[snippet];
-    }
-    return output;
+    cell.innerHTML = snippets.join();
 }
 
 async function parse_table() {
