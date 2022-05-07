@@ -106,7 +106,7 @@ function parse_bttv_emotes(cell, global_emotes, channel_emotes) {
         if (emote == undefined) {
             continue;
         }
-        let regexp = new RegExp('\\b' + emote['code'] + '\\b');
+        let regexp = new RegExp('\b' + emote['code'] + '\b');
         console.log(regexp)
         let index = 0;
         while (index < cell.childNodes.length) {
