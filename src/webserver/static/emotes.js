@@ -249,6 +249,7 @@ async function parse_table() {
     bttv_channels = {};
     seventv_channels = {};
 
+    console.log(rows);
     for (let i in table.rows) {
         if (i == 0) {
             continue;
