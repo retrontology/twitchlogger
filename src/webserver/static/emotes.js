@@ -101,7 +101,6 @@ function parse_bttv_emotes(cell, global_emotes, channel_emotes) {
     let emotes = [...global_emotes];
     emotes = emotes.concat(channel_emotes['channelEmotes']);
     emotes = emotes.concat(channel_emotes['sharedEmotes']);
-    console.log(emotes);
     for (var emote in emotes) {
         emote = emotes[emote];
         if (emote == undefined) {
@@ -255,7 +254,7 @@ async function parse_table() {
             continue;
         }
         let row = table.rows[i];
-
+        console.log(row);
         let channel = row.getAttribute("data-channel");
         let channel_id = row.getAttribute("data-channel-id");
 
