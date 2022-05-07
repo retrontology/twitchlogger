@@ -264,13 +264,13 @@ async function parse_table() {
         let channel_id = row.getAttribute("data-channel-id");
 
         if (!(channel in ffz_channels)) {
-            ffz_channels[channel] = fetch_ffz_channel_emotes(channel_id);
+            ffz_channels[channel] = await fetch_ffz_channel_emotes(channel_id);
         }
         if (!(channel in bttv_channels)) {
-            bttv_channels[channel] = fetch_bttv_channel_emotes(channel_id);
+            bttv_channels[channel] = await fetch_bttv_channel_emotes(channel_id);
         }
         if (!(channel in seventv_channels)) {
-            seventv_channels[channel] = fetch_7tv_channel_emotes(channel);
+            seventv_channels[channel] = await fetch_7tv_channel_emotes(channel);
         }
 
         for (let j in row.cells) {
