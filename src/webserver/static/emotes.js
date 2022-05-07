@@ -237,7 +237,7 @@ function replace_twitch_emotes(cell, emote_indexes) {
     } else {
         output = `<span class='content-fragment'>${message}</span>`;
     }
-    
+    console.log(output);
     cell.innerHTML = output;
 }
 
@@ -252,13 +252,12 @@ async function parse_table() {
     bttv_channels = {};
     seventv_channels = {};
 
-    console.log(table.rows);
     for (let i in table.rows) {
         if (i == 0 || table.rows[i].getAttribute == undefined) {
             continue;
         }
         let row = table.rows[i];
-        console.log(row);
+
         let channel = row.getAttribute("data-channel");
         let channel_id = row.getAttribute("data-channel-id");
 
