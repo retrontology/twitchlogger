@@ -209,18 +209,19 @@ function parse_twitch_emotes(emote_string, dark_mode = true) {
 function replace_twitch_emotes(cell, emote_indexes) {
     emote_indexes.sort(compare_indexes);
     var message = cell.innerHTML;
+    var output = '';
     if (emote_indexes.length == 0) {
         var snippets = [];
         var last_end = 0;
         for (var emote_index in emote_indexes) {
 
             emote_index = emote_indexes[emote_index];
-            console.log(emote_index)
+
             let url = emote_index[0];
             let start = emote_index[1][0];
             let end = emote_index[1][1] + 1;
 
-            let content_fragment = `<span class='content-fragment'>${message.slice(last_end, start)}</span>`
+            let content_fragment = `<span class='content-fragment'>${message.slice(last_end, start)}</span>`;
             snippets.push(content_fragment);
 
             let emote_text = message.slice(start, end);
