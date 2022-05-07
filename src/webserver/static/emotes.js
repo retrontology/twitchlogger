@@ -206,8 +206,9 @@ function parse_twitch_emotes(emote_string, dark_mode = true) {
     }
 }
 
-function replace_emotes(message, emote_indexes) {
+function replace_twitch_emotes(cell, emote_indexes) {
     emote_indexes.sort(compare_indexes);
+    var message = cell.innerHTML;
     var snippets = [];
     var last_end = 0;
     for (var emote_index in emote_indexes) {
@@ -275,7 +276,7 @@ async function parse_table() {
 
                 let twitch_emotes = cell.getAttribute('data-emotes');
                 twitch_emotes = parse_twitch_emotes(twitch_emotes);
-                cell.innerHTML = replace_emotes(cell.innerHTML, twitch_emotes);
+                replace_twitch_emotes(cell, twitch_emotes);
 
                 //parse_7tv_emotes(cell, seventv_global, seventv_channels[channel]);
                 parse_bttv_emotes(cell, bttv_global, bttv_channels[channel]);
