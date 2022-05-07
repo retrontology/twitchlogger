@@ -210,7 +210,7 @@ function replace_twitch_emotes(cell, emote_indexes) {
     emote_indexes.sort(compare_indexes);
     var message = cell.innerHTML;
     var output = '';
-    if (emote_indexes.length == 0) {
+    if (emote_indexes.length > 0) {
         var snippets = [];
         var last_end = 0;
         for (var emote_index in emote_indexes) {
