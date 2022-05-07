@@ -276,8 +276,7 @@ async function parse_table() {
 
                 let twitch_emotes = cell.getAttribute('data-emotes');
                 twitch_emotes = parse_twitch_emotes(twitch_emotes);
-                replace_twitch_emotes(cell, twitch_emotes);
-                console.log(cell);
+                //replace_twitch_emotes(cell, twitch_emotes);
                 //parse_7tv_emotes(cell, seventv_global, seventv_channels[channel]);
                 parse_bttv_emotes(cell, bttv_global, bttv_channels[channel]);
                 //parse_ffz_emotes(cell, ffz_global, ffz_channels[channel]);
