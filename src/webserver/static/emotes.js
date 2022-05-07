@@ -209,31 +209,34 @@ function parse_twitch_emotes(emote_string, dark_mode = true) {
 function replace_twitch_emotes(cell, emote_indexes) {
     emote_indexes.sort(compare_indexes);
     var message = cell.innerHTML;
-    var snippets = [];
-    var last_end = 0;
-    for (var emote_index in emote_indexes) {
+    if (emote_indexes.length == 0) {
+        var snippets = [];
+        var last_end = 0;
+        for (var emote_index in emote_indexes) {
 
-        emote_index = emote_indexes[emote_index];
-        console.log(emote_index)
-        let url = emote_index[0];
-        let start = emote_index[1][0];
-        let end = emote_index[1][1] + 1;
+            emote_index = emote_indexes[emote_index];
+            console.log(emote_index)
+            let url = emote_index[0];
+            let start = emote_index[1][0];
+            let end = emote_index[1][1] + 1;
 
-        let content_fragment = `<span class='content-fragment'>${message.slice(last_end, start)}</span>`
-        snippets.push(content_fragment);
+            let content_fragment = `<span class='content-fragment'>${message.slice(last_end, start)}</span>`
+            snippets.push(content_fragment);
 
-        let emote_text = message.slice(start, end);
-        let snippet = `<img alt="${emote_text}" src="${url}1.0" srcset="${url}1.0 1x,${url}2.0 2x,${url}3.0 4x"></img>`;
-        console.log('Snippet: ' + snippet);
-        snippets.push(snippet);
-        last_end = end;
+            let emote_text = message.slice(start, end);
+            let snippet = `<img alt="${emote_text}" src="${url}1.0" srcset="${url}1.0 1x,${url}2.0 2x,${url}3.0 4x"></img>`;
+            snippets.push(snippet);
+            last_end = end;
+        }
+        if (last_end < message.length) {
+            let content_fragment = `<span class='content-fragment'>${message.slice(last_end)}</span>`;
+            snippets.push(content_fragment);
+        }
+        output = snippets.join('');
+    } else {
+        output = `<span class='content-fragment'>${message}</span>`;
     }
-    if (last_end < message.length) {
-        let content_fragment = `<span class='content-fragment'>${message.slice(last_end)}</span>`;
-        snippets.push(content_fragment);
-    }
-    var output = snippets.join('');
-    console.log(output);
+    
     cell.innerHTML = output;
 }
 
