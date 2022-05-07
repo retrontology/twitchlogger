@@ -111,11 +111,11 @@ function parse_bttv_emotes(cell, global_emotes, channel_emotes) {
         let index = 0;
         while (index < cell.childNodes.length) {
             node = cell.childNodes[index];
-            console.log(node)
             if ((node.classList != undefined) && (node.classList.contains("content-fragment"))) {
+                console.log(node)
                 var match = regexp.exec(node.innerHTML);
+                console.log(match)
                 if (match) {
-                    console.log(match)
                     message = node.innerHTML;
                     node.innerHTML = node.innerHTML.slice(0, match.index);
                     var url = 'https://cdn.betterttv.net/emote/' + emote['id'] + '/';
