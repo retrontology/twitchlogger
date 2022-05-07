@@ -25,8 +25,51 @@ async function fetch_ffz_global_emotes() {
     return emotes;
 }
 
-function parse_ffz_emotes(message, emotes) {
-    return [];
+function parse_ffz_emotes(cell, global_emotes, channel_emotes) {
+
+    let emotes = [];
+    for (var set in global_emotes['sets']) {
+        emotes = emotes.concat(global_emotes['sets'][set]['emoticons']);
+    }
+    for (var set in channel_emotes['sets']) {
+        emotes = emotes.concat(channel_emotes['sets'][set]['emoticons']);
+    }
+    
+    for (var emote of emotes) {
+        let regexp = new RegExp('\\b' + emote['name'] + '\\b');
+        let index = 0;
+        while (index < cell.childNodes.length) {
+            if (node.classList.contains("content-fragment")) {
+                var match = regexp.exec(node.innerHTML);
+                if (match) {
+                    message = node.innerHTML;
+                    node.innerHTML = node.innerHTML.slice(0, match.index);
+                    var emote_image = document.createElement('img');
+                    emote_image.src = 'https:' + emote['urls']['1'];
+                    emote_image.setAttribute('alt', emote['name']);
+                    if (emote['urls'].length > 1) {
+                        var srcset_strings = [];
+                        for (var url in emote['urls']) {
+                            var size_string = 'https:' + emote['urls'][url] + ' ' + url + 'x';
+                            srcset_strings.push(size_string);
+                        }
+                        emote_image.setAttribute('srcset', srcset_strings.join());
+                    }
+                    var rest_of_text = document.createElement('span');
+                    rest_of_text.classList.add('content-fragment')
+                    if (index >= cell.childNodes.length - 1) {
+                        cell.appendChild(emote_image);
+                        cell.appendChild(rest_of_text);
+                    } else {
+                        cell.insertBefore(emote_image, cell.childNodes[index+1]);
+                        cell.insertBefore(emote_image, cell.childNodes[index+2]);
+                    }
+                    index += 1
+                }
+            }
+            index += 1;
+        }
+    }
 }
 
 async function fetch_bttv_channel_emotes(channel_id) {
@@ -54,8 +97,45 @@ async function fetch_bttv_global_emotes() {
     }
 }
 
-function parse_bttv_emotes(message, emotes) {
-    return [];
+function parse_bttv_emotes(message, global_emotes, channel_emotes) {
+    let emotes = [...global_emotes];
+    emotes = emotes.concat(channel_emotes['channelEmotes']);
+    emotes = emotes.concat(channel_emotes['sharedEmotes']);
+    
+    for (var emote of emotes) {
+        let regexp = new RegExp('\\b' + emote['code'] + '\\b');
+        let index = 0;
+        while (index < cell.childNodes.length) {
+            if (node.classList.contains("content-fragment")) {
+                var match = regexp.exec(node.innerHTML);
+                if (match) {
+                    message = node.innerHTML;
+                    node.innerHTML = node.innerHTML.slice(0, match.index);
+                    var url = 'https://cdn.betterttv.net/emote/' + emote['id'] + '/';
+                    var emote_image = document.createElement('img');
+                    emote_image.src = url + '1x';
+                    emote_image.setAttribute('alt', emote['code']);
+                    
+                    var srcset = `${url}1.0 1x,${url}2.0 2x,${url}3.0 4x`;
+
+                    emote_image.setAttribute('srcset', srcset);
+                    
+                    var rest_of_text = document.createElement('span');
+                    rest_of_text.classList.add('content-fragment');
+                    rest_of_text.innerHTML = message.slice(match.index);
+                    if (index >= cell.childNodes.length - 1) {
+                        cell.appendChild(emote_image);
+                        cell.appendChild(rest_of_text);
+                    } else {
+                        cell.insertBefore(emote_image, cell.childNodes[index+1]);
+                        cell.insertBefore(emote_image, cell.childNodes[index+2]);
+                    }
+                    index += 1
+                }
+            }
+            index += 1;
+        }
+    }
 }
 
 async function fetch_7tv_global_emotes() {
@@ -187,17 +267,15 @@ async function parse_table() {
         for (let j in row.cells) {
             let cell = row.cells[j]
             if (cell.classList != undefined && cell.classList.contains("message-content")) {
-                let message = cell.innerHTML;
 
                 let twitch_emotes = cell.getAttribute('data-emotes');
                 twitch_emotes = parse_twitch_emotes(twitch_emotes);
-                let ffz_emotes = parse_ffz_emotes(message, ffz_global, ffz_channels[channel]);
-                let bttv_emotes = parse_bttv_emotes(message, bttv_global, bttv_channels[channel]);
-                let seventv_emotes = parse_7tv_emotes(message, seventv_global, seventv_channels[channel]);
+                cell.innerHTML = replace_emotes(cell.innerHTML, twitch_emotes);
 
-                let message_emotes = twitch_emotes.concat(ffz_emotes, bttv_emotes, seventv_emotes);
-
-                cell.innerHTML = replace_emotes(cell.innerHTML, message_emotes);
+                //parse_7tv_emotes(cell, seventv_global, seventv_channels[channel]);
+                parse_bttv_emotes(cell, bttv_global, bttv_channels[channel]);
+                //parse_ffz_emotes(cell, ffz_global, ffz_channels[channel]);
+                
             }
         }
     }
