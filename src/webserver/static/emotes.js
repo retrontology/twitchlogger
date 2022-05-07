@@ -110,7 +110,7 @@ function parse_bttv_emotes(cell, global_emotes, channel_emotes) {
         let index = 0;
         while (index < cell.childNodes.length) {
             node = cell.childNodes[index];
-            if (node.classList.contains("content-fragment")) {
+            if ((node.classList != undefined) && (node.classList.contains("content-fragment"))) {
                 var match = regexp.exec(node.innerHTML);
                 if (match) {
                     message = node.innerHTML;
