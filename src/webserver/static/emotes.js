@@ -257,8 +257,8 @@ async function parse_table() {
         if (!(channel in ffz_channels)) {
             ffz_channels[channel] = fetch_ffz_channel_emotes(channel_id);
         }
-        if (!(channel in bttv_global)) {
-            bttv_global[channel] = fetch_bttv_channel_emotes(channel_id);
+        if (!(channel in bttv_channels)) {
+            bttv_channels[channel] = fetch_bttv_channel_emotes(channel_id);
         }
         if (!(channel in seventv_channels)) {
             seventv_channels[channel] = fetch_7tv_channel_emotes(channel);
