@@ -252,7 +252,7 @@ async function parse_table() {
 
     console.log(table.rows);
     for (let i in table.rows) {
-        if (i == 0) {
+        if (i == 0 || row.getAttribute == undefined) {
             continue;
         }
         let row = table.rows[i];
