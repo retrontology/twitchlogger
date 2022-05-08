@@ -245,7 +245,7 @@ function replace_twitch_emotes(cell, emote_indexes) {
 function clean_message_node(cell) {
     for(var child in cell.childNodes) {
         if (child.classList == undefined || !('content-fragment' in child.classList)) {
-            cell.removeChild(cell);
+            cell.removeChild(child);
         }
     }
 }
