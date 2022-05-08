@@ -212,6 +212,7 @@ function replace_twitch_emotes(cell, emote_indexes) {
 
         emote_indexes.sort(compare_indexes);
         let last_end = 0;
+        let index = 0;
 
         for (var emote_index of emote_indexes) {
             
@@ -219,7 +220,7 @@ function replace_twitch_emotes(cell, emote_indexes) {
             let start = emote_index[1][0] - last_end;
             let end = emote_index[1][1] + 1 - last_end;
 
-            let start_fragment = cell.lastChild;
+            let start_fragment = cell.childNodes[index];
             console.log(start_fragment);
             let message = start_fragment.innerHTML;
 
@@ -236,6 +237,7 @@ function replace_twitch_emotes(cell, emote_indexes) {
             cell.appendChild(next_fragment);
 
             last_end = end;
+            index += 2;
         }
     }
 }
