@@ -208,49 +208,39 @@ function parse_twitch_emotes(emote_string, dark_mode = true) {
 }
 
 function replace_twitch_emotes(cell, emote_indexes) {
-    emote_indexes.sort(compare_indexes);
-    var message = cell.innerHTML;
-    var output = '';
     if (emote_indexes.length > 0) {
-        var snippets = [];
-        var last_end = 0;
-        for (var emote_index in emote_indexes) {
 
-            emote_index = emote_indexes[emote_index];
+        emote_indexes.sort(compare_indexes);
+        let last_end = 0;
 
+        for (var emote_index of emote_indexes) {
+            
             let url = emote_index[0];
-            let start = emote_index[1][0];
-            let end = emote_index[1][1] + 1;
+            let start = emote_index[1][0] - last_end;
+            let end = emote_index[1][1] + 1 - last_end;
 
-            let content_fragment = `<span class='content-fragment'>${message.slice(last_end, start)}</span>`;
-            snippets.push(content_fragment);
+            let start_fragment = cell.lastChild;
+            let message = start_fragment.innerHTML;
 
-            let emote_text = message.slice(start, end);
-            let snippet = `<img alt="${emote_text}" src="${url}1.0" srcset="${url}1.0 1x,${url}2.0 2x,${url}3.0 4x"></img>`;
-            snippets.push(snippet);
+            start_fragment.innerHTML = message.slice(0, start);
+
+            let img_element = document.createElement('img');
+            img_element.src = url + '1.0';
+            img_element.srcset = `${url}1.0 1x,${url}2.0 2x,${url}3.0 4x`;
+            cell.appendChild(img_element);
+
+            let next_fragment = document.createElement('span');
+            next_fragment.classList.add('content-fragment');
+            next_fragment.innerHTML = message.slice(end);
+            cell.appendChild(next_fragment);
+
             last_end = end;
         }
-        if (last_end < message.length) {
-            let content_fragment = `<span class='content-fragment'>${message.slice(last_end)}</span>`;
-            snippets.push(content_fragment);
-        }
-        output = snippets.join('');
-    } else {
-        output = `<span class='content-fragment'>${message}</span>`;
     }
-    cell.innerHTML = output;
 }
 
 async function parse_table() {
     let table = document.getElementById('messages');
-
-    ffz_global = await fetch_ffz_global_emotes();
-    bttv_global = await fetch_bttv_global_emotes();
-    seventv_global = await fetch_7tv_global_emotes();
-
-    ffz_channels = {};
-    bttv_channels = {};
-    seventv_channels = {};
 
     for (let i in table.rows) {
         if (i == 0 || table.rows[i].getAttribute == undefined) {
@@ -261,25 +251,15 @@ async function parse_table() {
         let channel = row.getAttribute("data-channel");
         let channel_id = row.getAttribute("data-channel-id");
 
-        if (!(channel in ffz_channels)) {
-            ffz_channels[channel] = await fetch_ffz_channel_emotes(channel_id);
-        }
-        if (!(channel in bttv_channels)) {
-            bttv_channels[channel] = await fetch_bttv_channel_emotes(channel_id);
-        }
-        if (!(channel in seventv_channels)) {
-            seventv_channels[channel] = await fetch_7tv_channel_emotes(channel);
-        }
-
         for (let j in row.cells) {
             let cell = row.cells[j]
             if (cell.classList != undefined && cell.classList.contains("message-content")) {
 
                 let twitch_emotes = cell.getAttribute('data-emotes');
                 twitch_emotes = parse_twitch_emotes(twitch_emotes);
-                //replace_twitch_emotes(cell, twitch_emotes);
+                replace_twitch_emotes(cell, twitch_emotes);
                 //parse_7tv_emotes(cell, seventv_global, seventv_channels[channel]);
-                parse_bttv_emotes(cell, bttv_global, bttv_channels[channel]);
+                //parse_bttv_emotes(cell, bttv_global, bttv_channels[channel]);
                 //parse_ffz_emotes(cell, ffz_global, ffz_channels[channel]);
                 
             }
