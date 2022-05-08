@@ -236,7 +236,7 @@ function replace_twitch_emotes(cell, emote_indexes) {
             next_fragment.innerHTML = message.slice(end);
             cell.appendChild(next_fragment);
 
-            last_end = end;
+            last_end += end;
             index += 2;
         }
     }
