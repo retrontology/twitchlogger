@@ -212,8 +212,7 @@ function replace_twitch_emotes(cell, emote_indexes) {
 
         emote_indexes.sort(compare_indexes);
         let last_end = 0;
-        let index = 0;
-        console.log(cell.childNodes);
+        let index = 1;
         for (var emote_index of emote_indexes) {
             
             let url = emote_index[0];
