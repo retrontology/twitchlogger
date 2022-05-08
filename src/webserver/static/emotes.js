@@ -220,6 +220,7 @@ function replace_twitch_emotes(cell, emote_indexes) {
             let end = emote_index[1][1] + 1 - last_end;
 
             let start_fragment = cell.lastChild;
+            console.log(start_fragment);
             let message = start_fragment.innerHTML;
 
             start_fragment.innerHTML = message.slice(0, start);
