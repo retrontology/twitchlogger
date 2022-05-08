@@ -242,14 +242,6 @@ function replace_twitch_emotes(cell, emote_indexes) {
     }
 }
 
-function clean_message_node(cell) {
-    for(var child in cell.childNodes) {
-        if (child.classList == undefined || !('content-fragment' in child.classList)) {
-            cell.removeChild(child);
-        }
-    }
-}
-
 async function parse_table() {
     let table = document.getElementById('messages');
 
@@ -267,8 +259,6 @@ async function parse_table() {
             if (cell.classList != undefined && cell.classList.contains("message-content")) {
 
                 let twitch_emotes = cell.getAttribute('data-emotes');
-
-                clean_message_node(cell);
 
                 twitch_emotes = parse_twitch_emotes(twitch_emotes);
                 replace_twitch_emotes(cell, twitch_emotes);
