@@ -159,5 +159,8 @@ class noSQLmessage(retroBot.message):
             'flags': self.flags,
             'mod': self.mod,
             'turbo': self.turbo,
-            'content': self.content
+            'content': self.content,
+            'emotes-ffz': self.emotes_ffz,
+            'emotes-bttv': self.emotes_bttv,
+            'emotes-seventv': self.emotes_seventv
         }

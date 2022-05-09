@@ -29,7 +29,10 @@ def setup_bot(config):
         dbpassword=config['mongo']['password'],
         dboptions=config['mongo']['options'],
         defaultauthdb=config['mongo']['authdb'],
-        dbname=config['mongo']['dbname']
+        dbname=config['mongo']['dbname'],
+        ffz=True,
+        bttv=True,
+        seventv=True
     )
     bot_thread = Thread(target=bot.start, daemon=True).start()
     return bot, bot_thread
