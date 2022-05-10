@@ -11,9 +11,9 @@ DEFAULT_FIELDS = [
     'content',
     'color',
     'emotes',
-    'emotes-ffz',
-    'emotes-bttv',
-    'emotes-seventv'
+    'emotes_ffz',
+    'emotes_bttv',
+    'emotes_seventv'
 ]
 DEFAULT_SORT = list({'timestamp': -1}.items())
 MESSAGE_COLLECTION = 'messages'
