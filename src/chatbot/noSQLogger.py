@@ -60,7 +60,7 @@ class noSQLogger(retroBot.bot.retroBot):
         twitch_id = results[0]['id']
         if self.handler:
             try:
-                self.channel_handlers[channel.lower()] = self.handler(channel.lower(), self)
+                self.channel_handlers[channel.lower()] = self.handler(channel.lower(), self, self.ffz, self.bttv, self.seventv)
                 self.get_channel_collection().insert_one({
                     'channel': channel.lower(),
                     'added': datetime.datetime.now(),
@@ -132,13 +132,13 @@ class noSQLogger(retroBot.bot.retroBot):
 
 class noSQLoggerHandler(retroBot.channelHandler):
     
-    def __init__(self, channel: str, parent: noSQLogger):
+    def __init__(self, channel: str, parent: noSQLogger, **kwargs):
         self.channel = channel
         self.parent = parent
-        super(noSQLoggerHandler, self).__init__(channel, parent)
+        super(noSQLoggerHandler, self).__init__(channel, parent, **kwargs)
 
     def on_pubmsg(self, c, e):
-        self.parent.get_messages_collection().insert_one(noSQLmessage(e).to_db_entry(self.channel))
+        self.parent.get_messages_collection().insert_one(noSQLmessage(e, self.emote_parsers).to_db_entry(self.channel))
         
 class noSQLmessage(retroBot.message):
 
@@ -159,5 +159,8 @@ class noSQLmessage(retroBot.message):
             'flags': self.flags,
             'mod': self.mod,
             'turbo': self.turbo,
-            'content': self.content
+            'content': self.content,
+            'emotes-ffz': self.emotes_ffz,
+            'emotes-bttv': self.emotes_bttv,
+            'emotes-seventv': self.emotes_seventv
         }
