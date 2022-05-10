@@ -81,7 +81,7 @@ class SQLoggerHandler(retroBot.channelHandler):
         conn.close()
 
     def on_pubmsg(self, c, e):
-        self.parent.queue.append(SQLmessage(e).to_db_entry(self.channel))
+        self.parent.queue.append(SQLmessage(e, self.emote_parsers).to_db_entry(self.channel))
         
 class SQLmessage(retroBot.message):
 
