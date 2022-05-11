@@ -92,6 +92,7 @@ function replace_emotes(cell, emote_indexes) {
                 let img_element = document.createElement('img');
                 img_element.src = url.replace('%s', '1');
                 img_element.srcset = `${url.replace('%s', '1')} 1x,${url.replace('%s', '2')} 2x,${url.replace('%s', '3')} 4x`;
+                img_element.alt = message.slice(start, end);
                 cell.appendChild(img_element);
 
                 let next_fragment = document.createElement('span');
