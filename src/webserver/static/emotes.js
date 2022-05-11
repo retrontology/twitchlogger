@@ -115,9 +115,6 @@ async function parse_table() {
         }
         let row = table.rows[i];
 
-        let channel = row.getAttribute("data-channel");
-        let channel_id = row.getAttribute("data-channel-id");
-
         for (let j in row.cells) {
             let cell = row.cells[j]
             if (cell.classList != undefined && cell.classList.contains("message-content")) {
