@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 <script src="{% static 'emotes.js' %}"></script> 
 <html>
-    <body>
+    <body onload="parse_table()">
         <div class="top-messages-navigation">
             <span class="user-title">
                 <a class="user-title" href="{{ username }}">{{ username }}</a>
