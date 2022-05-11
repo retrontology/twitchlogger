@@ -131,7 +131,7 @@ async function parse_table() {
                 let seventv_emotes = cell.getAttribute('data-emotes-seventv');
                 seventv_emotes = parse_seventv_emotes(seventv_emotes);
 
-                replace_twitch_emotes(cell, twitch_emotes.concat(ffz_emotes, bttv_emotes, seventv_emotes));
+                replace_emotes(cell, twitch_emotes.concat(ffz_emotes, bttv_emotes, seventv_emotes));
                 
             }
         }
