@@ -43,6 +43,10 @@ tr.messages-row:nth-child(even) {background-color: #1f1925;}
     white-space: nowrap;
 }
 
+img.content-emote {
+    vertical-align: middle;
+}
+
 .message-date {
     color: #A1A1A1
 }
