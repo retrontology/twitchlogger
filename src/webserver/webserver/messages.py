@@ -30,7 +30,7 @@ def get_channel_messages(channel:str, filter={}, sort=DEFAULT_SORT, fields=DEFAU
         sort=sort,
         skip=page*limit,
         limit=limit
-    )
+    ).limit(limit)
     return parse_messages(cursor)
 
 def get_page_count(channel=None, username=None, filter={}, limit=DEFAULT_LIMIT):
@@ -64,7 +64,7 @@ def get_user_color(username):
         filter=filter,
         projection=project,
         limit=limit
-    ))['color']
+    ).limit(limit))['color']
     return color
 
 def get_user_messages(username, channels=None, filter={}, sort=DEFAULT_SORT, fields=DEFAULT_FIELDS, limit=DEFAULT_LIMIT, page=0):
@@ -77,7 +77,7 @@ def get_user_messages(username, channels=None, filter={}, sort=DEFAULT_SORT, fie
         sort=sort,
         skip=page*limit,
         limit=limit
-    )
+    ).limit(limit)
     return parse_messages(cursor)
 
 def get_project(fields):
