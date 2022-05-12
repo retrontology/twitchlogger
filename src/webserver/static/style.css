@@ -76,7 +76,7 @@ select.page-selection {
     color: var(--text-color);
     background-color: #2f2736;
     padding: 8px;
-    padding-top: 6px;
+    padding-top: 8px;
     border-style: solid;
     background-clip: border-box;
     border: 1px #0b0a0d;
