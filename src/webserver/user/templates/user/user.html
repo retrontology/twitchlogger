@@ -1,13 +1,14 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 <script src="{% static 'emotes.js' %}"></script> 
+<script src="{% static 'page_navigation.js' %}"></script> 
 <html>
     <body onload="parse_table()">
         <div class="top-messages-navigation">
             <span class="user-title">
                 <a class="user-title" href="{{ username }}">{{ username }}</a>
             </span>
-            <span class="page-navigation">
+            <span class="page-navigation" name="page-navigation">
                 {% include "user/page_navigation.html" %}
             </span>
         </div>
@@ -15,7 +16,7 @@
             {% include "messages.html" %}
         </div>
         <div class="bottom-messages-navigation">
-            <span class="page-navigation">
+            <span class="page-navigation" name="page-navigation">
                 {% include "user/page_navigation.html" %}
             </span>
         </div>
