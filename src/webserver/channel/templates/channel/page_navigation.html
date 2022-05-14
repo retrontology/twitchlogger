@@ -2,11 +2,14 @@
 <script src="{% static 'page_navigation.js' %}"></script> 
 <a class="first-page"{% if page > 0 %} href="{% url 'channel' channel %}{% if username is not None %}?username={{ username }}{% endif %}" title='First Page'{% endif %}><<</a>
 <a class="previous-page"{% if page > 0 %} href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ page|add:'-1' }}&limit={{ limit }}" title='Prev Page'{% endif %}><</a>
+{% comment %}
 <select class="page-selection" onchange="change_page.call(this);" data-url="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}limit={{ limit }}">
     {% load page_filter %}
     {% for i in last_page|pages %}
     <option value="{{ i }}"{% if i == page %} selected="selected"{% endif %}>{{ i }}</option>
     {% endfor %}
 </select>
+{% endcomment %}
+<input type="number" id="page" onchange="change_page.call(this);" min="0" max="{{ last_page }}" />
 <a class="next-page"{% if page < last_page %} href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ page|add:'1' }}&limit={{ limit }}" title='Next Page'{% endif %}>></a>
 <a class="last-page"{% if page < last_page %} href="{% url 'channel' channel %}?{% if username is not None %}username={{ username }}&{% endif %}page={{ last_page }}&limit={{ limit }}" title='Last Page'{% endif %}>{{ last_page}} >></a>
