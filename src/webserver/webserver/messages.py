@@ -65,9 +65,7 @@ def get_channels():
         'channel': 1,
         'message_count': 1
     }
-    sort = {
-        list({'channel': -1}.items())
-    }
+    sort = list({'channel': -1}.items())
     return [x for x in get_db()[CHANNEL_COLLECTION].find(
         projection=project,
         sort=sort
