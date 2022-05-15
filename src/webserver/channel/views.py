@@ -5,7 +5,7 @@ from webserver.messages import *
 
 def index(request):
     template = loader.get_template('channel/index.html')
-    return HttpResponse(template.render({'channels': sorted(get_channels())}, request))
+    return HttpResponse(template.render({'channels': get_channels()}, request))
 
 def channel(request, channel):
     channel = channel.lower()
