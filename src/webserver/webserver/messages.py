@@ -33,6 +33,24 @@ def get_channel_messages(channel:str, filter={}, sort=DEFAULT_SORT, fields=DEFAU
     ).limit(limit)
     return parse_messages(cursor)
 
+def get_channel_page_count(channel:str, limit=DEFAULT_LIMIT):
+    channel = channel.lower()
+    container = get_db()[CHANNEL_COLLECTION]
+    result = container.find_one(
+        filter={
+            'channel': channel
+        }, 
+        projection={
+            'message_count': 1, 
+            '_id': 0
+        }
+    )
+    if result:
+        result = result['message_count']
+    else:
+        result = 0
+    return ceil(result/limit)
+
 def get_page_count(channel=None, username=None, filter={}, limit=DEFAULT_LIMIT):
     container = get_db()[MESSAGE_COLLECTION]
     if channel: filter['channel'] = channel
