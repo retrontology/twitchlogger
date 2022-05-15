@@ -17,7 +17,7 @@ function populate_page_select(element) {
             let option = document.createElement('option');
             option.value = i;
             option.text = i;
-            page_selection.insertBefore(option, element.firstChild);
+            page_selection.insertBefore(option, page_selection.firstChild);
         }
     }
 
