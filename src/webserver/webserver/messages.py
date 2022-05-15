@@ -65,11 +65,11 @@ def get_channels():
         'channel': 1,
         'message_count': 1
     }
-    return get_db()[CHANNEL_COLLECTION].find(
+    return [x for x in get_db()[CHANNEL_COLLECTION].find(
         {
             'projection': project,
         }
-    )
+    )]
 
 def get_user_color(username):
     username = username.lower()
