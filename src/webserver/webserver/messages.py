@@ -66,8 +66,11 @@ def get_channels():
         'message_count': 1
     }
     return [x for x in get_db()[CHANNEL_COLLECTION].find(
-        {
+        projection={
             'projection': project,
+        }
+        sort={
+            'channel': -1,
         }
     )]
 
