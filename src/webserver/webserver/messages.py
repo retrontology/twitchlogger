@@ -59,7 +59,17 @@ def get_page_count(channel=None, username=None, filter={}, limit=DEFAULT_LIMIT):
     return ceil(total / limit)
 
 def get_channels():
-    return get_db()[MESSAGE_COLLECTION].distinct('channel')
+    #return get_db()[MESSAGE_COLLECTION].distinct('channel')
+    project = {
+        '_id': 0,
+        'channel': 1,
+        'message_count': 1
+    }
+    return get_db()[CHANNEL_COLLECTION].find(
+        {
+            'projection': project,
+        }
+    )
 
 def get_user_color(username):
     username = username.lower()
