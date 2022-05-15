@@ -4,7 +4,7 @@
 <script src="{% static 'page_navigation.js' %}"></script> 
 <html>
     <body onload="parse_table()">
-        <div class="top-messages-navigation">
+        <div class="messages-navigation">
             <span class="channel-title">
                 <a class="channel-title" href="{{ channel }}">{{ channel }}</a>
             </span class="channel-title">
@@ -15,7 +15,7 @@
         <div>
             {% include "messages.html" %}
         </div>
-        <div class="bottom-messages-navigation">
+        <div class="messages-navigation">
             <span class="page-navigation">
                 {% include "channel/page_navigation.html" %}
             </span>
