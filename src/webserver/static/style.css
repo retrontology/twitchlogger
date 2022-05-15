@@ -71,7 +71,7 @@ div.page-navigation {
     margin: auto;
 }
 
-select.page-selection {
+input.page-selection {
     font-size: inherit;
     color: var(--text-color);
     background-color: #2f2736;
