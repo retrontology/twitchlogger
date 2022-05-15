@@ -3,14 +3,12 @@
 <html>
     <h1>Channels</h1>
     <body>
-        <table>
+        <div>
             {% for channel in channels %}
-            <tr>
-                <td>
+                <li>
                     <a href="{{ channel }}">{{ channel }}</a>
-                </td>
-            </tr>
+                </li>
             {% endfor %}
-        </table>
+        </div>
     </body>
 </html>
