@@ -116,7 +116,21 @@ ul.channel-list {
 
 li.channel-list-item {
     font-size: 20px;
-    padding: 8px;
     background-color: #2f2736;
     margin: 4px;
+}
+
+a.channel-list-item-link {
+    display: block;
+    padding: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+span.channel-list-item-channel {
+    text-align: left;
+}
+span.channel-list-item-messages {
+    text-align: right;
+    float: right;
 }
