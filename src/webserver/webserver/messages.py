@@ -68,7 +68,7 @@ def get_channels():
     return [x for x in get_db()[CHANNEL_COLLECTION].find(
         projection={
             'projection': project,
-        }
+        },
         sort={
             'channel': -1,
         }
