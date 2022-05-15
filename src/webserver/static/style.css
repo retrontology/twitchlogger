@@ -112,11 +112,11 @@ span.page-navigation {
 ul.channel-list {
     list-style-type: none;
     padding: 0;
-
 }
 
 li.channel-list-item {
     font-size: 20px;
     padding: 8px;
     background-color: #2f2736;
+    margin: 4px;
 }
