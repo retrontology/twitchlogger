@@ -3,12 +3,12 @@
 <html>
     <h1>Channels</h1>
     <body>
-        <div>
+        <ul class="channel-list">
             {% for channel in channels %}
-                <li>
+                <li class="channel-list-item">
                     <a href="{{ channel }}">{{ channel }}</a>
                 </li>
             {% endfor %}
-        </div>
+        </ul>
     </body>
 </html>
