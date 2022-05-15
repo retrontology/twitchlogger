@@ -64,7 +64,8 @@ class noSQLogger(retroBot.bot.retroBot):
                 self.get_channel_collection().insert_one({
                     'channel': channel.lower(),
                     'added': datetime.datetime.now(),
-                    'twitch_id': twitch_id
+                    'twitch_id': twitch_id,
+                    'message_count': 0
                 })
                 self.connection.join('#' + channel.lower())
                 return True
@@ -136,9 +137,15 @@ class noSQLoggerHandler(retroBot.channelHandler):
         self.channel = channel
         self.parent = parent
         super(noSQLoggerHandler, self).__init__(channel, parent, **kwargs)
+        self.update_message_count()
+    
+    def update_message_count(self):
+        count = self.parent.get_messages_collection().count_documents({'channel': self.channel})
+        self.parent.get_channel_collection().update_one({'channel': self.channel}, {'$set':{'message_count': count}})
 
     def on_pubmsg(self, c, e):
         self.parent.get_messages_collection().insert_one(noSQLmessage(e, self.emote_parsers).to_db_entry(self.channel))
+        self.parent.get_channel_collection().update_one({'channel': self.channel}, {'$inc': {'message_count', 1}})
         
 class noSQLmessage(retroBot.message):
 
