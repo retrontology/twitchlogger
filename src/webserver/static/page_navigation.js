@@ -4,7 +4,7 @@ function change_page() {
     window.location.href = this.getAttribute('data-url') + '&page=' + this.value;
 }
 
-function populate_page_select(element) {
+async function populate_page_select(element) {
     let last_page = element.getElementsByClassName('last-page')[0].textContent;
     last_page = parseInt(last_page.slice(0, -3));
 
@@ -31,7 +31,7 @@ function populate_page_select(element) {
     }
 }
 
-function load_navigation() {
+async function load_navigation() {
     let navigation_elements = document.getElementsByClassName('page-navigation');
     for (var nav_span of navigation_elements) {
         if (nav_span.tagName == "SPAN") {
