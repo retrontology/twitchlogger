@@ -62,8 +62,9 @@ a {
 
 a.channel-title, a.user-title {
     font-family: "Roobert", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 32px;
-    margin: 4px;
+    font-size: 40px;
+    margin: 0px;
+    margin-left: 1px
 }
 
 div.page-navigation {
@@ -104,7 +105,7 @@ a.first-page, a.previous-page, a.next-page, a.last-page {
 
 span.page-navigation {
     float: right;
-    margin: 4px;
+    margin: 2px;
     text-align: right;
 }
 
