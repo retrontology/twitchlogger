@@ -60,15 +60,17 @@ a {
     color: var(--text-color);
 }
 
-a.channel-title, a.user-title {
-    font-family: "Roobert", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 32px;
-    margin: 4px;
+span.channel-title {
+    margin-bottom: 0px;
+    vertical-align: bottom;
 }
 
-div.page-navigation {
-    font-size: 18px;
-    margin: auto;
+a.channel-title, a.user-title {
+    font-family: "Roobert", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 40px;
+    margin-left: 4px;
+    margin-bottom: 0px;
+    vertical-align: bottom;
 }
 
 input.page-selection {
@@ -80,7 +82,7 @@ input.page-selection {
     border-style: solid;
     background-clip: border-box;
     border: 1px #0b0a0d;
-    margin: 2px;
+    margin: 1px;
     width: 25%;
     -moz-appearance: textfield;
 }
@@ -102,9 +104,12 @@ a.first-page, a.previous-page, a.next-page, a.last-page {
     padding-right: 16px;
 }
 
+
 span.page-navigation {
     float: right;
-    margin: 4px;
+    font-size: 18px;
+    text-align: right;
+    margin: 2px
 }
 
 ul.channel-list {
