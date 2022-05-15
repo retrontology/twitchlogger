@@ -145,7 +145,7 @@ class noSQLoggerHandler(retroBot.channelHandler):
 
     def on_pubmsg(self, c, e):
         self.parent.get_messages_collection().insert_one(noSQLmessage(e, self.emote_parsers).to_db_entry(self.channel))
-        self.parent.get_channel_collection().update_one({'channel': self.channel}, {'$inc': {'message_count', 1}})
+        self.parent.get_channel_collection().update_one({'channel': self.channel}, {'$inc': {'message_count': 1}})
         
 class noSQLmessage(retroBot.message):
 
