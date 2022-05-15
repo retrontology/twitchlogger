@@ -6,7 +6,9 @@
         <ul class="channel-list">
             {% for channel in channels %}
                 <li class="channel-list-item">
-                    <a class = "channel-list-item-link" href="{{ channel }}">{{ channel }}</a>
+                    <a class="channel-list-item-link" href="{{ channel }}">
+                        <span class="channel-list-item-channel">{{ channel }}</span>
+                    </a>
                 </li>
             {% endfor %}
         </ul>
