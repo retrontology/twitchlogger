@@ -81,6 +81,14 @@ input.page-selection {
     background-clip: border-box;
     border: 1px #0b0a0d;
     margin: 2px;
+    width: 25%;
+    -moz-appearance: textfield;
+}
+
+input.page-selection::-webkit-outer-spin-button,
+input.page-selection::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 a.first-page, a.previous-page, a.next-page, a.last-page {
