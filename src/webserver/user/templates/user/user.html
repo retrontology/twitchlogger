@@ -3,7 +3,7 @@
 <script src="{% static 'emotes.js' %}"></script> 
 <script src="{% static 'page_navigation.js' %}"></script> 
 <html>
-    <body onload="parse_table()">
+    <body onload="parse_table(); load_navigation();">
         <div class="top-messages-navigation">
             <span class="user-title">
                 <a class="user-title" href="{{ username }}">{{ username }}</a>
