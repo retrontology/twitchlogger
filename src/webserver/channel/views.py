@@ -10,7 +10,7 @@ def index(request):
 def channel(request, channel):
     channel = channel.lower()
     template = loader.get_template('channel/channel.html')
-    dbs = get_channels()
+    dbs = [x['channel'] for x in get_channels()]
     if channel in dbs:
         username = request.GET.get('username', None)
         limit = int(request.GET.get('limit', DEFAULT_LIMIT))
