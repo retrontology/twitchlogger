@@ -30,8 +30,26 @@ def get_channel_messages(channel:str, filter={}, sort=DEFAULT_SORT, fields=DEFAU
         sort=sort,
         skip=page*limit,
         limit=limit
-    )
+    ).limit(limit)
     return parse_messages(cursor)
+
+def get_channel_page_count(channel:str, limit=DEFAULT_LIMIT):
+    channel = channel.lower()
+    container = get_db()[CHANNEL_COLLECTION]
+    result = container.find_one(
+        filter={
+            'channel': channel
+        }, 
+        projection={
+            'message_count': 1, 
+            '_id': 0
+        }
+    )
+    if result:
+        result = result['message_count']
+    else:
+        result = 0
+    return ceil(result/limit)
 
 def get_page_count(channel=None, username=None, filter={}, limit=DEFAULT_LIMIT):
     container = get_db()[MESSAGE_COLLECTION]
@@ -41,7 +59,17 @@ def get_page_count(channel=None, username=None, filter={}, limit=DEFAULT_LIMIT):
     return ceil(total / limit)
 
 def get_channels():
-    return get_db()[MESSAGE_COLLECTION].distinct('channel')
+    #return get_db()[MESSAGE_COLLECTION].distinct('channel')
+    project = {
+        '_id': 0,
+        'channel': 1,
+        'message_count': 1
+    }
+    sort = list({'channel': 1}.items())
+    return [x for x in get_db()[CHANNEL_COLLECTION].find(
+        projection=project,
+        sort=sort
+    )]
 
 def get_user_color(username):
     username = username.lower()
@@ -64,7 +92,7 @@ def get_user_color(username):
         filter=filter,
         projection=project,
         limit=limit
-    ))['color']
+    ).limit(limit))['color']
     return color
 
 def get_user_messages(username, channels=None, filter={}, sort=DEFAULT_SORT, fields=DEFAULT_FIELDS, limit=DEFAULT_LIMIT, page=0):
@@ -77,7 +105,7 @@ def get_user_messages(username, channels=None, filter={}, sort=DEFAULT_SORT, fie
         sort=sort,
         skip=page*limit,
         limit=limit
-    )
+    ).limit(limit)
     return parse_messages(cursor)
 
 def get_project(fields):

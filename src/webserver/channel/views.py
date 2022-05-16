@@ -5,12 +5,12 @@ from webserver.messages import *
 
 def index(request):
     template = loader.get_template('channel/index.html')
-    return HttpResponse(template.render({'channels': sorted(get_channels())}, request))
+    return HttpResponse(template.render({'channels': get_channels()}, request))
 
 def channel(request, channel):
     channel = channel.lower()
     template = loader.get_template('channel/channel.html')
-    dbs = get_channels()
+    dbs = [x['channel'] for x in get_channels()]
     if channel in dbs:
         username = request.GET.get('username', None)
         limit = int(request.GET.get('limit', DEFAULT_LIMIT))
@@ -18,11 +18,7 @@ def channel(request, channel):
         filter = {}
         if username:
             filter['username'] = username
-        page_count = get_page_count(
-            channel=channel,
-            filter=filter,
-            limit=limit
-        )
+        page_count = get_channel_page_count(channel, limit)
         messages = get_channel_messages(
             channel=channel,
             filter=filter,

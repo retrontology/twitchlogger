@@ -58,7 +58,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [join(BASE_DIR, 'webserver', 'templates')],
-        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -68,7 +67,13 @@ TEMPLATES = [
             ],
             'libraries': {
                 'page_filter': 'webserver.templatetags.page_filter'
-            }
+            },
+            'loaders': [
+                ('django.template.loaders.cached.Loader', [
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader'
+                ]),
+            ],
         },
     },
 ]

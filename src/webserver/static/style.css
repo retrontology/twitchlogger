@@ -62,25 +62,17 @@ a {
 
 a.channel-title, a.user-title {
     font-family: "Roobert", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 32px;
-    margin: 4px;
+    font-size: 42px;
+    margin: 0px;
+    margin-left: 1px;
+    float: left;
+    text-align: left;
 }
 
-div.page-navigation {
-    font-size: 18px;
-    margin: auto;
-}
-
-select.page-selection {
-    font-size: inherit;
-    color: var(--text-color);
-    background-color: #2f2736;
-    padding: 8px;
-    padding-top: 8px;
-    border-style: solid;
-    background-clip: border-box;
-    border: 1px #0b0a0d;
-    margin: 2px;
+input.page-selection::-webkit-outer-spin-button,
+input.page-selection::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 a.first-page, a.previous-page, a.next-page, a.last-page {
@@ -94,7 +86,51 @@ a.first-page, a.previous-page, a.next-page, a.last-page {
     padding-right: 16px;
 }
 
+div.messages-navigation {
+    width: 100%;
+}
+
 span.page-navigation {
     float: right;
+    margin-right: 2px;
+    width: fit-content;
+}
+
+input.page-selection {
+    -moz-appearance: textfield;
+    font-size: inherit;
+    color: var(--text-color);
+    background-color: #2f2736;
+    padding: 8px;
+    padding-top: 6px;
+    border-style: solid;
+    background-clip: border-box;
+    border: 1px #0b0a0d;
+    margin: 1px;
+}
+
+ul.channel-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+li.channel-list-item {
+    font-size: 20px;
+    background-color: #2f2736;
     margin: 4px;
+}
+
+a.channel-list-item-link {
+    display: block;
+    padding: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+span.channel-list-item-channel {
+    text-align: left;
+}
+span.channel-list-item-messages {
+    text-align: right;
+    float: right;
 }

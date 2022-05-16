@@ -3,14 +3,15 @@
 <html>
     <h1>Channels</h1>
     <body>
-        <table>
+        <ul class="channel-list">
             {% for channel in channels %}
-            <tr>
-                <td>
-                    <a href="{{ channel }}">{{ channel }}</a>
-                </td>
-            </tr>
+                <li class="channel-list-item">
+                    <a class="channel-list-item-link" href="{{ channel.channel }}">
+                        <span class="channel-list-item-channel">{{ channel.channel }}</span>
+                        <span class="channel-list-item-messages">{{ channel.message_count }}</span>
+                    </a>
+                </li>
             {% endfor %}
-        </table>
+        </ul>
     </body>
 </html>
