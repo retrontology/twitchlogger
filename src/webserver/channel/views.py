@@ -1,4 +1,5 @@
 from django.http import HttpResponse, Http404
+from django.template.context import make_context
 from django.template import loader
 from datetime import datetime
 from webserver.messages import *
@@ -33,6 +34,7 @@ def channel(request, channel):
             'limit': limit,
             'last_page': page_count-1
         }
+        context = make_context(context=context, autoescape=False)
         return HttpResponse(template.render(context, request))
     else:
         raise Http404("Channel not found in database") 
