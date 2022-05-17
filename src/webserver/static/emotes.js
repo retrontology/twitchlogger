@@ -85,9 +85,9 @@ function replace_emotes(cell, emote_indexes) {
 
                 let start_fragment = cell.childNodes[index];
                 console.log(start_fragment);
-                let message = start_fragment.innerHTML;
+                let message = start_fragment.innerText;
 
-                start_fragment.innerHTML = message.slice(0, start);
+                start_fragment.innerText = message.slice(0, start);
 
                 let img_element = document.createElement('img');
                 img_element.classList.add('content-emote');
@@ -98,7 +98,7 @@ function replace_emotes(cell, emote_indexes) {
 
                 let next_fragment = document.createElement('span');
                 next_fragment.classList.add('content-fragment');
-                next_fragment.innerHTML = message.slice(end);
+                next_fragment.innerText = message.slice(end);
                 cell.appendChild(next_fragment);
 
                 last_end += end;
