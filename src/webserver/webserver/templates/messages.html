@@ -19,7 +19,7 @@
             <a style="color:{{ message.color }};" href="{{ message.channel }}?username={{ message.username }}">{{ message.username }}</a>
             <a href="{% url 'user' message.username %}">[U]</a>
         </td>
-        <td class="message-content" data-emotes="{{ message.emotes }}" data-emotes-ffz="{{ message.emotes_ffz }}" data-emotes-bttv="{{ message.emotes_bttv }}" data-emotes-seventv="{{ message.emotes_seventv }}"><span class="content-fragment">{{ message.content }}</span></td>
+        <td class="message-content" data-emotes="{{ message.emotes | safe }}" data-emotes-ffz="{{ message.emotes_ffz | safe }}" data-emotes-bttv="{{ message.emotes_bttv | safe }}" data-emotes-seventv="{{ message.emotes_seventv | safe }}"><span class="content-fragment">{{ message.content | safe }}</span></td>
     </tr>
     {% endfor %}
 </table>
