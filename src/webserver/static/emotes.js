@@ -134,7 +134,6 @@ function parse_usernames(cell, channel) {
 
 async function parse_table() {
     let table = document.getElementById('messages');
-data-channel
     for (let i in table.rows) {
         if (i == 0 || table.rows[i].getAttribute == undefined) {
             continue;
