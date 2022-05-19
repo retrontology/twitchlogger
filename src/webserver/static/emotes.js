@@ -124,7 +124,14 @@ function parse_usernames(cell, channel) {
                 user_link.classList.add('message-user-mention');
                 user_link.href = `/channel/${channel}?username=${username}`;
 
-                child.insertAdjacentElement('afterend', user_link)
+                child.insertAdjacentElement('afterend', user_link);
+
+                let next_fragment = document.createElement('span');
+                next_fragment.classList.add('content-fragment');
+                next_fragment.innerText = message.slice(match.index + match[0].length);
+
+                user_link.insertAdjacentElement('afterend', next_fragment);
+
 
             }
         }
