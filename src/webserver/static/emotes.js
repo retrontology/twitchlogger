@@ -117,10 +117,10 @@ function parse_usernames(cell, channel) {
             if (match) {
                 child.innerText = message.slice(0, match.index);
 
-                let username = message.slice(match.index + 1, match.index + match.length).toLowerCase();
+                let username = message.slice(match.index + 1, match.index + match[0].length).toLowerCase();
 
                 let user_link = document.createElement('a');
-                user_link.innerText = message.slice(match.index, match.index + match.length);
+                user_link.innerText = message.slice(match.index, match.index + match[0].length);
                 user_link.classList.add('message-user-mention');
                 user_link.href = `/channel/${channel}?username=${username}`;
 
