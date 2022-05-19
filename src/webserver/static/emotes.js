@@ -117,7 +117,7 @@ function parse_usernames(cell, channel) {
             if (match) {
                 child.innerText = message.slice(0, match.index);
 
-                let username = message.slice(match.index + 1, match.index + match.length).lower();
+                let username = message.slice(match.index + 1, match.index + match.length).toLowerCase();
 
                 let user_link = document.createElement('a');
                 user_link.innerText = message.slice(match.index, match.index + match.length);
