@@ -77,14 +77,12 @@ function replace_emotes(cell, emote_indexes) {
         let index = 0;
         for (var emote_index of emote_indexes) {
             if (emote_index[1][0] >= last_end) {
-                console.log(cell.childNodes);
                 
                 let url = emote_index[0];
                 let start = emote_index[1][0] - last_end;
                 let end = emote_index[1][1] + 1 - last_end;
 
                 let start_fragment = cell.childNodes[index];
-                console.log(start_fragment);
                 let message = start_fragment.innerText;
 
                 start_fragment.innerText = message.slice(0, start);
@@ -109,17 +107,46 @@ function replace_emotes(cell, emote_indexes) {
     }
 }
 
+function parse_usernames(cell, channel) {
+    let index = 0;
+    while (index < cell.childNodes.length) {
+        let child = cell.childNodes[index];
+        if (child.tagName == 'SPAN') {
+            let message = child.innerText;
+            let match = /@([A-Z,a-z,0-9])\w+/.exec(message);
+            if (match) {
+                child.innerText = message.slice(0, match.index);
+
+                let username = message.slice(match.index + 1, match.index + match.length).lower();
+
+                let user_link = document.createElement('a');
+                user_link.innerText = message.slice(match.index, match.index + match.length);
+                user_link.classList.add('message-user-mention');
+                user_link.href = `/channel/${channel}?username=${username}`;
+
+                child.insertAdjacentElement('afterend', user_link)
+
+            }
+        }
+        index += 1;
+    }
+}
+
 async function parse_table() {
     let table = document.getElementById('messages');
-
+data-channel
     for (let i in table.rows) {
         if (i == 0 || table.rows[i].getAttribute == undefined) {
             continue;
         }
         let row = table.rows[i];
 
+        let channel = row.getAttribute('data-channel');
+        let channel_id = row.getAttribute('data-channel-id');
+
         for (let j in row.cells) {
             let cell = row.cells[j]
+            
             if (cell.classList != undefined && cell.classList.contains("message-content")) {
 
                 let twitch_emotes = cell.getAttribute('data-emotes');
@@ -135,7 +162,8 @@ async function parse_table() {
                 seventv_emotes = parse_seventv_emotes(seventv_emotes);
 
                 replace_emotes(cell, twitch_emotes.concat(ffz_emotes, bttv_emotes, seventv_emotes));
-                
+                parse_usernames(cell, channel);
+
             }
         }
     }
