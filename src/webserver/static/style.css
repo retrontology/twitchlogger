@@ -1,5 +1,6 @@
 :root {
     --text-color: rgb(239, 239, 241);
+    --font-family: "Inter", "Roobert", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -14,11 +15,13 @@ body {
     width: 100%;
     table-layout: auto;
     border-collapse: collapse;
+    color: var(--text-color);
+    font-family: var(--font-family);
 }
 
 th {
     text-align: center;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     padding: 8px;
     background-color: #342641;
@@ -29,6 +32,7 @@ th {
 
 td.message-date, td.message-user, td.message-channel, td.message-content {
     text-align: left;
+    font-size: 13px;
     padding: 8px;
     border: 1px #0b0a0d;
     border-collapse: collapse;
@@ -45,8 +49,6 @@ tr.messages-row:nth-child(even) {background-color: #1f1925;}
 
 span.content-fragment, a.message-user-mention {
     vertical-align: middle;
-    color: --text-color;
-    font-family: "Inter", "Roobert", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 13px;
 }
 
@@ -72,7 +74,7 @@ a {
 }
 
 a.channel-title, a.user-title {
-    font-family: "Roobert", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: var(--font-family);
     font-size: 42px;
     margin: 0px;
     margin-left: 1px;
