@@ -43,12 +43,18 @@ tr.messages-row:nth-child(even) {background-color: #1f1925;}
     white-space: nowrap;
 }
 
-span.content-fragment {
+span.content-fragment, a.message-user-mention {
     vertical-align: middle;
+    color: --text-color;
+    font-family: "Inter", "Roobert", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+
+span.content-fragment {
+    font-weight: 400;
 }
 
 a.message-user-mention {
-    vertical-align: middle;
     font-weight: 600;
 }
 
