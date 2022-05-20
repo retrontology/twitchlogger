@@ -80,6 +80,7 @@ a.channel-title, a.user-title {
     margin-left: 6px;
     float: left;
     text-align: left;
+    margin-bottom: -4px;
 }
 
 input.page-selection::-webkit-outer-spin-button,
@@ -89,7 +90,7 @@ input.page-selection::-webkit-inner-spin-button {
 }
 
 a.first-page, a.previous-page, a.next-page, a.last-page {
-    border: 1px #0b0a0d;
+    border: 0px #0b0a0d;
     background-color: #2f2736;
     border-collapse: collapse;
     border-style: solid;
@@ -97,6 +98,7 @@ a.first-page, a.previous-page, a.next-page, a.last-page {
     padding: 6px;
     padding-left: 12px;
     padding-right: 12px;
+    margin-left: 0px;
 }
 
 div.messages-navigation {
@@ -105,6 +107,8 @@ div.messages-navigation {
 
 span.page-navigation {
     float: right;
+    vertical-align: bottom;
+    margin-top: 2px;
     margin-right: 2px;
     width: fit-content;
 }
@@ -117,8 +121,8 @@ input.page-selection {
     padding: 6px;
     border-style: solid;
     background-clip: border-box;
-    border: 1px #0b0a0d;
-    margin: 1px;
+    border: 0px #0b0a0d;
+
 }
 
 ul.channel-list {
