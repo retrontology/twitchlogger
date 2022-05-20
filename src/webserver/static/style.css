@@ -1,5 +1,6 @@
 :root {
     --text-color: rgb(239, 239, 241);
+    --font-family: "Inter", "Roobert", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -14,11 +15,13 @@ body {
     width: 100%;
     table-layout: auto;
     border-collapse: collapse;
+    color: var(--text-color);
+    font-family: var(--font-family);
 }
 
 th {
     text-align: center;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
     padding: 8px;
     background-color: #342641;
@@ -29,6 +32,7 @@ th {
 
 td.message-date, td.message-user, td.message-channel, td.message-content {
     text-align: left;
+    font-size: 13px;
     padding: 8px;
     border: 1px #0b0a0d;
     border-collapse: collapse;
@@ -43,8 +47,17 @@ tr.messages-row:nth-child(even) {background-color: #1f1925;}
     white-space: nowrap;
 }
 
-span.content-fragment {
+span.content-fragment, a.message-user-mention {
     vertical-align: middle;
+    font-size: 13px;
+}
+
+span.content-fragment {
+    font-weight: 400;
+}
+
+a.message-user-mention {
+    font-weight: 600;
 }
 
 img.content-emote {
@@ -61,12 +74,13 @@ a {
 }
 
 a.channel-title, a.user-title {
-    font-family: "Roobert", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 42px;
+    font-family: var(--font-family);
+    font-size: 36px;
     margin: 0px;
-    margin-left: 1px;
+    margin-left: 6px;
     float: left;
     text-align: left;
+    margin-bottom: -4px;
 }
 
 input.page-selection::-webkit-outer-spin-button,
@@ -76,14 +90,15 @@ input.page-selection::-webkit-inner-spin-button {
 }
 
 a.first-page, a.previous-page, a.next-page, a.last-page {
-    border: 1px #0b0a0d;
+    border: 0px #0b0a0d;
     background-color: #2f2736;
     border-collapse: collapse;
     border-style: solid;
     background-clip: border-box;
-    padding: 8px;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding: 6px;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-left: 0px;
 }
 
 div.messages-navigation {
@@ -92,6 +107,8 @@ div.messages-navigation {
 
 span.page-navigation {
     float: right;
+    vertical-align: bottom;
+    margin-top: 2px;
     margin-right: 2px;
     width: fit-content;
 }
@@ -101,12 +118,11 @@ input.page-selection {
     font-size: inherit;
     color: var(--text-color);
     background-color: #2f2736;
-    padding: 8px;
-    padding-top: 6px;
+    padding: 6px;
     border-style: solid;
     background-clip: border-box;
-    border: 1px #0b0a0d;
-    margin: 1px;
+    border: 0px #0b0a0d;
+
 }
 
 ul.channel-list {

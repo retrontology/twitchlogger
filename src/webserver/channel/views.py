@@ -1,5 +1,6 @@
 from django.http import HttpResponse, Http404
-from django.template import loader
+from django.template.context import make_context
+from django.template import loader, Template
 from datetime import datetime
 from webserver.messages import *
 

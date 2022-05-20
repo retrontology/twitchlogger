@@ -7,6 +7,7 @@
         <th class="message-user">User</th>
         <th class="message-content">Message</th>
     </tr>
+    {% autoescape off %}
     {% for message in messages %}
     <tr class="messages-row" data-channel-id="{{ message.channel_id }}" data-channel="{{ message.channel }}">
         <td class="message-date">{{ message.timestamp }}</td>
@@ -19,7 +20,8 @@
             <a style="color:{{ message.color }};" href="{{ message.channel }}?username={{ message.username }}">{{ message.username }}</a>
             <a href="{% url 'user' message.username %}">[U]</a>
         </td>
-        <td class="message-content" data-emotes="{{ message.emotes }}" data-emotes-ffz="{{ message.emotes_ffz }}" data-emotes-bttv="{{ message.emotes_bttv }}" data-emotes-seventv="{{ message.emotes_seventv }}"><span class="content-fragment">{{ message.content }}</span></td>
+        <td class="message-content" data-emotes="{{ message.emotes }}" data-emotes-ffz="{{ message.emotes_ffz }}" data-emotes-bttv="{{ message.emotes_bttv }}" data-emotes-seventv="{{ message.emotes_seventv }}"><span class="content-fragment">{{ message.content|safe }}</span></td>
     </tr>
     {% endfor %}
+    {% endautoescape %}
 </table>

@@ -77,28 +77,27 @@ function replace_emotes(cell, emote_indexes) {
         let index = 0;
         for (var emote_index of emote_indexes) {
             if (emote_index[1][0] >= last_end) {
-                console.log(cell.childNodes);
                 
                 let url = emote_index[0];
                 let start = emote_index[1][0] - last_end;
                 let end = emote_index[1][1] + 1 - last_end;
 
                 let start_fragment = cell.childNodes[index];
-                console.log(start_fragment);
-                let message = start_fragment.innerHTML;
+                let message = start_fragment.innerText;
 
-                start_fragment.innerHTML = message.slice(0, start);
+                start_fragment.innerText = message.slice(0, start);
 
                 let img_element = document.createElement('img');
                 img_element.classList.add('content-emote');
                 img_element.src = url.replace('%s', '1');
                 img_element.srcset = `${url.replace('%s', '1')} 1x,${url.replace('%s', '2')} 2x,${url.replace('%s', '3')} 4x`;
                 img_element.alt = message.slice(start, end);
+                img_element.title = img_element.alt
                 cell.appendChild(img_element);
 
                 let next_fragment = document.createElement('span');
                 next_fragment.classList.add('content-fragment');
-                next_fragment.innerHTML = message.slice(end);
+                next_fragment.innerText = message.slice(end);
                 cell.appendChild(next_fragment);
 
                 last_end += end;
@@ -108,17 +107,52 @@ function replace_emotes(cell, emote_indexes) {
     }
 }
 
+function parse_usernames(cell, channel) {
+    let index = 0;
+    while (index < cell.childNodes.length) {
+        let child = cell.childNodes[index];
+        if (child.tagName == 'SPAN') {
+            let message = child.innerText;
+            let match = /@([A-Z,a-z,0-9])\w+/.exec(message);
+            if (match) {
+                child.innerText = message.slice(0, match.index);
+
+                let username = message.slice(match.index + 1, match.index + match[0].length).toLowerCase();
+
+                let user_link = document.createElement('a');
+                user_link.innerText = message.slice(match.index, match.index + match[0].length);
+                user_link.classList.add('message-user-mention');
+                user_link.href = `/channel/${channel}?username=${username}`;
+
+                child.insertAdjacentElement('afterend', user_link);
+
+                let next_fragment = document.createElement('span');
+                next_fragment.classList.add('content-fragment');
+                next_fragment.innerText = message.slice(match.index + match[0].length);
+
+                user_link.insertAdjacentElement('afterend', next_fragment);
+
+
+            }
+        }
+        index += 1;
+    }
+}
+
 async function parse_table() {
     let table = document.getElementById('messages');
-
     for (let i in table.rows) {
         if (i == 0 || table.rows[i].getAttribute == undefined) {
             continue;
         }
         let row = table.rows[i];
 
+        let channel = row.getAttribute('data-channel');
+        let channel_id = row.getAttribute('data-channel-id');
+
         for (let j in row.cells) {
             let cell = row.cells[j]
+            
             if (cell.classList != undefined && cell.classList.contains("message-content")) {
 
                 let twitch_emotes = cell.getAttribute('data-emotes');
@@ -134,7 +168,8 @@ async function parse_table() {
                 seventv_emotes = parse_seventv_emotes(seventv_emotes);
 
                 replace_emotes(cell, twitch_emotes.concat(ffz_emotes, bttv_emotes, seventv_emotes));
-                
+                parse_usernames(cell, channel);
+
             }
         }
     }

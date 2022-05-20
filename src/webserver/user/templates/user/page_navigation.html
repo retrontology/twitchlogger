@@ -1,5 +1,0 @@
-<a class="first-page"{% if page > 0 %} href="{% url 'user' username %}?page=0&limit={{ limit }}" title='First Page'{% endif %}><<</a>
-<a class="previous-page"{% if page > 0 %} href="{% url 'user' username %}?page={{ page|add:'-1' }}&limit={{ limit }}" title='Prev Page'{% endif %}><</a>
-<input class="page-selection" size="3" onchange="change_page.call(this);" type="number" min="0" max="{{ last_page }}" data-url="{% url 'user' username %}?limit={{ limit }}" value="{{ page }}">
-<a class="next-page"{% if page < last_page %} href="{% url 'user' username %}?page={{ page|add:'1' }}&limit={{ limit }}" title='Next Page'{% endif %}>></a>
-<a class="last-page"{% if page < last_page %} href="{% url 'user' username %}?page={{ last_page }}&limit={{ limit }}" title='Last Page'{% endif %}>{{ last_page}} >></a>
