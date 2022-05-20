@@ -9,7 +9,11 @@
                 <a class="user-title" href="{{ username }}">{{ username }}</a>
             </span>
             <span class="page-navigation" name="page-navigation">
-                {% include "user/page_navigation.html" %}
+                <a class="first-page"{% if page > 0 %} href="{% url 'user' username %}?page=0&limit={{ limit }}" title='First Page'{% endif %}><<</a>
+                <a class="previous-page"{% if page > 0 %} href="{% url 'user' username %}?page={{ page|add:'-1' }}&limit={{ limit }}" title='Prev Page'{% endif %}><</a>
+                <input class="page-selection" size="3" onchange="change_page.call(this);" type="number" min="0" max="{{ last_page }}" data-url="{% url 'user' username %}?limit={{ limit }}" value="{{ page }}">
+                <a class="next-page"{% if page < last_page %} href="{% url 'user' username %}?page={{ page|add:'1' }}&limit={{ limit }}" title='Next Page'{% endif %}>></a>
+                <a class="last-page"{% if page < last_page %} href="{% url 'user' username %}?page={{ last_page }}&limit={{ limit }}" title='Last Page'{% endif %}>{{ last_page}} >></a>
             </span>
         </div>
         <div>
@@ -17,7 +21,11 @@
         </div>
         <div class="messages-navigation">
             <span class="page-navigation" name="page-navigation">
-                {% include "user/page_navigation.html" %}
+                <a class="first-page"{% if page > 0 %} href="{% url 'user' username %}?page=0&limit={{ limit }}" title='First Page'{% endif %}><<</a>
+                <a class="previous-page"{% if page > 0 %} href="{% url 'user' username %}?page={{ page|add:'-1' }}&limit={{ limit }}" title='Prev Page'{% endif %}><</a>
+                <input class="page-selection" size="3" onchange="change_page.call(this);" type="number" min="0" max="{{ last_page }}" data-url="{% url 'user' username %}?limit={{ limit }}" value="{{ page }}">
+                <a class="next-page"{% if page < last_page %} href="{% url 'user' username %}?page={{ page|add:'1' }}&limit={{ limit }}" title='Next Page'{% endif %}>></a>
+                <a class="last-page"{% if page < last_page %} href="{% url 'user' username %}?page={{ last_page }}&limit={{ limit }}" title='Last Page'{% endif %}>{{ last_page}} >></a>
             </span>
         </div>
     </body>
