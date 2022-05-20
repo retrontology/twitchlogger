@@ -47,6 +47,11 @@ span.content-fragment {
     vertical-align: middle;
 }
 
+a.message-user-mention {
+    vertical-align: middle;
+    font-weight: 600;
+}
+
 img.content-emote {
     vertical-align: middle;
 }
