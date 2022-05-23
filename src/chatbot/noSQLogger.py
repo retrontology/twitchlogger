@@ -62,7 +62,7 @@ class noSQLogger(retroBot.bot.retroBot):
         twitch_id = results[0]['id']
         if self.handler:
             try:
-                self.channel_handlers[channel.lower()] = self.handler(channel.lower(), self, self.ffz, self.bttv, self.seventv)
+                self.channel_handlers[channel.lower()] = self.handler(channel.lower(), self, ffz=self.ffz, bttv=self.bttv, seventv=self.seventv)
                 self.get_channel_collection().insert_one({
                     'channel': channel.lower(),
                     'added': datetime.datetime.now(),
