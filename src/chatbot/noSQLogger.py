@@ -40,8 +40,9 @@ class noSQLogger(retroBot.bot.retroBot):
         if not 'handler' in kwargs:
             kwargs['handler'] = noSQLoggerHandler
             self.handler = kwargs['handler']
-        self.logger.info(channels=self.get_channels())
-        super(noSQLogger, self).__init__(*args, channels=self.get_channels(), **kwargs)
+        channels = channels=self.get_channels()
+        super(noSQLogger, self).__init__(*args, channels=channels, **kwargs)
+        self.logger.info(channels)
     
     def init_indexes(self):
         current_indexes = self.get_messages_collection().list_indexes()
