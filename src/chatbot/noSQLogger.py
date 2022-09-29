@@ -68,7 +68,7 @@ class noSQLogger(retroBot.bot.retroBot):
                     'twitch_id': twitch_id,
                     'message_count': 0
                 })
-                self.connection.join('#' + channel.lower())
+                self.join_channel(channel)
                 return True
             except Exception as e:
                 self.logger.error(e)
