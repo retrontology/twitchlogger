@@ -1,0 +1,16 @@
+twitch:
+  client_id: ':)'
+  client_secret: ':)'
+  username: ':)'
+mongo:
+  hosts:
+  - host: '192.168.1.32'
+    port: 27017
+  username: null
+  password: null
+  options: {}
+  authdb: null
+  dbname: 'twitch_logger'
+api:
+  host: '127.0.0.1'
+  port: 8365
